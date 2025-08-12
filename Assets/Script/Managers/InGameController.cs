@@ -65,7 +65,7 @@ public class InGameController
     public IEnumerator EndGame()
     {
         //TODO: 게임 끝낼 시 실행할 로직
-        
+        Debug.Log("Game Ended");
         //ex.게임오버 연출, 결과창UI등
         
         //게임이 끝난 후, 바로 돌아가지 않고 대기.
