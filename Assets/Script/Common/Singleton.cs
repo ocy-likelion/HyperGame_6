@@ -30,11 +30,22 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
             _instance = this as T;
             DontDestroyOnLoad(gameObject);
         }
+        else if (Instance != this)
+        {
+            Debug.LogWarning($"Duplicate instance of {typeof(T).Name} found and destroyed.");
+            Destroy(gameObject);
+            return;
+        }
 
         Initialize();
     }
 
     protected virtual void Initialize()
     {
+    }
+    
+    protected void OnDestroy()
+    {
+        _instance = null;
     }
 }
