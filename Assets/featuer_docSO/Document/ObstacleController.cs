@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObstacleController : MonoBehaviour
 {
+    public GameObject OriginalPrefab { get; set; } 
+    
     private DocumentController _documentController;
     private int _processCount;
 
@@ -44,7 +46,7 @@ public class ObstacleController : MonoBehaviour
                     // DocumentController 쪽 상태 변경
                     _documentController?.ObstacleCleared();
 
-                    Destroy(gameObject);
+                    DocumentPool.Instance.ReturnObject(this.gameObject);
                 }
             }
         }
