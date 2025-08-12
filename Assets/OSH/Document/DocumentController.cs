@@ -11,10 +11,15 @@ public partial class DocumentController : MonoBehaviour
     //장애물 프리팹 (0:날벌레, 1:요구자 손, 2:포스트잇, 3:파일철, 4:서류봉투)
     [SerializeField] private List<GameObject> _obstacleObjPrefabs;
     
+    //서류 및 장애물 데이터 생성
     private DocumentData _currentDocument;
     private ObstacleData _currentObstacle;
     public ObstacleData CurrentObstacle => _currentObstacle;
+    
+    //장애물이 치워졌는지 여부
     private bool _isClean;
+    
+    //서류 사이즈(반려요소 스폰지점 산출에 사용)
     private Vector3 _documentSize;
     
     //테스트용 변수
@@ -43,6 +48,8 @@ public partial class DocumentController : MonoBehaviour
         // }
         
         var rejectRenderer = _rejectObjPrefabs[_currentDocument.rejectObjIdx].GetComponent<SpriteRenderer>();
+        
+        //반려요소 위치 랜덤 생성
         Vector3 rejectSize = rejectRenderer != null ? rejectRenderer.bounds.size : Vector3.zero;
         float minX = -_documentSize.x / 2f + rejectSize.x / 2f;
         float maxX = _documentSize.x / 2f - rejectSize.x / 2f;
@@ -50,7 +57,9 @@ public partial class DocumentController : MonoBehaviour
         float maxY = _documentSize.y / 2f - rejectSize.y / 2f;
         _currentDocument.spawnPosX = Random.Range(minX, maxX);
         _currentDocument.spawnPosY = Random.Range(minY, maxY);
-
+        
+        
+        //장애물 타입 결정 함수로
         CreateObstacle();
     }
 
@@ -83,19 +92,25 @@ public partial class DocumentController : MonoBehaviour
             }
         }
         
+        //서류 생성 함수로
         SpawnDocument();
     }
 
+    // 서류 생성 함수
     void SpawnDocument()
     {
+        // 서류 생성
         Instantiate(_documentPrefab);
 
+        // 서류 타입에 따라 반려 요소 생성
         if (!_currentDocument.documentType)
         {
             Vector3 rejectPos = new Vector3(_currentDocument.spawnPosX, _currentDocument.spawnPosY, 0f);
             Instantiate(_rejectObjPrefabs[_currentDocument.rejectObjIdx], rejectPos, Quaternion.identity);
         }
-
+        
+        
+        //확률에 따라 장애물 생성
         float chance = Mathf.Clamp(_day * 5f, 0f, 100f);
         float roll = Random.Range(0f, 100f);
         if (roll < chance)
@@ -104,7 +119,7 @@ public partial class DocumentController : MonoBehaviour
             Vector3 obsPos = new Vector3(_currentObstacle.spawnPosX, _currentObstacle.spawnPosY, 0f);
             var obstacleObj = Instantiate(_obstacleObjPrefabs[_currentObstacle.obstacleObjIdx], obsPos, Quaternion.identity);
         
-            // 의존성 주입 
+            // 장애물 컨트롤러 생성
             var obstacleController = obstacleObj.GetComponent<ObstacleController>();
             if (obstacleController != null)
             {
@@ -113,6 +128,7 @@ public partial class DocumentController : MonoBehaviour
         }
     }
     
+    //장애물이 치워지면 호출될 함수
     public void ObstacleCleared()
     {
         _isClean = true;
