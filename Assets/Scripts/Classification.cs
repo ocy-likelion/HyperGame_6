@@ -8,9 +8,7 @@ public class Classification : Singleton<Classification>
     public bool clean; //반려요소 true: 반려요소 없음, false: 반려요소 있음
     public bool confirm; //승인 여부 true: 승인버튼 클릭, false: 반려버튼 클릭
     bool success; //분류 성공 여부 true: 성공, false: 실패
-    int playTime = 60; //일과시간
-    int day = 10; //일과 날짜
-    public int Day => day;
+
     int combo = 0; //콤보 횟수
     int maxCombo = 0; //최대 콤보 횟수
     float feverValue = 0; //피버 게이지
@@ -61,12 +59,15 @@ public class Classification : Singleton<Classification>
     } //점수 배율 조정
     public void DocumentClassification() //서류 분류 메소드
     {
-        if(obstacle) // 장애물이 있을 때 
+        float time = TimeController.Instance._remainedTime; // 남은 일과시간
+        int day = TimeController.Instance._day; // 남은 진행일수
+
+        if (obstacle) // 장애물이 있을 때 
         {
             success = false;
-            playTime -= 5 * day; //일과시간 감소
+            time -= 5 * day; //일과시간 감소
             combo = 0; //콤보 초기화
-            Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + playTime + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+            Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
         }
         else // 장애물이 없을 때
         {
@@ -75,7 +76,7 @@ public class Classification : Singleton<Classification>
                 if(confirm) // 승인 버튼 클릭 시
                 {
                     success = true;
-                    playTime += 1 * day; //일과시간 증가
+                    time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
                     feverValue += 3 * scoreMag; //피버 게이지 증가
                     score += (int)((1 * day) * scoreMag); //점수 증가
@@ -85,16 +86,16 @@ public class Classification : Singleton<Classification>
                         maxCombo = combo; //최대 콤보 갱신
                     }
                     
-                    Debug.Log("분류 성공! 일과시간 증가: " + playTime + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    Debug.Log("분류 성공! 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
                 }
                 else // 반려 버튼 클릭 시
                 {
                     success = false;
-                    playTime -= 5 * day; //일과시간 감소
+                    time -= 5 * day; //일과시간 감소
                     combo = 0; //콤보 초기화
                     scoreMagnification(); //점수 배율 적용
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
-                    Debug.Log("분류 실패! 일과시간 감소: " + playTime + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
                 }
             }
             else // 반려요소가 있을 때
@@ -102,16 +103,16 @@ public class Classification : Singleton<Classification>
                 if(confirm) // 승인 버튼 클릭 시
                 {
                     success = false;
-                    playTime -= 5 * day; //일과시간 감소
+                    time -= 5 * day; //일과시간 감소
                     combo = 0; //콤보 초기화
                     scoreMagnification(); //점수 배율 적용
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
-                    Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + playTime + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
                 }
                 else // 반려 버튼 클릭 시
                 {
                     success = true;
-                    playTime += 1 * day; //일과시간 증가
+                    time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
                     feverValue += 3 * scoreMag; //피버 게이지 증가
                     score += (int)((1 * day) * scoreMag); //점수 증가
@@ -121,9 +122,12 @@ public class Classification : Singleton<Classification>
                         maxCombo = combo; //최대 콤보 갱신
                     }
                     
-                    Debug.Log("분류 성공! 반려요소 없음. 일과시간 증가: " + playTime + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    Debug.Log("분류 성공! 반려요소 없음. 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
                 }
             }
         }
+
+        TimeController.Instance._remainedTime = time; // 남은 일과시간 갱신
+        TimeController.Instance._day = day; // 남은 진행일수 갱신
     }
 }
