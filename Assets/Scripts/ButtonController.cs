@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
-    public void OnClickConfirmButton() //½ÂÀÎ¹öÆ°Å¬¸¯
+    public void OnClickConfirmButton() //ìŠ¹ì¸ë²„íŠ¼í´ë¦­
     {
-        Classification.Instance.confirm = true; //½ÂÀÎ¹öÆ° Å¬¸¯½Ã ¼­·ù ½ÂÀÎ
-        Classification.Instance.DocumentClassification(); // ¼­·ù ºĞ·ù ¸Ş¼Òµå È£Ãâ
+        Classification.Instance.confirm = true; //ìŠ¹ì¸ë²„íŠ¼ í´ë¦­ì‹œ ì„œë¥˜ ìŠ¹ì¸
+        Classification.Instance.DocumentClassification(); // ì„œë¥˜ ë¶„ë¥˜ ë©”ì†Œë“œ í˜¸ì¶œ
     }
 
-    public void OnClickRejectButton() //¹İ·Á¹öÆ°Å¬¸¯
+    public void OnClickRejectButton() //ë°˜ë ¤ë²„íŠ¼í´ë¦­
     {
-        Classification.Instance.confirm = false; //¹İ·Á¹öÆ° Å¬¸¯½Ã ¼­·ù ¹İ·Á
-        Classification.Instance.DocumentClassification(); // ¼­·ù ºĞ·ù ¸Ş¼Òµå È£Ãâ
+        Classification.Instance.confirm = false; //ë°˜ë ¤ë²„íŠ¼ í´ë¦­ì‹œ ì„œë¥˜ ë°˜ë ¤
+        Classification.Instance.DocumentClassification(); // ì„œë¥˜ ë¶„ë¥˜ ë©”ì†Œë“œ í˜¸ì¶œ
     }
 }

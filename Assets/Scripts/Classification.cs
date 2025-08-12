@@ -1,126 +1,126 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Classification : Singleton<Classification>
 {
-    bool obstacle; //Àå¾Ö¹° À¯¹« true: Àå¾Ö¹° ÀÖÀ½, false: Àå¾Ö¹° ¾øÀ½
-    bool clean; //¹İ·Á¿ä¼Ò true: ¹İ·Á¿ä¼Ò ¾øÀ½, false: ¹İ·Á¿ä¼Ò ÀÖÀ½
-    public bool confirm; //½ÂÀÎ ¿©ºÎ true: ½ÂÀÎ¹öÆ° Å¬¸¯, false: ¹İ·Á¹öÆ° Å¬¸¯
-    bool success; //ºĞ·ù ¼º°ø ¿©ºÎ true: ¼º°ø, false: ½ÇÆĞ
-    int playTime = 60; //ÀÏ°ú½Ã°£
-    int day = 1; //ÀÏ°ú ³¯Â¥
-    int combo = 0; //ÄŞº¸ È½¼ö
-    int maxCombo = 0; //ÃÖ´ë ÄŞº¸ È½¼ö
-    float feverValue = 0; //ÇÇ¹ö °ÔÀÌÁö
-    float scoreMag = 1.0f; //Á¡¼ö ¹èÀ²
-    int score = 0; //Á¡¼ö
+    bool obstacle; //ì¥ì• ë¬¼ ìœ ë¬´ true: ì¥ì• ë¬¼ ìˆìŒ, false: ì¥ì• ë¬¼ ì—†ìŒ
+    bool clean; //ë°˜ë ¤ìš”ì†Œ true: ë°˜ë ¤ìš”ì†Œ ì—†ìŒ, false: ë°˜ë ¤ìš”ì†Œ ìˆìŒ
+    public bool confirm; //ìŠ¹ì¸ ì—¬ë¶€ true: ìŠ¹ì¸ë²„íŠ¼ í´ë¦­, false: ë°˜ë ¤ë²„íŠ¼ í´ë¦­
+    bool success; //ë¶„ë¥˜ ì„±ê³µ ì—¬ë¶€ true: ì„±ê³µ, false: ì‹¤íŒ¨
+    int playTime = 60; //ì¼ê³¼ì‹œê°„
+    int day = 1; //ì¼ê³¼ ë‚ ì§œ
+    int combo = 0; //ì½¤ë³´ íšŸìˆ˜
+    int maxCombo = 0; //ìµœëŒ€ ì½¤ë³´ íšŸìˆ˜
+    float feverValue = 0; //í”¼ë²„ ê²Œì´ì§€
+    float scoreMag = 1.0f; //ì ìˆ˜ ë°°ìœ¨
+    int score = 0; //ì ìˆ˜
 
     public void scoreMagnification()
     {
         switch(combo)
         {
             case int n when (n < 5):
-                scoreMag = 1.0f; //ÄŞº¸ ¾øÀ½
+                scoreMag = 1.0f; //ì½¤ë³´ ì—†ìŒ
                 break;
             case int n when (n >= 5 && n <=10):
-                scoreMag = 1.1f; //ÄŞº¸ 1.1¹è
+                scoreMag = 1.1f; //ì½¤ë³´ 1.1ë°°
                 break;
             case int n when (n >= 11 && n <=20):
-                scoreMag = 1.2f; //ÄŞº¸ 1.2¹è
+                scoreMag = 1.2f; //ì½¤ë³´ 1.2ë°°
                 break;
             case int n when (n >= 21 && n <= 30):
-                scoreMag = 1.3f; //ÄŞº¸ 1.3¹è
+                scoreMag = 1.3f; //ì½¤ë³´ 1.3ë°°
                 break;
             case int n when (n >= 31 && n <= 40):
-                scoreMag = 1.4f; //ÄŞº¸ 1.4¹è
+                scoreMag = 1.4f; //ì½¤ë³´ 1.4ë°°
                 break;
             case int n when (n >= 41 && n <= 50):
-                scoreMag = 1.5f; //ÄŞº¸ 1.5¹è
+                scoreMag = 1.5f; //ì½¤ë³´ 1.5ë°°
                 break;
             case int n when (n >= 51 && n <= 60):
-                scoreMag = 1.6f; //ÄŞº¸ 1.6¹è
+                scoreMag = 1.6f; //ì½¤ë³´ 1.6ë°°
                 break;
             case int n when (n >= 61 && n <= 70):
-                scoreMag = 1.7f; //ÄŞº¸ 1.7¹è
+                scoreMag = 1.7f; //ì½¤ë³´ 1.7ë°°
                 break;
             case int n when (n >= 71 && n <= 80):
-                scoreMag = 1.8f; //ÄŞº¸ 1.8¹è
+                scoreMag = 1.8f; //ì½¤ë³´ 1.8ë°°
                 break;
             case int n when (n >= 81 && n <= 90):
-                scoreMag = 1.9f; //ÄŞº¸ 1.9¹è
+                scoreMag = 1.9f; //ì½¤ë³´ 1.9ë°°
                 break;
             case int n when (n >= 91 && n <= 100):
-                scoreMag = 2.0f; //ÄŞº¸ 2¹è
+                scoreMag = 2.0f; //ì½¤ë³´ 2ë°°
                 break;
             case int n when (n >= 101):
-                scoreMag = 2.5f; //ÄŞº¸ 2.5¹è 
+                scoreMag = 2.5f; //ì½¤ë³´ 2.5ë°° 
                 break;
         }
-    } //Á¡¼ö ¹èÀ² Á¶Á¤
-    public void DocumentClassification() //¼­·ù ºĞ·ù ¸Ş¼Òµå
+    } //ì ìˆ˜ ë°°ìœ¨ ì¡°ì •
+    public void DocumentClassification() //ì„œë¥˜ ë¶„ë¥˜ ë©”ì†Œë“œ
     {
-        if(obstacle) // Àå¾Ö¹°ÀÌ ÀÖÀ» ¶§ 
+        if(obstacle) // ì¥ì• ë¬¼ì´ ìˆì„ ë•Œ 
         {
             success = false;
-            playTime -= 5 * day; //ÀÏ°ú½Ã°£ °¨¼Ò
-            combo = 0; //ÄŞº¸ ÃÊ±âÈ­
-            Debug.Log("ºĞ·ù ½ÇÆĞ! Àå¾Ö¹° ÀÖÀ½. ÀÏ°ú½Ã°£ °¨¼Ò: " + playTime + ", ÇöÀç ÄŞº¸: " + combo + ", ÃÖ´ë ÄŞº¸: " + maxCombo + "Á¡¼ö ¹èÀ²: " + scoreMag);
+            playTime -= 5 * day; //ì¼ê³¼ì‹œê°„ ê°ì†Œ
+            combo = 0; //ì½¤ë³´ ì´ˆê¸°í™”
+            Debug.Log("ë¶„ë¥˜ ì‹¤íŒ¨! ì¥ì• ë¬¼ ìˆìŒ. ì¼ê³¼ì‹œê°„ ê°ì†Œ: " + playTime + ", í˜„ì¬ ì½¤ë³´: " + combo + ", ìµœëŒ€ ì½¤ë³´: " + maxCombo + "ì ìˆ˜ ë°°ìœ¨: " + scoreMag);
         }
-        else // Àå¾Ö¹°ÀÌ ¾øÀ» ¶§
+        else // ì¥ì• ë¬¼ì´ ì—†ì„ ë•Œ
         {
-            if(clean) // ¹İ·Á¿ä¼Ò°¡ ¾øÀ» ¶§
+            if(clean) // ë°˜ë ¤ìš”ì†Œê°€ ì—†ì„ ë•Œ
             {
-                if(confirm) // ½ÂÀÎ ¹öÆ° Å¬¸¯ ½Ã
+                if(confirm) // ìŠ¹ì¸ ë²„íŠ¼ í´ë¦­ ì‹œ
                 {
                     success = true;
-                    playTime += 1 * day; //ÀÏ°ú½Ã°£ Áõ°¡
-                    combo += 1; //ÄŞº¸ Áõ°¡
-                    feverValue += 3 * scoreMag; //ÇÇ¹ö °ÔÀÌÁö Áõ°¡
-                    score += (int)((1 * day) * scoreMag); //Á¡¼ö Áõ°¡
-                    scoreMagnification(); //Á¡¼ö ¹èÀ² Àû¿ë
+                    playTime += 1 * day; //ì¼ê³¼ì‹œê°„ ì¦ê°€
+                    combo += 1; //ì½¤ë³´ ì¦ê°€
+                    feverValue += 3 * scoreMag; //í”¼ë²„ ê²Œì´ì§€ ì¦ê°€
+                    score += (int)((1 * day) * scoreMag); //ì ìˆ˜ ì¦ê°€
+                    scoreMagnification(); //ì ìˆ˜ ë°°ìœ¨ ì ìš©
                     if (combo > maxCombo)
                     {
-                        maxCombo = combo; //ÃÖ´ë ÄŞº¸ °»½Å
+                        maxCombo = combo; //ìµœëŒ€ ì½¤ë³´ ê°±ì‹ 
                     }
                     
-                    Debug.Log("ºĞ·ù ¼º°ø! ÀÏ°ú½Ã°£ Áõ°¡: " + playTime + ", ÇöÀç ÄŞº¸: " + combo + ", ÃÖ´ë ÄŞº¸: " + maxCombo + "Á¡¼ö ¹èÀ²: " + scoreMag);
+                    Debug.Log("ë¶„ë¥˜ ì„±ê³µ! ì¼ê³¼ì‹œê°„ ì¦ê°€: " + playTime + ", í˜„ì¬ ì½¤ë³´: " + combo + ", ìµœëŒ€ ì½¤ë³´: " + maxCombo + "ì ìˆ˜ ë°°ìœ¨: " + scoreMag);
                 }
-                else // ¹İ·Á ¹öÆ° Å¬¸¯ ½Ã
+                else // ë°˜ë ¤ ë²„íŠ¼ í´ë¦­ ì‹œ
                 {
                     success = false;
-                    playTime -= 5 * day; //ÀÏ°ú½Ã°£ °¨¼Ò
-                    combo = 0; //ÄŞº¸ ÃÊ±âÈ­
-                    scoreMagnification(); //Á¡¼ö ¹èÀ² Àû¿ë
-                    feverValue -= (float)(feverValue * 0.1); //ÇÇ¹ö °ÔÀÌÁö °¨¼Ò
-                    Debug.Log("ºĞ·ù ½ÇÆĞ! ÀÏ°ú½Ã°£ °¨¼Ò: " + playTime + ", ÇöÀç ÄŞº¸: " + combo + ", ÃÖ´ë ÄŞº¸: " + maxCombo + "Á¡¼ö ¹èÀ²: " + scoreMag);
+                    playTime -= 5 * day; //ì¼ê³¼ì‹œê°„ ê°ì†Œ
+                    combo = 0; //ì½¤ë³´ ì´ˆê¸°í™”
+                    scoreMagnification(); //ì ìˆ˜ ë°°ìœ¨ ì ìš©
+                    feverValue -= (float)(feverValue * 0.1); //í”¼ë²„ ê²Œì´ì§€ ê°ì†Œ
+                    Debug.Log("ë¶„ë¥˜ ì‹¤íŒ¨! ì¼ê³¼ì‹œê°„ ê°ì†Œ: " + playTime + ", í˜„ì¬ ì½¤ë³´: " + combo + ", ìµœëŒ€ ì½¤ë³´: " + maxCombo + "ì ìˆ˜ ë°°ìœ¨: " + scoreMag);
                 }
             }
-            else // ¹İ·Á¿ä¼Ò°¡ ÀÖÀ» ¶§
+            else // ë°˜ë ¤ìš”ì†Œê°€ ìˆì„ ë•Œ
             {
-                if(confirm) // ½ÂÀÎ ¹öÆ° Å¬¸¯ ½Ã
+                if(confirm) // ìŠ¹ì¸ ë²„íŠ¼ í´ë¦­ ì‹œ
                 {
                     success = false;
-                    playTime -= 5 * day; //ÀÏ°ú½Ã°£ °¨¼Ò
-                    combo = 0; //ÄŞº¸ ÃÊ±âÈ­
-                    scoreMagnification(); //Á¡¼ö ¹èÀ² Àû¿ë
-                    feverValue -= (float)(feverValue * 0.1); //ÇÇ¹ö °ÔÀÌÁö °¨¼Ò
-                    Debug.Log("ºĞ·ù ½ÇÆĞ! ¹İ·Á¿ä¼Ò ÀÖÀ½. ÀÏ°ú½Ã°£ °¨¼Ò: " + playTime + ", ÇöÀç ÄŞº¸: " + combo + ", ÃÖ´ë ÄŞº¸: " + maxCombo + "Á¡¼ö ¹èÀ²: " + scoreMag);
+                    playTime -= 5 * day; //ì¼ê³¼ì‹œê°„ ê°ì†Œ
+                    combo = 0; //ì½¤ë³´ ì´ˆê¸°í™”
+                    scoreMagnification(); //ì ìˆ˜ ë°°ìœ¨ ì ìš©
+                    feverValue -= (float)(feverValue * 0.1); //í”¼ë²„ ê²Œì´ì§€ ê°ì†Œ
+                    Debug.Log("ë¶„ë¥˜ ì‹¤íŒ¨! ë°˜ë ¤ìš”ì†Œ ìˆìŒ. ì¼ê³¼ì‹œê°„ ê°ì†Œ: " + playTime + ", í˜„ì¬ ì½¤ë³´: " + combo + ", ìµœëŒ€ ì½¤ë³´: " + maxCombo + "ì ìˆ˜ ë°°ìœ¨: " + scoreMag);
                 }
-                else // ¹İ·Á ¹öÆ° Å¬¸¯ ½Ã
+                else // ë°˜ë ¤ ë²„íŠ¼ í´ë¦­ ì‹œ
                 {
                     success = true;
-                    playTime += 1 * day; //ÀÏ°ú½Ã°£ Áõ°¡
-                    combo += 1; //ÄŞº¸ Áõ°¡
-                    feverValue += 3 * scoreMag; //ÇÇ¹ö °ÔÀÌÁö Áõ°¡
-                    score += (int)((1 * day) * scoreMag); //Á¡¼ö Áõ°¡
-                    scoreMagnification(); //Á¡¼ö ¹èÀ² Àû¿ë
+                    playTime += 1 * day; //ì¼ê³¼ì‹œê°„ ì¦ê°€
+                    combo += 1; //ì½¤ë³´ ì¦ê°€
+                    feverValue += 3 * scoreMag; //í”¼ë²„ ê²Œì´ì§€ ì¦ê°€
+                    score += (int)((1 * day) * scoreMag); //ì ìˆ˜ ì¦ê°€
+                    scoreMagnification(); //ì ìˆ˜ ë°°ìœ¨ ì ìš©
                     if (combo > maxCombo)
                     {
-                        maxCombo = combo; //ÃÖ´ë ÄŞº¸ °»½Å
+                        maxCombo = combo; //ìµœëŒ€ ì½¤ë³´ ê°±ì‹ 
                     }
                     
-                    Debug.Log("ºĞ·ù ¼º°ø! ¹İ·Á¿ä¼Ò ¾øÀ½. ÀÏ°ú½Ã°£ Áõ°¡: " + playTime + ", ÇöÀç ÄŞº¸: " + combo + ", ÃÖ´ë ÄŞº¸: " + maxCombo + "Á¡¼ö ¹èÀ²: " + scoreMag);
+                    Debug.Log("ë¶„ë¥˜ ì„±ê³µ! ë°˜ë ¤ìš”ì†Œ ì—†ìŒ. ì¼ê³¼ì‹œê°„ ì¦ê°€: " + playTime + ", í˜„ì¬ ì½¤ë³´: " + combo + ", ìµœëŒ€ ì½¤ë³´: " + maxCombo + "ì ìˆ˜ ë°°ìœ¨: " + scoreMag);
                 }
             }
         }
