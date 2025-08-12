@@ -10,11 +10,16 @@ public class DocumentController : MonoBehaviour
     [SerializeField] private List<GameObject> _rejectObjPrefabs;
     //장애물 프리팹 (0:날벌레, 1:요구자 손, 2:포스트잇, 3:파일철, 4:서류봉투)
     [SerializeField] private List<GameObject> _obstacleObjPrefabs;
+    public List<GameObject> ObstacleObjPrefabs => _obstacleObjPrefabs;
     
-    //서류 및 장애물 데이터 생성
+    //서류 및 장애물 데이터, 프리팹 생성
     private DocumentData _currentDocument;
     private ObstacleData _currentObstacle;
     public ObstacleData CurrentObstacle => _currentObstacle;
+    
+    private GameObject _docObj;
+    private GameObject _rejectObj;
+    private GameObject _obstacleObj;
     
     //장애물이 치워졌는지 여부
     private bool _isClean;
@@ -33,6 +38,7 @@ public class DocumentController : MonoBehaviour
     
     public void InitDocuments()
     {
+        Classification.Instance.docController = this;
         var renderer = _documentPrefab.GetComponent<SpriteRenderer>();
         _documentSize = renderer != null ? renderer.bounds.size : Vector3.one;
         
@@ -42,14 +48,14 @@ public class DocumentController : MonoBehaviour
     //서류 타입 결정 함수
     void CreateDocument()
     {
-        _currentDocument = new DocumentData();
+        _currentDocument = ScriptableObject.CreateInstance<DocumentData>();
         
         _currentDocument.documentType = (Random.Range(0, 2) == 0);
         Classification.Instance.clean = _currentDocument.documentType;
         
         _currentDocument.rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count);
         
-        Debug.Log(_currentDocument.documentType);
+        Debug.Log("서류타입: " + _currentDocument.documentType);
         // if 피버타임이라면
         // {
         //     _currentDocument.documentType = true
@@ -74,8 +80,8 @@ public class DocumentController : MonoBehaviour
     //장애물 타입 결정 함수
     void CreateObstacle()
     {
-        _day = TimeController.Instance.day;
-        _currentObstacle = new ObstacleData();
+        _day = TimeController.Instance._day;
+        _currentObstacle = ScriptableObject.CreateInstance<ObstacleData>();
 
         _currentObstacle.processCount = Mathf.Max(1, _day / 5);
         _currentObstacle.obstacleObjIdx = Random.Range(0, _obstacleObjPrefabs.Count);
@@ -100,6 +106,11 @@ public class DocumentController : MonoBehaviour
                 _currentObstacle.spawnPosY = Random.Range(-_documentSize.y / 2f, _documentSize.y / 2f);
             }
         }
+        else
+        {
+            _currentObstacle.spawnPosX = Vector3.zero.x;
+            _currentObstacle.spawnPosY = Vector3.zero.y;
+        }
         
         //서류 생성 함수로
         SpawnDocument();
@@ -109,13 +120,13 @@ public class DocumentController : MonoBehaviour
     void SpawnDocument()
     {
         // 서류 생성
-        Instantiate(_documentPrefab);
+        _docObj = DocumentPool.Instance.GetObject(_documentPrefab, Vector3.zero, Quaternion.identity);
 
         // 서류 타입에 따라 반려 요소 생성
         if (!_currentDocument.documentType)
         {
             Vector3 rejectPos = new Vector3(_currentDocument.spawnPosX, _currentDocument.spawnPosY, 0f);
-            Instantiate(_rejectObjPrefabs[_currentDocument.rejectObjIdx], rejectPos, Quaternion.identity);
+            _rejectObj = DocumentPool.Instance.GetObject(_rejectObjPrefabs[_currentDocument.rejectObjIdx], rejectPos, Quaternion.identity);
         }
         
         
@@ -127,10 +138,10 @@ public class DocumentController : MonoBehaviour
             _isClean = false;
             Classification.Instance.obstacle = !_isClean;
             Vector3 obsPos = new Vector3(_currentObstacle.spawnPosX, _currentObstacle.spawnPosY, 0f);
-            var obstacleObj = Instantiate(_obstacleObjPrefabs[_currentObstacle.obstacleObjIdx], obsPos, Quaternion.identity);
+            _obstacleObj = DocumentPool.Instance.GetObject(_obstacleObjPrefabs[_currentObstacle.obstacleObjIdx], obsPos, Quaternion.identity);;
         
             // 장애물 컨트롤러 생성
-            var obstacleController = obstacleObj.GetComponent<ObstacleController>();
+            var obstacleController = _obstacleObj.GetComponent<ObstacleController>();
             if (obstacleController != null)
             {
                 obstacleController.Initialize(this);
@@ -144,4 +155,23 @@ public class DocumentController : MonoBehaviour
         _isClean = true;
         Classification.Instance.obstacle = !_isClean;
     }
+    
+    // 서류 치우기 함수
+    public void ReloadDocument()
+    {
+        DocumentPool.Instance.ReturnObject(_docObj);
+
+        if (_rejectObj != null)
+        {
+            DocumentPool.Instance.ReturnObject(_rejectObj);
+        }
+
+        if (_obstacleObj != null)
+        {
+            DocumentPool.Instance.ReturnObject(_obstacleObj);
+        }
+        
+        CreateDocument();
+    }
+
 }

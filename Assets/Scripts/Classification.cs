@@ -14,7 +14,8 @@ public class Classification : Singleton<Classification>
     float feverValue = 0; //피버 게이지
     float scoreMag = 1.0f; //점수 배율
     int score = 0; //점수
-
+    
+    public DocumentController docController;
     public void scoreMagnification()
     {
         switch(combo)
@@ -126,8 +127,10 @@ public class Classification : Singleton<Classification>
                 }
             }
         }
-
+    
         TimeController.Instance._remainedTime = time; // 남은 일과시간 갱신
         TimeController.Instance._day = day; // 남은 진행일수 갱신
+        
+        docController.ReloadDocument(); // 서류 재생성
     }
 }

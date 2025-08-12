@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394134146815866716}
   - component: {fileID: 1404553056799581593}
+  - component: {fileID: -8137229455129299568}
   m_Layer: 0
   m_Name: coffee
   m_TagString: Untagged
@@ -84,3 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8137229455129299568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085532528814942462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e568d78dd26c784687515fb1d8fb3f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
