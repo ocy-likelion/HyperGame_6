@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class DocumentController : MonoBehaviour
+public class DocumentController : MonoBehaviour
 {
     //서류 프리팹
     [SerializeField] private GameObject _documentPrefab;
@@ -22,9 +22,16 @@ public partial class DocumentController : MonoBehaviour
     //서류 사이즈(반려요소 스폰지점 산출에 사용)
     private Vector3 _documentSize;
     
-    //테스트용 변수
-    [SerializeField] private int _day;
+    //날짜 수
+    private int _day;
+
+    //테스트용 함수
     void Start()
+    {
+        InitDocuments();
+    }
+    
+    public void InitDocuments()
     {
         var renderer = _documentPrefab.GetComponent<SpriteRenderer>();
         _documentSize = renderer != null ? renderer.bounds.size : Vector3.one;
@@ -38,6 +45,7 @@ public partial class DocumentController : MonoBehaviour
         _currentDocument = new DocumentData();
         
         _currentDocument.documentType = (Random.Range(0, 2) == 0);
+        Classification.Instance.clean = _currentDocument.documentType;
         
         _currentDocument.rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count);
         
@@ -66,6 +74,7 @@ public partial class DocumentController : MonoBehaviour
     //장애물 타입 결정 함수
     void CreateObstacle()
     {
+        _day = Classification.Instance.Day;
         _currentObstacle = new ObstacleData();
 
         _currentObstacle.processCount = Mathf.Max(1, _day / 5);
@@ -116,6 +125,7 @@ public partial class DocumentController : MonoBehaviour
         if (roll < chance)
         {
             _isClean = false;
+            Classification.Instance.obstacle = !_isClean;
             Vector3 obsPos = new Vector3(_currentObstacle.spawnPosX, _currentObstacle.spawnPosY, 0f);
             var obstacleObj = Instantiate(_obstacleObjPrefabs[_currentObstacle.obstacleObjIdx], obsPos, Quaternion.identity);
         
@@ -132,5 +142,6 @@ public partial class DocumentController : MonoBehaviour
     public void ObstacleCleared()
     {
         _isClean = true;
+        Classification.Instance.obstacle = !_isClean;
     }
 }

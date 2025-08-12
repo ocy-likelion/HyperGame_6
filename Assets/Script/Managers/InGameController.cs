@@ -12,7 +12,7 @@ public class InGameController
     private bool _gameStarted;
     private bool _gameFinished;
     private bool _quitGame;
-
+    
     public void Initialize()
     {
         //TODO: 게임 실행시 초기화 할 로직
@@ -50,11 +50,15 @@ public class InGameController
     public IEnumerator StartGame()
     {
         _gameStarted = true;
-        //TODO: 게임시작 후 실행할 로직
-        
-        //ex. workTime, Day등 시작
-        
-        //게임 끝내기 전까지 시퀀스 유지
+        var docController = GameObject.FindObjectOfType<DocumentController>();
+        if (docController != null)
+        {
+            docController.InitDocuments();
+        }
+        else
+        {
+            Debug.LogWarning("DocumentController not found in scene!");
+        }
         while (!_gameFinished)
         {
             yield return null;
