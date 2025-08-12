@@ -74,7 +74,7 @@ public class DocumentController : MonoBehaviour
     //장애물 타입 결정 함수
     void CreateObstacle()
     {
-        _day = Classification.Instance.Day;
+        _day = TimeController.Instance.day;
         _currentObstacle = new ObstacleData();
 
         _currentObstacle.processCount = Mathf.Max(1, _day / 5);
