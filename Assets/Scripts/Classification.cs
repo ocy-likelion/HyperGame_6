@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Classification : Singleton<Classification>
 {
-    bool obstacle; //장애물 유무 true: 장애물 있음, false: 장애물 없음
-    bool clean; //반려요소 true: 반려요소 없음, false: 반려요소 있음
+    public bool obstacle; //장애물 유무 true: 장애물 있음, false: 장애물 없음
+    public bool clean; //반려요소 true: 반려요소 없음, false: 반려요소 있음
     public bool confirm; //승인 여부 true: 승인버튼 클릭, false: 반려버튼 클릭
     bool success; //분류 성공 여부 true: 성공, false: 실패
     int playTime = 60; //일과시간
-    int day = 1; //일과 날짜
+    int day = 10; //일과 날짜
+    public int Day => day;
     int combo = 0; //콤보 횟수
     int maxCombo = 0; //최대 콤보 횟수
     float feverValue = 0; //피버 게이지
