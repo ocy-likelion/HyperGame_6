@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Gameflow/Raise.unity
+    guid: 5e04938858d7bba409203f50a92fc61b
+  - enabled: 1
+    path: Assets/Scenes/Gameflow/Title.unity
+    guid: 407a8801a829f0540bd08c59e59a2096
+  - enabled: 1
+    path: Assets/Scenes/Gameflow/InGame.unity
+    guid: 9f6b9c84ca5b9574b917538f09d6c0b3
   m_configObjects: {}
