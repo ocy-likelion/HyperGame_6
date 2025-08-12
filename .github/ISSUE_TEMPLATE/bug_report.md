@@ -1,3 +1,11 @@
+---
+name: Bug request
+about: 버그 제보 템플릿
+title: "[Bug] "
+labels: bug
+assignees: ""
+---
+
 ### 버그 설명
 [버그에 대한 명확하고 간단한 설명을 작성해주세요]
 

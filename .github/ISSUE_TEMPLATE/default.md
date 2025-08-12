@@ -1,3 +1,11 @@
+---
+name: Feature request
+about: 새로운 기능 추가 제안 템플릿
+title: "[Feature] "
+labels: feature
+assignees: ""
+---
+
 ### 기능 설명
 [추가하고자 하는 기능에 대해 설명해주세요]
 
@@ -13,5 +21,3 @@
 
 ### 참고 자료
 [레퍼런스나 예시 이미지/영상이 있다면 첨부해주세요]
-
-/label ~feature
