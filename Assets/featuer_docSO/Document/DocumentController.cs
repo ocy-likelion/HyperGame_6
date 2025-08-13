@@ -30,11 +30,11 @@ public class DocumentController : MonoBehaviour
     //날짜 수
     private int _day;
 
-    //테스트용 함수
-    void Start()
-    {
-        InitDocuments();
-    }
+    // //테스트용 함수
+    // void Start()
+    // {
+    //     InitDocuments();
+    // }
     
     public void InitDocuments()
     {
@@ -80,7 +80,8 @@ public class DocumentController : MonoBehaviour
     //장애물 타입 결정 함수
     void CreateObstacle()
     {
-        _day = TimeController.Instance._day;
+        _day = GameManager.Instance.GetTimeController()._day;
+        //_day = TimeController.Instance._day;
         _currentObstacle = ScriptableObject.CreateInstance<ObstacleData>();
 
         _currentObstacle.processCount = Mathf.Max(1, _day / 5);

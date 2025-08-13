@@ -136,6 +136,18 @@ public class GameManager : Singleton<GameManager>
         GameStateChanged?.Invoke(_currentState);
     }
     
+    ///TimeController가 필요할땐 이 함수를 쓰시면 됩니다.
+    public TimeController GetTimeController()
+    {
+        return inGameController.timeController != null ? inGameController.timeController : null;
+    }
+    
+    ///DocumentController가 필요할땐 이 함수를 쓰시면 됩니다.
+    public DocumentController GetDocumentController()
+    {
+        return inGameController.docController != null ? inGameController.docController : null;
+    }
+    
     ///일시정지(백그라운드 상태) 되었을 때
     private void OnApplicationPause(bool pauseStatus)
     {
