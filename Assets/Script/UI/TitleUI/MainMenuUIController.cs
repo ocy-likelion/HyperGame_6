@@ -9,6 +9,7 @@ public class MainMenuUIController : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Button _gameStartButton;
     [SerializeField] private Button _gameTutorialButton;
+    [SerializeField] private GameObject _tutorialPanel;
 
     private void Awake()
     {
@@ -24,6 +25,6 @@ public class MainMenuUIController : MonoBehaviour
 
     public void OnClickGameTutotialButton()
     {
-        Debug.Log("OnClickGameTutotialButton");
+        _tutorialPanel.SetActive(true);
     }
 }
