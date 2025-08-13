@@ -53,8 +53,10 @@ public class DocumentPool : Singleton<DocumentPool>
         
         obj.transform.position = position;
         obj.transform.rotation = rotation;
-
+        
+        
         obj.SetActive(true);
+        Debug.Log("GetObject: " + prefab.name + ", Active: " + obj.activeSelf);
 
         return obj;
     }
