@@ -351,6 +351,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3419502302508340581, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5555419457573602589, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_Name
       value: TitleUICanvas
