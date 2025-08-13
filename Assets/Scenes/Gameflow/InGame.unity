@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playTime: 60
   remainedTime: 0
-  day: 1
+  day: 10
   timeOut: 0
 --- !u!4 &207524410
 Transform:
@@ -271,15 +271,15 @@ MonoBehaviour:
   _rejectObjPrefabs:
   - {fileID: 8087392837858221209, guid: ac309d69a7ac81b44b56e885ef500c91, type: 3}
   - {fileID: 4856289768420295286, guid: 06c4da46f94edfd4ebe17e7c08e64cfb, type: 3}
-  - {fileID: 4085532528814942462, guid: 5c50214ad9f7d2449a361a47f901d37b, type: 3}
   - {fileID: 5295545704364293337, guid: 826257b57d8dcb34ba041caa1a1d2fc5, type: 3}
+  - {fileID: 4085532528814942462, guid: 5c50214ad9f7d2449a361a47f901d37b, type: 3}
   - {fileID: 5548518695324985368, guid: ef573eff58a2a7f43a9ab11909089af1, type: 3}
-  _obstacleObjPrefabs:
-  - {fileID: 8488175749631518371, guid: ba77760a48db4fe41b19b5bf6e88bc28, type: 3}
-  - {fileID: 4890631209711065255, guid: 85608016ddc5f914eb8dc3ef913edf2d, type: 3}
-  - {fileID: 3743899208043231560, guid: efc78acf088380045bfbbe1b12ac752c, type: 3}
-  - {fileID: 7466518050768958989, guid: e92c610b0e57f4c47a5676e3ee967955, type: 3}
-  - {fileID: 3924906214934567246, guid: 86b9a897236badf49bdb206dddfc4a0b, type: 3}
+  _obstacleObjDatas:
+  - {fileID: 11400000, guid: c1ab2fadfb81ea043af168bd9574dff8, type: 2}
+  - {fileID: 11400000, guid: 90b20b554e9944647943cb9769e72eaa, type: 2}
+  - {fileID: 11400000, guid: 71e4cb0deee3f0c4fb386f22f8360bf0, type: 2}
+  - {fileID: 11400000, guid: 7991fc5899812b34f8cccecbddae67bd, type: 2}
+  - {fileID: 11400000, guid: fab483b00a119e94db046bdef551a957, type: 2}
 --- !u!4 &1033011133
 Transform:
   m_ObjectHideFlags: 0
