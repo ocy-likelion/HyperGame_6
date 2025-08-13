@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Constants;
 
 public class GameManager : Singleton<GameManager>
@@ -28,12 +29,19 @@ public class GameManager : Singleton<GameManager>
         _states[GameState.Title] = new TitleState();
         _states[GameState.InGame] = new InGameState();
         _states[GameState.Pause] = new PauseState();
-        ChangeGameState(GameState.Title);
         
         inGameController = new InGameController();
         inGameController.Initialize();
 
         _isPaused = false;
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        ChangeGameState(GameState.Title);
     }
     
     private void Update()
@@ -50,7 +58,9 @@ public class GameManager : Singleton<GameManager>
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            ReturnToTitle();
+            //게임오버 시키기
+            inGameController.QuitGame();
+            //ReturnToTitle();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -62,13 +72,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
     
-    //게임을 시작합니다.
+    ///게임을 시작합니다.
     public void GoToInGame()
     {
         ChangeGameState(GameState.InGame);
     }
 
-    //타이틀로 돌아갑니다.
+    ///타이틀로 돌아갑니다.
     public void ReturnToTitle()
     {
         ChangeGameState(GameState.Title);
@@ -87,7 +97,7 @@ public class GameManager : Singleton<GameManager>
         _isPaused = true;
     }
 
-    //게임을 재개 합니다.
+    ///게임을 재개 합니다.
     public void ResumeGame()
     {
         if (!_isPaused)
@@ -100,7 +110,7 @@ public class GameManager : Singleton<GameManager>
         _isPaused = false;
     }
 
-    //게임의 상태를 변경합니다.
+    ///게임의 상태를 변경합니다.
     public void ChangeGameState(GameState newGameState, bool resume = false)
     {
         //기존 State 종료
@@ -126,13 +136,25 @@ public class GameManager : Singleton<GameManager>
         GameStateChanged?.Invoke(_currentState);
     }
     
-    //일시정지(백그라운드 상태) 되었을 때
+    ///TimeController가 필요할땐 이 함수를 쓰시면 됩니다.
+    public TimeController GetTimeController()
+    {
+        return inGameController.timeController != null ? inGameController.timeController : null;
+    }
+    
+    ///DocumentController가 필요할땐 이 함수를 쓰시면 됩니다.
+    public DocumentController GetDocumentController()
+    {
+        return inGameController.docController != null ? inGameController.docController : null;
+    }
+    
+    ///일시정지(백그라운드 상태) 되었을 때
     private void OnApplicationPause(bool pauseStatus)
     {
         //Debug.Log("OnApplicationPause: " + pauseStatus);
     }
 
-    //게임이 종료되었을 때
+    ///게임이 종료되었을 때
     private void OnApplicationQuit()
     {
         //Debug.Log("OnApplicationQuit");

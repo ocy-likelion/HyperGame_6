@@ -20,7 +20,8 @@ public class SceneController : Singleton<SceneController>
     /// 씬을 전환합니다.
     /// </summary>
     /// <param name="sceneName">로드할 씬의 SceneState를 넣어주세요</param>
-    /// <param name="sceneLoadedAction">(옵션)씬 로드 후, 실행할 콜백을 넣어주세요.</param>
+    /// <param name="sceneLoadedAction">(옵션)씬 로드 마무리 전, 실행할 콜백을 넣어주세요.</param>
+    /// <param name="onCompleted">(옵션)씬 로드가 끝난 후 실행할 콜백을 넣어주세요</param>
     public static void TransitionToScene(SceneState sceneName, Func<IEnumerator> sceneLoadedAction = null, Func<IEnumerator> onCompleted = null)
     {
         Instance.StartCoroutine(Instance.TransitionScene(sceneName, sceneLoadedAction: sceneLoadedAction, onCompleted: onCompleted));
@@ -57,6 +58,10 @@ public class SceneController : Singleton<SceneController>
             Time.timeScale = 1f;
         
         //씬로드 완료 후 실행
-        onCompleted?.Invoke();
+        if (onCompleted != null)
+        {
+            yield return StartCoroutine(onCompleted());
+        }
+        
     }
 }

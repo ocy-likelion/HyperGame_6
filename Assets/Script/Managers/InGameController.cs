@@ -2,10 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 //인게임 주요 로직들을 제어합니다.
 public class InGameController
 {
+    public TimeController timeController;
+    public DocumentController docController;
+    //public Classification classification;
+    
     public bool Initialized;
     
     private bool _initComplete;
@@ -13,9 +18,11 @@ public class InGameController
     private bool _gameFinished;
     private bool _quitGame;
     
+    
     public void Initialize()
     {
         //TODO: 게임 실행시 초기화 할 로직
+        //classification = new Classification();
         Initialized = true;
     }
     
@@ -36,11 +43,24 @@ public class InGameController
     public IEnumerator SetInitGame()
     {
         //TODO: 게임 시작시 초기화 할 로직
+        _initComplete = false;
+        
         _gameStarted = false;
         _gameFinished = false;
         _quitGame = false;
+
+        //씬 내 타이머, 문서생성 오브젝트 찾기
+        if (timeController == null)
+        {
+            yield return new WaitUntil(() => timeController = Object.FindObjectOfType<TimeController>());
+        }
+        if (docController == null)
+        {
+            yield return new WaitUntil(() => docController = Object.FindObjectOfType<DocumentController>());
+        }
         
-        yield return null;
+        //타이머 초기화
+        timeController.InitTimeController();
         
         _initComplete = true;
     }
@@ -50,15 +70,15 @@ public class InGameController
     public IEnumerator StartGame()
     {
         _gameStarted = true;
-        var docController = GameObject.FindObjectOfType<DocumentController>();
-        if (docController != null)
-        {
-            docController.InitDocuments();
-        }
-        else
-        {
-            Debug.LogWarning("DocumentController not found in scene!");
-        }
+        
+        //인게임UI 보이기
+        UIManager.Instance.inGameUIController.ShowTimeUI();
+        UIManager.Instance.inGameUIController.ShowInteractionUI();
+        
+        //타이머, 문서 생성 시작.
+        timeController.StartRunningTimer();
+        docController.InitDocuments();
+        
         while (!_gameFinished)
         {
             yield return null;
@@ -78,8 +98,15 @@ public class InGameController
             yield return null;
         }
 
-        //타이틀로 돌아감
+        //초기화.
         _initComplete = false;
+        
+        //인게임 UI 닫기
+        UIManager.Instance.inGameUIController.HideInGameUI();
+        UIManager.Instance.inGameUIController.HideTimeUI();
+        UIManager.Instance.inGameUIController.HideInteractionUI();
+        
+        //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
     }
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimeController : Singleton<TimeController>
+public class TimeController : MonoBehaviour
 {
-    [Header("UI")]
-    public TMP_Text timeText; // 일과 시간 텍스트
-    public TMP_Text dayText;  // 진행 일수 텍스트
+    // [Header("UI")]
+    // public TMP_Text timeText; // 일과 시간 텍스트
+    // public TMP_Text dayText;  // 진행 일수 텍스트
 
     [Header("초기 일과 시간 설정")]
     public float playTime = 60.0f; // 하루 일과 시간
@@ -32,22 +32,32 @@ public class TimeController : Singleton<TimeController>
     public bool timeOut = false; // 타임아웃 (시간 종료) 여부
     bool isTimeRunning = false; // 타이머 동작 여부
 
-    void Start()
+    public void InitTimeController()
     {
         remainedTime = playTime; // 남은 시간 초기화
-        StartTime();             // 타이머 시작
         UpdateTimeUI();          // 시간 UI 갱신
         UpdateDayUI();           // 일수 UI 갱신
     }
 
-    void Update()
+    public void StartRunningTimer()
     {
-        if (!isTimeRunning) return;     // 타이머가 동작 중이 아닐 경우 업데이트 중지
+        if (isTimeRunning) return; //타이머가 이미 실행중이면 중단
+        Debug.Log("StartRunningTimer");
+        StartTime();             // 타이머 시작
+        StartCoroutine(Timer());
+    }
 
-        remainedTime -= Time.deltaTime; // 시간 감소
-        CheckTimeEnd();                 // 타이머 종료 체크
-        UpdateTimeUI();                 // 남은 시간 UI 갱신
-        UpdateDayUI();                  // 진행 일수 UI 갱신
+    IEnumerator Timer()
+    {
+        while (isTimeRunning)// 타이머가 동작 중이 아닐 경우 업데이트 중지
+        {
+            remainedTime -= Time.deltaTime; // 시간 감소
+            CheckTimeEnd();                 // 타이머 종료 체크
+            UpdateTimeUI();                 // 남은 시간 UI 갱신
+            UpdateDayUI();                  // 진행 일수 UI 갱신
+            
+            yield return null;
+        }
     }
 
     public void StartTime() // 타이머 시작
@@ -76,6 +86,7 @@ public class TimeController : Singleton<TimeController>
         remainedTime = 0f;
         StopTime();
         HandleTimeOut();
+        GameManager.Instance.inGameController.Dispose();//게임 오버
     }
 
     void HandleTimeOut() // 타임아웃 처리: 일수 증가 및 상태 갱신
@@ -86,13 +97,13 @@ public class TimeController : Singleton<TimeController>
 
     void UpdateTimeUI() // 남은 시간 UI 갱신
     {
-        if (timeText != null)
+        if (UIManager.Instance.inGameUIController.timeUIController.workTimeText is var timeText && timeText != null)
             timeText.text = remainedTime.ToString("F1");
     }
 
     void UpdateDayUI() // 진행 일수 UI 갱신("1일" 형식)
     {
-        if (dayText != null)
+        if (UIManager.Instance.inGameUIController.timeUIController.dayText is var dayText && dayText != null)
             dayText.text = $"{day} Day";
     }
 }

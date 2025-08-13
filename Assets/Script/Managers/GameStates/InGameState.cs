@@ -9,6 +9,7 @@ public class InGameState : IGameState
             GameManager.Instance.inGameController.SetInitGame,
             GameManager.Instance.inGameController.RunSequence
             );
+       UIManager.Instance.inGameUIController.ShowInGameUI();
     }
     
     public void OnUpdate()
@@ -18,6 +19,6 @@ public class InGameState : IGameState
     
     public void OnExit()
     {
-        
+       
     }
 }
