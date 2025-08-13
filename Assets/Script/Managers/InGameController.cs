@@ -9,7 +9,7 @@ public class InGameController
 {
     public TimeController timeController;
     public DocumentController docController;
-    //public Classification classification;
+    public Classification classification;
     
     public bool Initialized;
     
@@ -61,7 +61,7 @@ public class InGameController
         
         //타이머 초기화
         timeController.InitTimeController();
-        
+        //classification.InitScore();
         _initComplete = true;
     }
 
@@ -74,7 +74,8 @@ public class InGameController
         //인게임UI 보이기
         UIManager.Instance.inGameUIController.ShowTimeUI();
         UIManager.Instance.inGameUIController.ShowInteractionUI();
-        
+        UIManager.Instance.inGameUIController.ShowScoreUI();
+
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
         docController.InitDocuments();
@@ -105,7 +106,8 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideInGameUI();
         UIManager.Instance.inGameUIController.HideTimeUI();
         UIManager.Instance.inGameUIController.HideInteractionUI();
-        
+        UIManager.Instance.inGameUIController.HideScoreUI();
+
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
     }

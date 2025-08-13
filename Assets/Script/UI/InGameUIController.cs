@@ -12,10 +12,11 @@ public class InGameUIController : Singleton<InGameUIController>
     //ex. public TimerUIController timerUIController;
     public TimeUIController timeUIController;
     public InteractionUIController interactionUIController;
-    
-    
+    public ScoreUIController scoreUIController;
+    public ComboUIController comboUIController;
+
     //여기까지
-    
+
     protected override void Initialize()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -58,6 +59,18 @@ public class InGameUIController : Singleton<InGameUIController>
     public void HideInteractionUI()
     {
         interactionUIController.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region ScoreUI
+    public void ShowScoreUI()
+    {
+        scoreUIController.gameObject.SetActive(true);
+    }
+
+    public void HideScoreUI()
+    {
+        scoreUIController.gameObject.SetActive(false);
     }
     #endregion
 }
