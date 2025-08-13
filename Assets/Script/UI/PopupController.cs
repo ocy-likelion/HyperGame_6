@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class PopupController : MonoBehaviour
 {
-    [Header("팝업 관리")]
-    [SerializeField] private List<GameObject> popups;
+    // [Header("팝업 관리")]
+    // [SerializeField] private List<GameObject> popups;
 
+    //활성화 시 뒷배경 켜기
+    void OnEnable()
+    {
+        UIManager.Instance.ShowBackgroundImage(true);
+    }
+
+    void OnDisable()
+    {
+        UIManager.Instance.ShowBackgroundImage(false);
+    }
+    
     // 팝업 열기
     public void ShowPopup(GameObject popup)
     {

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
+    [SerializeField] public TitleUIController titleUIController;
+    [SerializeField] public InGameUIController inGameUIController;
+    [SerializeField] public PopupUIController popupUIController;
+    
     [SerializeField] private PanelController panelController;
     [SerializeField] private PopupController popupController;
 
@@ -12,6 +16,31 @@ public class UIManager : Singleton<UIManager>
         base.Initialize();
         
         // 초기화 로직 필요 시, 추가
+    }
+
+    public void SetTitleUIController(TitleUIController titleUIController)
+    {
+        this.titleUIController = titleUIController;
+    }
+    
+    public void SetInGameUIController(InGameUIController inGameUIController)
+    {
+        this.inGameUIController = inGameUIController;
+    }
+    
+    public void SetPopupUIController(PopupUIController popupUIController)
+    {
+        this.popupUIController = popupUIController;
+    }
+    
+    public void ReleasePopupUIController()
+    {
+        popupUIController = null;
+    }
+    
+    public void ShowBackgroundImage(bool isShow)
+    {
+        popupUIController.backgroundImage.gameObject.SetActive(isShow);
     }
 
     // Panel 관련
