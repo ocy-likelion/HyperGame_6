@@ -23,17 +23,20 @@ public class InteractionUIController : MonoBehaviour
     {
         Classification.Instance.confirm = true; //승인버튼 클릭시 서류 승인
         Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
+        AudioManager.Instance.SFX.PlayStamp();
     }
 
     public void OnClickNegativeButton()
     {
         Classification.Instance.confirm = false; //반려버튼 클릭시 서류 반려
         Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
+        AudioManager.Instance.SFX.PlayStamp();
     }
     
     public void OnClickPauseButton()
     {
         GameManager.Instance.PauseGame();
         UIManager.Instance.popupUIController.ShowPauseUI();
+        AudioManager.Instance.SFX.PlayButtonClick();
     }
 }

@@ -7,10 +7,9 @@ public class Constants
 
     #endregion
     
-    #region AudioClipNames
-    //임시 키워드
-    public const string MainBGM = "MainBGM";
-    public const string OnClick = "ClickSFX";
+    #region SceneNames
+    public const string TitleSceneName = "Title";
+    public const string GameSceneName = "InGame";
     #endregion
     
     //
