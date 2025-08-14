@@ -236,7 +236,7 @@ public class DocumentController : MonoBehaviour
             });
     }
 
-    public void ReloadDocument()
+    public void ReloadDocument(bool noLoop = false)
     {
         if (_docObj != null)
         {
@@ -257,7 +257,7 @@ public class DocumentController : MonoBehaviour
         _docObj = null;
         Classification.Instance.obstacle = false;
 
-        CreateDocument();
+        if(!noLoop) CreateDocument();
     }
     void Update()
     {
