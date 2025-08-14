@@ -412,10 +412,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2495928130648802580, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4036573270773826206, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
       propertyPath: m_Name
       value: PopupUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4885675662937442339, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+      propertyPath: tutorialUIController
+      value: 
+      objectReference: {fileID: 1860846750}
     - target: {fileID: 7392646381052498739, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -494,6 +502,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7392646381052498739, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704827548183159347, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704827548183159347, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -640,6 +656,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24befd2236d3c604a924f6552c0f6349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860846750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8601002942268772781, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+  m_PrefabInstance: {fileID: 834013603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5974a9659c2b4324bb156b1751d86831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

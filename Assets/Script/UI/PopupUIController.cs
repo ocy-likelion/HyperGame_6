@@ -14,6 +14,7 @@ public class PopupUIController : Singleton<PopupUIController>
     public PauseUIController pauseUIController;
     public ResultUIController resultUIController;
     public GameOverUIController gameOverUIController;
+    public TutorialUIController tutorialUIController;
     
     //여기까지
     
@@ -59,6 +60,18 @@ public class PopupUIController : Singleton<PopupUIController>
     public void HideGameOverUI()
     {
         gameOverUIController.ClosePopup();
+    }
+    #endregion
+
+    #region TutorialUI
+    public void ShowTutorialUI()
+    {
+        tutorialUIController.ShowPopup();
+    }
+
+    public void HideTutorialUI()
+    {
+        tutorialUIController.ClosePopup();
     }
     #endregion
 }
