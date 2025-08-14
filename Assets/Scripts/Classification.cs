@@ -181,4 +181,14 @@ public class Classification : Singleton<Classification>
         UpdateScoreMagUI(); // 점수 배율 UI 갱신
         UpdateComboUI(); // 콤보 UI 갱신
     }
+
+    public int GetMaxCombo()
+    {
+        return maxCombo;
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
 }

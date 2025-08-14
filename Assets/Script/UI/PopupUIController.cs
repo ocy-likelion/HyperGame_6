@@ -12,7 +12,8 @@ public class PopupUIController : Singleton<PopupUIController>
     //이 싱글톤 객체를 통해 UI 접근을 용이하게 관리합니다.
     //ex. public PauseUIController pauseUIController;
     public PauseUIController pauseUIController;
-    
+    public ResultUIController resultUIController;
+    public GameOverUIController gameOverUIController;
     
     //여기까지
     
@@ -38,5 +39,26 @@ public class PopupUIController : Singleton<PopupUIController>
         pauseUIController.ClosePopup();
     }
     #endregion
+
+    #region ResultUI
+    public void ShowResultUI()
+    {
+        resultUIController.ShowPopup();
+    }
+    public void HideResultUI()
+    {
+        resultUIController.ClosePopup();
+    }
+    #endregion
     
+    #region GameOverUI
+    public void ShowGameOverUI()
+    {
+        gameOverUIController.ShowPopup();
+    }
+    public void HideGameOverUI()
+    {
+        gameOverUIController.ClosePopup();
+    }
+    #endregion
 }
