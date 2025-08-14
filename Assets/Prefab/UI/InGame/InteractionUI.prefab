@@ -388,7 +388,6 @@ GameObject:
   - component: {fileID: 8033335471564335744}
   - component: {fileID: 3180749498187260014}
   - component: {fileID: 8657650184181806166}
-  - component: {fileID: 7475079780629244605}
   m_Layer: 5
   m_Name: BtnAccept
   m_TagString: Untagged
@@ -497,31 +496,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3180749498187260014}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7475079780629244605}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: OnClickConfirmButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7475079780629244605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113752833846574040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df452598ce66304c997bc40fff5e06b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &3530976123980147650
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +689,6 @@ GameObject:
   - component: {fileID: 4231414739908256888}
   - component: {fileID: 1877398445593113130}
   - component: {fileID: 662951929002542270}
-  - component: {fileID: 2557420058451169881}
   m_Layer: 5
   m_Name: BtnNegative
   m_TagString: Untagged
@@ -823,31 +797,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1877398445593113130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2557420058451169881}
-        m_TargetAssemblyTypeName: ButtonController, Assembly-CSharp
-        m_MethodName: OnClickRejectButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2557420058451169881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8081845810874562919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df452598ce66304c997bc40fff5e06b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+      m_Calls: []
 --- !u!1 &8738262696648782362
 GameObject:
   m_ObjectHideFlags: 0
