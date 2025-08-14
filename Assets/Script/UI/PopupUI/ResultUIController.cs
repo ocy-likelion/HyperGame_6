@@ -1,24 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-
-public class GameResultData
-{
-    public int Day;
-    public int MaxCombo;
-    public int Score;
-     
-    public GameResultData(int day, int maxCombo, int score)
-    {
-        Day = day;
-        MaxCombo = maxCombo;
-        Score = score;
-    }
-}
 
 public class ResultUIController : PopupController
 {
