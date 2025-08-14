@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using DG.Tweening;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DocumentController : MonoBehaviour
 {
@@ -43,6 +45,9 @@ public class DocumentController : MonoBehaviour
     
     //이동 시간
     [SerializeField] private float _duration;
+    
+    //버튼 연타 방지용 변수
+    [NonSerialized] public bool _isClickable;
     
     public void InitDocuments()
     {
@@ -196,8 +201,8 @@ public class DocumentController : MonoBehaviour
                 _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docStopPosY, _docObj.transform.position.z), _duration)
                     .SetEase(Ease.Linear);
             });
-        
-        //todo: 버튼 클릭 활성화
+
+        _isClickable = true;
     }
     
     
@@ -218,7 +223,7 @@ public class DocumentController : MonoBehaviour
     // 서류 치우기 함수
     public void RemoveDocument()
     {
-        //todo: 버튼 연타 방지
+        _isClickable = false;
         
         //서류 퇴장 연출
         _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docDespawnY, _docObj.transform.position.z), _duration)
