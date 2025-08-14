@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2fb6d766bc0eccc46aadda021d84e833
+guid: 91f7891018d0c7946bee4c389207bee4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -134,7 +134,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: rej_water_printx_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 327
+        width: 311
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e2c734dc5656534ebc5bde68e938445
+      internalID: -263105054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rej_water_printx_2
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 14
+        width: 252
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37a3092906413014e98b1762b3f5dae2
+      internalID: -1814430614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +187,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      rej_water_printx_0: 1285248337
+      rej_water_printx_1: -263105054
+      rej_water_printx_2: -1814430614
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

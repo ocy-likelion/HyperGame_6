@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2378037c6681c994b83426f9c2b530b2
+guid: f0c5043b02b511d4b86b229403a2f573
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -134,7 +134,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: obs_bug_0
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 174
+        width: 230
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2efebbd876e3dd458c1b5a7190220f5
+      internalID: -1362795385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +166,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      obs_bug_0: -1362795385
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
