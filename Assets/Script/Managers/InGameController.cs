@@ -62,6 +62,7 @@ public class InGameController
         //타이머 초기화
         timeController.InitTimeController();
         //classification.InitScore();
+        Classification.Instance.InitScore();
         _initComplete = true;
     }
 
