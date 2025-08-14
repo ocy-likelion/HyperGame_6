@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class DocumentController : MonoBehaviour
 {
@@ -26,6 +28,21 @@ public class DocumentController : MonoBehaviour
     
     //날짜 수
     private int _day;
+    
+    //서류 스폰 포인트
+    [SerializeField] private float _docSpawnX;
+    [SerializeField] private float _docSpawnY;
+    
+    //서류 도착 포인트
+    [SerializeField] private float _docStopPosX;
+    [SerializeField] private float _docStopPosY;
+    
+    //서류 디스폰 포인트
+    [SerializeField] private float _docDespawnX;
+    [SerializeField] private float _docDespawnY;
+    
+    //이동 시간
+    [SerializeField] private float _duration;
     
     public void InitDocuments()
     {
@@ -55,15 +72,16 @@ public class DocumentController : MonoBehaviour
         //     _currentDocument.documentType = true
         // }
         
-        Debug.Log("서류타입: " + _currentDocument.documentType);
+        // 반려 요소 크기 캐싱
         var rejectRenderer = _rejectObjPrefabs[_currentDocument.rejectObjIdx].GetComponent<SpriteRenderer>();
         
-        //반려요소 위치 랜덤 생성
         Vector3 rejectSize = rejectRenderer != null ? rejectRenderer.bounds.size : Vector3.zero;
+
         float minX = -_documentSize.x / 2f + rejectSize.x / 2f;
         float maxX = _documentSize.x / 2f - rejectSize.x / 2f;
         float minY = -_documentSize.y / 2f + rejectSize.y / 2f;
         float maxY = _documentSize.y / 2f - rejectSize.y / 2f;
+
         _currentDocument.spawnPosX = Random.Range(minX, maxX);
         _currentDocument.spawnPosY = Random.Range(minY, maxY);
         
@@ -100,7 +118,7 @@ public class DocumentController : MonoBehaviour
             var obstacle = new ObstacleInstance();
             obstacle.obstacleObjIdx = obstacleType;
             obstacle.prefab = _obstacleObjDatas[obstacleType].obstaclePrefab;
-            obstacle.spawnPos = new Vector2(1f, -3f);
+            obstacle.spawnPos = new Vector2(1f, -2f);   //로컬 위치 고정 (todo:추후 도장찍는 위치 결정나면 바꿔야함)
             obstacle.processCount = diffiycult;
             _currentObstacles.Add(obstacle);
         }
@@ -122,27 +140,44 @@ public class DocumentController : MonoBehaviour
     void SpawnDocument()
     {
         _obstacleObjs.Clear();
+        
         // 서류 생성
-        _docObj = DocumentPool.Instance.GetObject(_documentPrefab, Vector3.zero, Quaternion.identity);
+        _docObj = DocumentPool.Instance.GetObject(_documentPrefab, new Vector3(7, 0.5f, 0), Quaternion.identity);
+        _docObj.transform.SetParent(this.transform, true);
 
         // 서류 타입에 따라 반려 요소 생성
         if (!_currentDocument.documentType)
         {
-            Vector3 rejectPos = new Vector3(_currentDocument.spawnPosX, _currentDocument.spawnPosY, 0f);
-            _rejectObj = DocumentPool.Instance.GetObject(_rejectObjPrefabs[_currentDocument.rejectObjIdx], rejectPos, Quaternion.identity);
+            _rejectObj = DocumentPool.Instance.GetObject(
+                _rejectObjPrefabs[_currentDocument.rejectObjIdx], Vector3.zero, Quaternion.identity
+            );
+            
+            // (부모: 서류 오브젝트)
+            _rejectObj.transform.SetParent(_docObj.transform, false);
+            _rejectObj.transform.localPosition = new Vector3(
+                _currentDocument.spawnPosX, _currentDocument.spawnPosY, 0f
+            );
         }
         
         
-        //확률에 따라 장애물 생성
+        // 확률에 따라 장애물 생성
         float chance = Mathf.Clamp(_day * 5f, 0f, 100f);
-        if (Random.Range(0f, 100f) < chance) //todo: 피버구현 후 조건에 'AND 피버타임이 아닐 경우'를 추가해야함
+        if (Random.Range(0f, 100f) < chance)
         {
             Classification.Instance.obstacle = true;
-            
+
             foreach (ObstacleInstance obstacle in _currentObstacles)
             {
-                Vector3 obsPos = new Vector3(obstacle.spawnPos.x, obstacle.spawnPos.y, 0f);
-                var obj = DocumentPool.Instance.GetObject(obstacle.prefab, obsPos, Quaternion.identity);
+                var obj = DocumentPool.Instance.GetObject(obstacle.prefab, Vector3.zero, Quaternion.identity);
+                
+                //(부모: 서류 오브젝트)
+                obj.transform.SetParent(_docObj.transform, false);
+                obj.transform.localPosition = new Vector3(
+                    obstacle.spawnPos.x, 
+                    obstacle.spawnPos.y, 
+                    0f
+                );
+
                 _obstacleObjs.Add(obj);
 
                 var obstacleController = obj.GetComponent<ObstacleController>();
@@ -152,7 +187,19 @@ public class DocumentController : MonoBehaviour
                 }
             }
         }
+        
+        //서류 등장 연출
+        _docObj.transform.DOMove(new Vector3(_docStopPosX, _docObj.transform.position.y, _docObj.transform.position.z), _duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docStopPosY, _docObj.transform.position.z), _duration)
+                    .SetEase(Ease.Linear);
+            });
+        
+        //todo: 버튼 클릭 활성화
     }
+    
     
     //장애물이 치워지면 호출될 함수
     public void ObstacleCleared(GameObject obstacleObj)
@@ -169,26 +216,44 @@ public class DocumentController : MonoBehaviour
     }
     
     // 서류 치우기 함수
+    public void RemoveDocument()
+    {
+        //todo: 버튼 연타 방지
+        
+        //서류 퇴장 연출
+        _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docDespawnY, _docObj.transform.position.z), _duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                _docObj.transform.DOMove(new Vector3(_docDespawnX, _docObj.transform.position.y, _docObj.transform.position.z), _duration)
+                    .SetEase(Ease.Linear)
+                    .OnComplete(() => ReloadDocument());
+            });
+    }
+
     public void ReloadDocument()
     {
-        DocumentPool.Instance.ReturnObject(_docObj);
-
-        if (_rejectObj != null)
+        if (_docObj != null)
         {
-            DocumentPool.Instance.ReturnObject(_rejectObj);
+            // 자식 오브젝트들을 먼저 풀에 반환
+            for (int i = _docObj.transform.childCount - 1; i >= 0; i--)
+            {
+                var child = _docObj.transform.GetChild(i).gameObject;
+                DocumentPool.Instance.ReturnObject(child);
+            }
+
+            // 마지막에 서류 자체 반환
+            DocumentPool.Instance.ReturnObject(_docObj);
         }
 
-        foreach (var obj in _obstacleObjs)
-        {
-            DocumentPool.Instance.ReturnObject(obj);
-        }
-        
         _currentObstacles.Clear();
         _obstacleObjs.Clear();
-        
+        _rejectObj = null;
+        _docObj = null;
+        Classification.Instance.obstacle = false;
+
         CreateDocument();
     }
-    
     void Update()
     {
         if (IsInputDown(out Vector2 inputPos))

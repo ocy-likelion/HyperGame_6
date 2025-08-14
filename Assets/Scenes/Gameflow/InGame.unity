@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973d4c35eb2adc547b2591be4cbc93cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _documentPrefab: {fileID: 8057628395227924039, guid: 619c00ef83ba1a94b8debdfef0cc7380, type: 3}
+  _documentPrefab: {fileID: 4462012646122428603, guid: 619c00ef83ba1a94b8debdfef0cc7380, type: 3}
   _rejectObjPrefabs:
   - {fileID: 8087392837858221209, guid: ac309d69a7ac81b44b56e885ef500c91, type: 3}
   - {fileID: 4856289768420295286, guid: 06c4da46f94edfd4ebe17e7c08e64cfb, type: 3}
@@ -278,6 +278,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71e4cb0deee3f0c4fb386f22f8360bf0, type: 2}
   - {fileID: 11400000, guid: 7991fc5899812b34f8cccecbddae67bd, type: 2}
   - {fileID: 11400000, guid: fab483b00a119e94db046bdef551a957, type: 2}
+  _docSpawnX: 7
+  _docSpawnY: 0.5
+  _docStopPosX: 0
+  _docStopPosY: 0
+  _docDespawnX: -7
+  _docDespawnY: 0.5
+  _duration: 0.1
 --- !u!4 &1033011133
 Transform:
   m_ObjectHideFlags: 0
