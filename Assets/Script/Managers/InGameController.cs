@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -66,6 +64,11 @@ public class InGameController
         
         //타이머 초기화
         timeController.InitTimeController();
+
+        
+        //서류 풀 초기화
+        docController.ReloadDocument(true);
+        
         //classification.InitScore();
         Classification.Instance.InitScore();
         _initComplete = true;
