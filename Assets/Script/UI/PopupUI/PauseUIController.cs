@@ -42,7 +42,8 @@ public class PauseUIController : PopupController
     
     public void OnClickRetryButton()
     {
-        
+        GameManager.Instance.GoToInGame();
+        ClosePopup();
     }
     
     public void OnClickQuitButton()
