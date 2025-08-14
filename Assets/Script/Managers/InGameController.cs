@@ -92,6 +92,19 @@ public class InGameController
         //TODO: 게임 끝낼 시 실행할 로직
         Debug.Log("Game Ended");
         //ex.게임오버 연출, 결과창UI등
+        var popupController = UIManager.Instance.popupUIController;
+        
+        //게임오버
+        var gameOverUI = popupController.gameOverUIController;
+        yield return gameOverUI.ShowSequence(); //게임오버 연출동안 딜레이
+        
+        //결과창
+        var resultUI = popupController.resultUIController;
+        popupController.ShowResultUI();
+        resultUI.InitResultItem(new GameResultData(
+            timeController._day,
+            Classification.Instance.GetMaxCombo(),
+            Classification.Instance.GetScore()));
         
         //게임이 끝난 후, 바로 돌아가지 않고 대기.
         while (!_quitGame)
