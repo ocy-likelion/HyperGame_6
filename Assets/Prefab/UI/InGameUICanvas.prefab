@@ -552,6 +552,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3412576542313236916}
     m_Modifications:
+    - target: {fileID: 2712382775229261351, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 4687411182233310204}
     - target: {fileID: 5654232745348103089, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
       propertyPath: m_Name
       value: TimeUI
@@ -559,6 +563,10 @@ PrefabInstance:
     - target: {fileID: 5654232745348103089, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372289790013699416, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
+      propertyPath: m_Name
+      value: TimerText
       objectReference: {fileID: 0}
     - target: {fileID: 9191498550234897736, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
       propertyPath: m_Pivot.x
@@ -650,6 +658,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9191498550234897736, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
   m_PrefabInstance: {fileID: 6337046913781826876}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4687411182233310204 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1656393605998597824, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
+  m_PrefabInstance: {fileID: 6337046913781826876}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8238745444136395547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2712382775229261351, guid: 9053a5ed0f7bd73429c4324af17f8c96, type: 3}
