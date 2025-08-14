@@ -94,5 +94,22 @@ public class DocumentPool : Singleton<DocumentPool>
 
         poolDictionary[prefabKey].Enqueue(obj);
     }
-
+    
+    public void ClearPool()
+    {
+        foreach (var queue in poolDictionary.Values)
+        {
+            while (queue.Count > 0)
+            {
+                GameObject obj = queue.Dequeue();
+                if (obj != null)
+                {
+                    Destroy(obj);
+                }
+            }
+        }
+        poolDictionary.Clear();
+        Debug.Log("DocumentPool cleared.");
+    }
+    
 }
