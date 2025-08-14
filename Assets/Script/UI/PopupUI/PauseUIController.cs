@@ -56,7 +56,7 @@ public class PauseUIController : PopupController
     
     public void OnClickAudioToggleButton()
     {
-        
+        AudioManager.Instance.ToggleAudio();
     }
     
     public void OnClickVibrateToggleButton()
