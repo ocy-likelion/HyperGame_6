@@ -61,7 +61,11 @@ public class InGameController
         {
             yield return new WaitUntil(() => docController = Object.FindObjectOfType<DocumentController>());
         }
-        
+        if(classification == null)
+        {
+            yield return new WaitUntil(() => classification = Object.FindObjectOfType<Classification>());
+        }
+
         //타이머 초기화
         timeController.InitTimeController();
 
@@ -70,7 +74,7 @@ public class InGameController
         docController.ReloadDocument(true);
         
         //classification.InitScore();
-        Classification.Instance.InitScore();
+        GameManager.Instance.GetClassification().InitScore();
         _initComplete = true;
         
     }
@@ -85,6 +89,7 @@ public class InGameController
         UIManager.Instance.inGameUIController.ShowTimeUI();
         UIManager.Instance.inGameUIController.ShowInteractionUI();
         UIManager.Instance.inGameUIController.ShowScoreUI();
+        UIManager.Instance.inGameUIController.ShowFeverUI();
 
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
@@ -124,8 +129,8 @@ public class InGameController
             popupController.ShowResultUI();
             resultUI.InitResultItem(new GameResultData(
                 timeController._day,
-                Classification.Instance.GetMaxCombo(),
-                Classification.Instance.GetScore()));
+                GameManager.Instance.GetClassification().GetMaxCombo(),
+                GameManager.Instance.GetClassification().GetScore()));
         }
         
         //게임이 끝난 후, 바로 돌아가지 않고 대기.
@@ -154,7 +159,8 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideTimeUI();
         UIManager.Instance.inGameUIController.HideInteractionUI();
         UIManager.Instance.inGameUIController.HideScoreUI();
-        
+        UIManager.Instance.inGameUIController.HideFeverUI();
+
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
     }
