@@ -51,7 +51,7 @@ public class DocumentController : MonoBehaviour
     
     public void InitDocuments()
     {
-        Classification.Instance.docController = this;
+        GameManager.Instance.GetClassification().docController = this;
         _currentObstacles.Clear();
         _obstacleObjs.Clear();
         
@@ -67,7 +67,7 @@ public class DocumentController : MonoBehaviour
         _currentDocument = new DocumentData();
         
         _currentDocument.documentType = (Random.Range(0, 2) == 0);
-        Classification.Instance.clean = _currentDocument.documentType;
+        GameManager.Instance.GetClassification().clean = _currentDocument.documentType;
         
         _currentDocument.rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count);
         
@@ -169,7 +169,7 @@ public class DocumentController : MonoBehaviour
         float chance = Mathf.Clamp(_day * 5f, 0f, 100f);
         if (Random.Range(0f, 100f) < chance)
         {
-            Classification.Instance.obstacle = true;
+            GameManager.Instance.GetClassification().obstacle = true;
 
             foreach (ObstacleInstance obstacle in _currentObstacles)
             {
@@ -216,7 +216,7 @@ public class DocumentController : MonoBehaviour
 
         if (_obstacleObjs.Count == 0)
         {
-            Classification.Instance.obstacle = false;
+            GameManager.Instance.GetClassification().obstacle = false;
         }
     }
     
@@ -255,7 +255,7 @@ public class DocumentController : MonoBehaviour
         _obstacleObjs.Clear();
         _rejectObj = null;
         _docObj = null;
-        Classification.Instance.obstacle = false;
+        GameManager.Instance.GetClassification().obstacle = false;
 
         if(!noLoop) CreateDocument();
     }

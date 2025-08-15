@@ -147,7 +147,13 @@ public class GameManager : Singleton<GameManager>
     {
         return inGameController.docController != null ? inGameController.docController : null;
     }
-    
+
+    ///Classification이 필요할땐 이 함수를 쓰시면 됩니다.
+    public Classification GetClassification()
+    {
+        return inGameController.classification != null ? inGameController.classification : null;
+    }
+
     ///일시정지(백그라운드 상태) 되었을 때
     private void OnApplicationPause(bool pauseStatus)
     {

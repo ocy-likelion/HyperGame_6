@@ -21,8 +21,8 @@ public class InteractionUIController : MonoBehaviour
     
     public void OnClickAcceptButton()
     {
-        Classification.Instance.confirm = true; //승인버튼 클릭시 서류 승인
-        Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
+        GameManager.Instance.GetClassification().confirm = true; //승인버튼 클릭시 서류 승인
+        GameManager.Instance.GetClassification().DocumentClassification(); // 서류 분류 메소드 호출
         AudioManager.Instance.SFX.PlayStamp();
         
         //VFX 테스트 예시. 
@@ -31,8 +31,8 @@ public class InteractionUIController : MonoBehaviour
 
     public void OnClickNegativeButton()
     {
-        Classification.Instance.confirm = false; //반려버튼 클릭시 서류 반려
-        Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
+        GameManager.Instance.GetClassification().confirm = false; //반려버튼 클릭시 서류 반려
+        GameManager.Instance.GetClassification().DocumentClassification(); // 서류 분류 메소드 호출
         AudioManager.Instance.SFX.PlayStamp();
     }
     
