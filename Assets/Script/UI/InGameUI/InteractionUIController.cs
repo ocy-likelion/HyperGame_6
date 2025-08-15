@@ -24,6 +24,9 @@ public class InteractionUIController : MonoBehaviour
         Classification.Instance.confirm = true; //승인버튼 클릭시 서류 승인
         Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
         AudioManager.Instance.SFX.PlayStamp();
+        
+        //VFX 테스트 예시. 
+        VfxManager.Instance.GetVFX(VFXType.TEST, new Vector2(0,0) , Quaternion.identity, Vector2.one);
     }
 
     public void OnClickNegativeButton()
