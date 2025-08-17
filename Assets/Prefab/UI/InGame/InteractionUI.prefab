@@ -77,6 +77,8 @@ MonoBehaviour:
   _acceptButton: {fileID: 8657650184181806166}
   _negativeButton: {fileID: 662951929002542270}
   _pauseButton: {fileID: 1486780877317965128}
+  acceptStampPrefab: {fileID: 4877359741710725933, guid: acdf325362be2ec438d904721c364790, type: 3}
+  rejectStampPrefab: {fileID: 1041951120273901811, guid: ec58cbd6355eee5409e2f3b874748fab, type: 3}
 --- !u!1 &1033814210499001665
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ public class InteractionUIController : MonoBehaviour
         Classification.Instance.confirm = true; //승인버튼 클릭시 서류 승인
         Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
         AudioManager.Instance.SFX.PlayStamp();
+        GameManager.Instance.GetDocumentController().ShowStamp(true);
     }
 
     public void OnClickNegativeButton()
@@ -31,6 +32,7 @@ public class InteractionUIController : MonoBehaviour
         Classification.Instance.confirm = false; //반려버튼 클릭시 서류 반려
         Classification.Instance.DocumentClassification(); // 서류 분류 메소드 호출
         AudioManager.Instance.SFX.PlayStamp();
+        GameManager.Instance.GetDocumentController().ShowStamp(false);
     }
     
     public void OnClickPauseButton()

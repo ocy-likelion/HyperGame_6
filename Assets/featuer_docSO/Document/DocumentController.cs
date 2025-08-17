@@ -43,6 +43,10 @@ public class DocumentController : MonoBehaviour
     
     //이동 시간
     [SerializeField] private float _duration;
+
+    [Header("도장 관련")]
+    [SerializeField] private GameObject approvalStampPrefab;
+    [SerializeField] private GameObject deniedStampPrefab;
     
     public void InitDocuments()
     {
@@ -198,6 +202,19 @@ public class DocumentController : MonoBehaviour
             });
         
         //todo: 버튼 클릭 활성화
+    }
+    
+    // 도장 생성 함수
+    public void ShowStamp(bool isApproved)
+    {
+        if (_docObj == null) return;
+
+        GameObject prefab = isApproved ? approvalStampPrefab : deniedStampPrefab;
+        GameObject currentStamp = Instantiate(prefab, _docObj.transform, false);
+
+        currentStamp.transform.localPosition = new Vector2(1f, -2f);
+        
+        // TODO: 도장 찍히는 연출
     }
     
     
