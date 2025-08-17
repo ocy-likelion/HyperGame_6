@@ -25,10 +25,9 @@ public class GameOverUIController : PopupController
         
         while (elapsedTime <= delayTime)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
-
         ClosePopup();
     }
 }

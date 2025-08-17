@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Classification : Singleton<Classification>
+public class Classification : MonoBehaviour
 {
     public bool obstacle; //장애물 유무 true: 장애물 있음, false: 장애물 없음
     public bool clean; //반려요소 true: 반려요소 없음, false: 반려요소 있음
     public bool confirm; //승인 여부 true: 승인버튼 클릭, false: 반려버튼 클릭
+    public bool fever = false; //피버 여부 true: 피버 상태, false: 일반 상태
     //bool success; //분류 성공 여부 true: 성공, false: 실패
 
     int combo = 0; //콤보 횟수
@@ -19,15 +20,15 @@ public class Classification : Singleton<Classification>
     public DocumentController docController;
     public void scoreMagnification()
     {
-        switch(combo)
+        switch (combo)
         {
             case int n when (n < 5):
                 scoreMag = 1.0f; //콤보 없음
                 break;
-            case int n when (n >= 5 && n <=10):
+            case int n when (n >= 5 && n <= 10):
                 scoreMag = 1.1f; //콤보 1.1배
                 break;
-            case int n when (n >= 11 && n <=20):
+            case int n when (n >= 11 && n <= 20):
                 scoreMag = 1.2f; //콤보 1.2배
                 break;
             case int n when (n >= 21 && n <= 30):
@@ -71,104 +72,130 @@ public class Classification : Singleton<Classification>
             //success = false;
             time -= 5 * day; //일과시간 감소
             combo = 0; //콤보 초기화
+            feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
             scoreMagnification(); //점수 배율 적용
             UpdateScoreMagUI(); //점수 배율 UI 갱신
             UpdateComboUI();
-            feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
-            Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+            UpdateFeverUI(); //피버 게이지 UI 갱신
+            Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
         }
         else // 장애물이 없을 때
         {
-            if(clean) // 반려요소가 없을 때
+            if (clean) // 반려요소가 없을 때
             {
-                if(confirm) // 승인 버튼 클릭 시
+                if (confirm) // 승인 버튼 클릭 시
                 {
                     //success = true;
                     time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
-                    feverValue += 3 * scoreMag; //피버 게이지 증가
+                    if (!fever)
+                        feverValue += 3 * scoreMag;
                     score += (int)((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
+                    UpdateFeverUI(); //피버 게이지 UI 갱신
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
                     }
-                    
-                    Debug.Log("분류 성공! 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    if (feverValue >= 100) // 피버 게이지가 100 이상일 때
+                    {
+                        fever = true; // 피버 상태로 변경
+                        feverValue = 0; // 피버 게이지 초기화
+                        Debug.Log("피버 상태 진입! 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo);
+                    }
+                    Debug.Log("분류 성공! 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
                 {
                     //success = false;
                     time -= 5 * day; //일과시간 감소
                     combo = 0; //콤보 초기화
+                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
-                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
-                    Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    UpdateFeverUI(); //피버 게이지 UI 갱신
+                    Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
             }
             else // 반려요소가 있을 때
             {
-                if(confirm) // 승인 버튼 클릭 시
+                if (confirm) // 승인 버튼 클릭 시
                 {
                     //success = false;
                     time -= 5 * day; //일과시간 감소
                     combo = 0; //콤보 초기화
+                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
-                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
-                    Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    UpdateFeverUI(); //피버 게이지 UI 갱신
+                    Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
                 {
                     //success = true;
                     time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
-                    feverValue += 3 * scoreMag; //피버 게이지 증가
+                    if (!fever)
+                        feverValue += 3 * scoreMag;
                     score += (int)((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
+                    UpdateFeverUI(); //피버 게이지 UI 갱신
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
                     }
-                    
-                    Debug.Log("분류 성공! 반려요소 없음. 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag);
+                    if (feverValue >= 100) // 피버 게이지가 100 이상일 때
+                    {
+                        fever = true; // 피버 상태로 변경
+                        feverValue = 0; // 피버 게이지 초기화
+                        Debug.Log("피버 상태 진입! 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo);
+                    }
+                    Debug.Log("분류 성공! 반려요소 없음. 일과시간 증가: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
             }
         }
-    
+
         GameManager.Instance.GetTimeController()._remainedTime = time; // 남은 일과시간 갱신
         GameManager.Instance.GetTimeController()._day = day; // 남은 진행일수 갱신
-        // TimeController.Instance._remainedTime = time; // 남은 일과시간 갱신
-        // TimeController.Instance._day = day; // 남은 진행일수 갱신
-        
-        docController.RemoveDocument(); // 서류 재생성
+                                                             // TimeController.Instance._remainedTime = time; // 남은 일과시간 갱신
+                                                             // TimeController.Instance._day = day; // 남은 진행일수 갱신
+
+        docController.ReloadDocument(); // 서류 재생성
     }
 
     public void UpdateScoreUI() // 점수 UI 갱신 메소드
     {
         if (UIManager.Instance.inGameUIController.scoreUIController.score is var scoreText && scoreText != null)
-            scoreText.text = Classification.Instance.score.ToString("F0");
+            scoreText.text = GameManager.Instance.GetClassification().score.ToString("F0");
     }
 
     public void UpdateScoreMagUI() // 점수 배율 UI 갱신 메소드
     {
         if (UIManager.Instance.inGameUIController.scoreUIController.scoreMag is var scoreMagText && scoreMagText != null)
-            scoreMagText.text = "x" + Classification.Instance.scoreMag.ToString("F1");
+            scoreMagText.text = "x" + GameManager.Instance.GetClassification().scoreMag.ToString("F1");
     }
 
     public void UpdateComboUI() // 콤보 UI 갱신 메소드
     {
         if (UIManager.Instance.inGameUIController.comboUIController.comboText is var comboText && comboText != null)
-            comboText.text = Classification.Instance.combo.ToString();
+            comboText.text = GameManager.Instance.GetClassification().combo.ToString();
+    }
+
+    public void UpdateFeverUI() // 피버 게이지 UI 갱신 메소드
+    {
+        var feverSlider = UIManager.Instance.inGameUIController.feverUIController.feverSlider;
+        if (feverSlider != null)
+        {
+            feverSlider.value = feverValue / 100; // 현재 Classification의 feverValue로 갱신
+        }
     }
     public void InitScore()
     {
@@ -180,6 +207,7 @@ public class Classification : Singleton<Classification>
         UpdateScoreUI(); // 점수 UI 갱신
         UpdateScoreMagUI(); // 점수 배율 UI 갱신
         UpdateComboUI(); // 콤보 UI 갱신
+        UpdateFeverUI(); // 피버 게이지 UI 갱신
     }
 
     public int GetMaxCombo()
