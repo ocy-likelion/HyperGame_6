@@ -335,6 +335,8 @@ MonoBehaviour:
   _docDespawnX: -7
   _docDespawnY: 0.5
   _duration: 0.1
+  approvalStampPrefab: {fileID: 4877359741710725933, guid: acdf325362be2ec438d904721c364790, type: 3}
+  deniedStampPrefab: {fileID: 1041951120273901811, guid: ec58cbd6355eee5409e2f3b874748fab, type: 3}
 --- !u!4 &1033011133
 Transform:
   m_ObjectHideFlags: 0

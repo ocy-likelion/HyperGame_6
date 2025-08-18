@@ -165,7 +165,7 @@ public class Classification : MonoBehaviour
 
         GameManager.Instance.GetTimeController().SetRemainedTimer(time); // 남은 일과시간 갱신
         GameManager.Instance.GetTimeController().SetDay(day); // 남은 진행일수 갱신
-        docController.ReloadDocument(); // 서류 재생성
+        docController.RemoveDocument(); // 서류 재생성
     }
 
     public void UpdateScoreUI() // 점수 UI 갱신 메소드
