@@ -1,100 +1,92 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DocumentPool : Singleton<DocumentPool>
 {
-    // 프리팹 별로 큐를 관리하는 딕셔너리
+    // 프리팹 별로 큐 관리
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
-    // 오브젝트 요청 메서드
-    // prefab: 생성/재사용할 오브젝트의 원본 프리팹
-    // position: 배치할 위치
-    // rotation: 배치할 회전값
-    public GameObject GetObject(GameObject prefab, Vector3 position, Quaternion rotation)
-    {
-        // 해당 프리팹의 큐가 없으면 새로 생성
-        if (!poolDictionary.ContainsKey(prefab))
-        {
-            poolDictionary[prefab] = new Queue<GameObject>();
-        }
+    [NonSerialized] public Canvas canvas; // UI 풀이 붙을 Canvas
 
-        GameObject obj;
-        
-        // 큐가 비어있으면 새로 Instantiate, 아니면 큐에서 꺼내서 재사용
-        if (poolDictionary[prefab].Count == 0)
+    /// <summary>
+    /// UI 오브젝트 요청
+    /// </summary>
+    /// <param name="prefab">생성/재사용할 UI 프리팹</param>
+    /// <param name="anchoredPosition">Canvas 기준 위치</param>
+    public GameObject GetObject(GameObject prefab, Vector2 anchoredPosition)
+    {
+        if (!poolDictionary.ContainsKey(prefab))
+            poolDictionary[prefab] = new Queue<GameObject>();
+
+        GameObject obj = poolDictionary[prefab].Count > 0 ? poolDictionary[prefab].Dequeue() : Instantiate(prefab);
+
+        // OriginalPrefab 저장
+        var obstacle = obj.GetComponent<ObstacleController>();
+        if (obstacle != null) obstacle.OriginalPrefab = prefab;
+
+        var reject = obj.GetComponent<RejectController>();
+        if (reject != null) reject.OriginalPrefab = prefab;
+
+        var document = obj.GetComponent<Document>();
+        if (document != null) document.OriginalPrefab = prefab;
+
+        // RectTransform 기준 배치
+        var rect = obj.GetComponent<RectTransform>();
+        if (rect != null)
         {
-            obj = Instantiate(prefab);
+            rect.SetParent(canvas.transform, false);
+            rect.anchoredPosition = anchoredPosition;
+            rect.localRotation = Quaternion.identity;
         }
         else
         {
-            obj = poolDictionary[prefab].Dequeue();
+            obj.transform.position = anchoredPosition;
+            obj.transform.rotation = Quaternion.identity;
         }
 
-        // 오리지널 프리팹 정보 저장 (되돌릴 때 사용)
-        var obstacleController = obj.GetComponent<ObstacleController>();
-        if (obstacleController != null)
-        {
-            obstacleController.OriginalPrefab = prefab;
-        }
-
-        var rejectController = obj.GetComponent<RejectController>();
-        if (rejectController != null)
-        {
-            rejectController.OriginalPrefab = prefab;
-        }
-        
-        var document = obj.GetComponent<Document>();
-        if (document != null)
-        {
-            document.OriginalPrefab = prefab;
-        }
-        //
-        
-        obj.transform.position = position;
-        obj.transform.rotation = rotation;
-        
-        
         obj.SetActive(true);
-        Debug.Log("GetObject: " + prefab.name + ", Active: " + obj.activeSelf);
-
         return obj;
     }
 
-    // 오브젝트 반환 메서드 (비활성화 후 풀에 넣기)
+    /// <summary>
+    /// UI 오브젝트 반환
+    /// </summary>
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
 
-        // 오브젝트에 붙어 있는 스크립트에서 원래의 프리팹 정보 가져오기
-        var obstacleController = obj.GetComponent<ObstacleController>();
-        var rejectController = obj.GetComponent<RejectController>();
+        var obstacle = obj.GetComponent<ObstacleController>();
+        var reject = obj.GetComponent<RejectController>();
         var document = obj.GetComponent<Document>();
 
-        GameObject prefabKey = null;
+        GameObject prefabKey = obstacle?.OriginalPrefab ?? reject?.OriginalPrefab ?? document?.OriginalPrefab;
 
-        if (obstacleController != null)
-            prefabKey = obstacleController.OriginalPrefab;
-        else if (rejectController != null)
-            prefabKey = rejectController.OriginalPrefab;
-        else if (document != null)
-            prefabKey = document.OriginalPrefab;
-        
-        // 프리팹 정보를 못 찾으면 경고 출력 후 오브젝트 삭제
         if (prefabKey == null)
         {
-            Debug.LogWarning("ReturnObject: OriginalPrefab not found on object, destroying.");
+            Debug.LogWarning("ReturnObject: OriginalPrefab not found, destroying object.");
             Destroy(obj);
             return;
         }
 
-        // 해당 프리팹의 큐가 없으면 새로 생성
+        var rect = obj.GetComponent<RectTransform>();
+        if (rect != null)
+        {
+            rect.SetParent(canvas.transform, false);
+            rect.anchoredPosition = Vector2.zero;
+            rect.localRotation = Quaternion.identity;
+        }
+
         if (!poolDictionary.ContainsKey(prefabKey))
             poolDictionary[prefabKey] = new Queue<GameObject>();
 
         poolDictionary[prefabKey].Enqueue(obj);
     }
-    
+
+    /// <summary>
+    /// 풀 전체 초기화
+    /// </summary>
     public void ClearPool()
     {
         foreach (var queue in poolDictionary.Values)
@@ -103,13 +95,11 @@ public class DocumentPool : Singleton<DocumentPool>
             {
                 GameObject obj = queue.Dequeue();
                 if (obj != null)
-                {
                     Destroy(obj);
-                }
             }
         }
+
         poolDictionary.Clear();
         Debug.Log("DocumentPool cleared.");
     }
-    
 }

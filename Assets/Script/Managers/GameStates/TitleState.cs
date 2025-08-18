@@ -5,7 +5,7 @@ public class TitleState : IGameState
 {
     public void OnEnter()
     {
-        SceneController.TransitionToScene(SceneState.Title);
+        //SceneController.TransitionToScene(SceneState.Title);
         UIManager.Instance.titleUIController.ShowTitleUI();
         UIManager.Instance.titleUIController.ShowMainMenuUI();
         UIManager.Instance.titleUIController.ShowSubMenuUI();

@@ -65,7 +65,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &5006536746898388658
 MonoBehaviour:
@@ -123,7 +123,7 @@ MonoBehaviour:
   pauseUIController: {fileID: 3299381842385237000}
   resultUIController: {fileID: 1367937482187163923}
   gameOverUIController: {fileID: 5343071928545477428}
-  tutorialUIController: {fileID: 8601002942268772781}
+  tutorialUIController: {fileID: 7922287493292378841}
 --- !u!1 &4979024322606292040
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,11 +241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7341253862038413582, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -300
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7341253862038413582, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -1200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7341253862038413582, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,15 +305,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7341253862038413582, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
   m_PrefabInstance: {fileID: 1084334693603230525}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8601002942268772781 stripped
+--- !u!114 &7922287493292378841 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8669625217953256080, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7133079661796133348, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
   m_PrefabInstance: {fileID: 1084334693603230525}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5974a9659c2b4324bb156b1751d86831, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e1ba9214092d2d41b86624d763796b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2319298877405221300

@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6789037483cc02941a49f74c1555adf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workTimeText: {fileID: 1656393605998597824}
+  timerText: {fileID: 0}
   dayText: {fileID: 4268161828392297604}
 --- !u!1 &6372289790013699416
 GameObject:

@@ -19,10 +19,26 @@ public class InGameController
     private bool _useRetry;
     
     
-    public void Initialize()
+    public IEnumerator Initialize()
     {
         //TODO: 게임 실행시 초기화 할 로직
         //classification = new Classification();
+        
+        //씬 내 타이머, 문서생성 오브젝트 찾기
+        if (timeController == null)
+        {
+            yield return new WaitUntil(() => timeController = Object.FindObjectOfType<TimeController>());
+        }
+        if (docController == null)
+        {
+            yield return new WaitUntil(() => docController = Object.FindObjectOfType<DocumentController>());
+        }
+        if(classification == null)
+        {
+            yield return new WaitUntil(() => classification = Object.FindObjectOfType<Classification>());
+            classification.Initialize();
+        }
+        
         Initialized = true;
     }
     
@@ -43,6 +59,9 @@ public class InGameController
     //게임 시작 전 초기화
     public IEnumerator SetInitGame()
     {
+        //실행 필수 초기화 완료전 까지 대기
+        yield return new WaitUntil(() => Initialized);
+        
         //TODO: 게임 시작시 초기화 할 로직
         _initComplete = false;
         
@@ -52,23 +71,8 @@ public class InGameController
         _skipResultUI = false;
         _useRetry = false;
 
-        //씬 내 타이머, 문서생성 오브젝트 찾기
-        if (timeController == null)
-        {
-            yield return new WaitUntil(() => timeController = Object.FindObjectOfType<TimeController>());
-        }
-        if (docController == null)
-        {
-            yield return new WaitUntil(() => docController = Object.FindObjectOfType<DocumentController>());
-        }
-        if(classification == null)
-        {
-            yield return new WaitUntil(() => classification = Object.FindObjectOfType<Classification>());
-        }
-
         //타이머 초기화
         timeController.InitTimeController();
-
         
         //서류 풀 초기화
         docController.ReloadDocument(true);
@@ -76,7 +80,6 @@ public class InGameController
         //classification.InitScore();
         GameManager.Instance.GetClassification().InitScore();
         _initComplete = true;
-        
     }
 
     
@@ -90,6 +93,8 @@ public class InGameController
         UIManager.Instance.inGameUIController.ShowInteractionUI();
         UIManager.Instance.inGameUIController.ShowScoreUI();
         UIManager.Instance.inGameUIController.ShowFeverUI();
+        UIManager.Instance.inGameUIController.ShowBackgroundUI();
+        UIManager.Instance.inGameUIController.ShowClockUI();
 
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
@@ -160,6 +165,8 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideInteractionUI();
         UIManager.Instance.inGameUIController.HideScoreUI();
         UIManager.Instance.inGameUIController.HideFeverUI();
+        UIManager.Instance.inGameUIController.HideBackgroundUI();
+        UIManager.Instance.inGameUIController.HideClockUI();
 
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();

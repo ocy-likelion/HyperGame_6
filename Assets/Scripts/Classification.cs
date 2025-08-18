@@ -18,6 +18,12 @@ public class Classification : MonoBehaviour
 
     public ScoreUIController scoreUIController; //점수 UI 컨트롤러
     public DocumentController docController;
+
+    public void Initialize()
+    {
+        docController = GameManager.Instance.GetDocumentController();
+    }
+    
     public void scoreMagnification()
     {
         switch (combo)
@@ -62,7 +68,7 @@ public class Classification : MonoBehaviour
     } //점수 배율 조정
     public void DocumentClassification() //서류 분류 메소드
     {
-        float time = GameManager.Instance.GetTimeController()._remainedTime; // 남은 일과시간
+        float time = GameManager.Instance.GetTimeController()._remainedTimerTime; // 남은 일과시간
         int day = GameManager.Instance.GetTimeController()._day; // 남은 진행일수
         // float time = TimeController.Instance._remainedTime; // 남은 일과시간
         // int day = TimeController.Instance._day; // 남은 진행일수
@@ -163,12 +169,9 @@ public class Classification : MonoBehaviour
             }
         }
 
-        GameManager.Instance.GetTimeController()._remainedTime = time; // 남은 일과시간 갱신
-        GameManager.Instance.GetTimeController()._day = day; // 남은 진행일수 갱신
-                                                             // TimeController.Instance._remainedTime = time; // 남은 일과시간 갱신
-                                                             // TimeController.Instance._day = day; // 남은 진행일수 갱신
-
-        docController.ReloadDocument(); // 서류 재생성
+        GameManager.Instance.GetTimeController().SetRemainedTimer(time); // 남은 일과시간 갱신
+        GameManager.Instance.GetTimeController().SetDay(day); // 남은 진행일수 갱신
+        docController.RemoveDocument(); // 서류 재생성
     }
 
     public void UpdateScoreUI() // 점수 UI 갱신 메소드

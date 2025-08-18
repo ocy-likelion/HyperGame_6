@@ -4,83 +4,70 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class DocumentController : MonoBehaviour
 {
-    //서류 프리팹
+    [Header("프리팹")]
     [SerializeField] private GameObject _documentPrefab;
-    //반려 요소 프리팹 (0:낙서, 1:잉크번짐, 2:커피 쏟음, 3:물쏟음, 4:인쇄불량)
     [SerializeField] private List<GameObject> _rejectObjPrefabs;
-    //장애물 프리팹 (0:날벌레, 1:포스트 잇, 2:요구자 손, 3:파일철, 4:서류봉투)
     [SerializeField] private List<ObstacleData> _obstacleObjDatas;
-    
-    //서류 및 장애물 데이터
+
+    [Header("도장")]
+    [SerializeField] private GameObject approvalStampPrefab;
+    [SerializeField] private GameObject deniedStampPrefab;
+
+    [Header("위치 및 이동")]
+    [SerializeField] private Vector2 _docSpawnPos;
+    [SerializeField] private Vector2 _docStopPos;
+    [SerializeField] private Vector2 _docDespawnPos;
+    [SerializeField] private float _duration;
+
     private DocumentData _currentDocument;
     private List<ObstacleInstance> _currentObstacles = new List<ObstacleInstance>();
-    
-    //생성된 서류 및 장애물 오브젝트
+    private List<GameObject> _obstacleObjs = new List<GameObject>();
+
     private GameObject _docObj;
     private GameObject _rejectObj;
-    private List<GameObject> _obstacleObjs = new List<GameObject>();
-    
-    //서류 사이즈(반려요소 스폰지점 산출에 사용)
-    private Vector3 _documentSize;
-    
-    //날짜 수
-    private int _day;
-    
-    //서류 스폰 포인트
-    [SerializeField] private float _docSpawnX;
-    [SerializeField] private float _docSpawnY;
-    
-    //서류 도착 포인트
-    [SerializeField] private float _docStopPosX;
-    [SerializeField] private float _docStopPosY;
-    
-    //서류 디스폰 포인트
-    [SerializeField] private float _docDespawnX;
-    [SerializeField] private float _docDespawnY;
-    
-    //이동 시간
-    [SerializeField] private float _duration;
-    
-    //버튼 연타 방지용 변수
+
+    private Vector2 _documentSize;
+
     [NonSerialized] public bool _isClickable;
-    
+
+    private Canvas _canvas;
+
+    private void Awake()
+    {
+        _canvas = GetComponentInParent<Canvas>();
+    }
+
     public void InitDocuments()
     {
-        GameManager.Instance.GetClassification().docController = this;
         _currentObstacles.Clear();
         _obstacleObjs.Clear();
         
-        var renderer = _documentPrefab.GetComponent<SpriteRenderer>();
-        _documentSize = renderer != null ? renderer.bounds.size : Vector3.one;
-        
+        DocumentPool.Instance.canvas = _canvas;
+
+        var image = _documentPrefab.GetComponent<Image>();
+        _documentSize = image != null ? image.rectTransform.rect.size : Vector2.one;
+
         CreateDocument();
     }
-    
-    //서류 타입 결정 함수
-    void CreateDocument()
+
+    private void CreateDocument()
     {
-        _currentDocument = new DocumentData();
-        
-        _currentDocument.documentType = (Random.Range(0, 2) == 0);
+        _currentDocument = new DocumentData
+        {
+            documentType = GameManager.Instance.GetClassification().fever || (Random.Range(0, 2) == 0),
+            rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count)
+        };
         GameManager.Instance.GetClassification().clean = _currentDocument.documentType;
-        
-        _currentDocument.rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count);
-        
-        
-        // todo: if 피버타임이라면
-        // {
-        //     _currentDocument.documentType = true
-        // }
-        
-        // 반려 요소 크기 캐싱
-        var rejectRenderer = _rejectObjPrefabs[_currentDocument.rejectObjIdx].GetComponent<SpriteRenderer>();
-        
-        Vector3 rejectSize = rejectRenderer != null ? rejectRenderer.bounds.size : Vector3.zero;
+
+        // 반려 요소 스폰 위치 계산
+        var rejectRect = _rejectObjPrefabs[_currentDocument.rejectObjIdx].GetComponent<RectTransform>();
+        Vector2 rejectSize = rejectRect != null ? rejectRect.rect.size : Vector2.zero;
 
         float minX = -_documentSize.x / 2f + rejectSize.x / 2f;
         float maxX = _documentSize.x / 2f - rejectSize.x / 2f;
@@ -89,150 +76,146 @@ public class DocumentController : MonoBehaviour
 
         _currentDocument.spawnPosX = Random.Range(minX, maxX);
         _currentDocument.spawnPosY = Random.Range(minY, maxY);
-        
-        
-        //장애물 타입 결정 함수로
+
         CreateObstacle();
     }
 
-    //장애물 타입 결정 함수
-    void CreateObstacle()
+    private void CreateObstacle()
     {
-        _day = GameManager.Instance.GetTimeController()._day;
-
-        int diffiycult = (_day / 5) + 1;
+        int day = GameManager.Instance.GetTimeController()._day;
+        int difficulty = (day / 5) + 1;
         int obstacleType = Random.Range(0, _obstacleObjDatas.Count);
-        
-        if (obstacleType == 0 || obstacleType == 1) // 날벌레, 포스트잇
+
+        // 장애물 인스턴스 생성
+        _currentObstacles.Clear();
+
+        if (obstacleType == 0 || obstacleType == 1)
         {
-            for (int i = 0; i < diffiycult; i++)
+            for (int i = 0; i < difficulty; i++)
             {
-                var obstacle = new ObstacleInstance();
-                obstacle.obstacleObjIdx = obstacleType;
-                obstacle.prefab = _obstacleObjDatas[obstacleType].obstaclePrefab;
-                obstacle.spawnPos = new Vector2(
-                    Random.Range(-_documentSize.x / 2f, _documentSize.x / 2f),
-                    Random.Range(-_documentSize.y / 2f, _documentSize.y / 2f)
-                );
-                obstacle.processCount = 1;
+                var obstacle = new ObstacleInstance
+                {
+                    obstacleObjIdx = obstacleType,
+                    prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
+                    processCount = 1,
+                    spawnPos = new Vector2(
+                        Random.Range(-_documentSize.x / 2f, _documentSize.x / 2f),
+                        Random.Range(-_documentSize.y / 2f, _documentSize.y / 2f)
+                    )
+                };
                 _currentObstacles.Add(obstacle);
             }
         }
-        else if (obstacleType == 2) // 손
+        else if (obstacleType == 2)
         {
-            var obstacle = new ObstacleInstance();
-            obstacle.obstacleObjIdx = obstacleType;
-            obstacle.prefab = _obstacleObjDatas[obstacleType].obstaclePrefab;
-            obstacle.spawnPos = new Vector2(1f, -2f);   //로컬 위치 고정 (todo:추후 도장찍는 위치 결정나면 바꿔야함)
-            obstacle.processCount = diffiycult;
+            var obstacle = new ObstacleInstance
+            {
+                obstacleObjIdx = obstacleType,
+                prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
+                processCount = difficulty,
+                spawnPos = new Vector2(1f, -2f)
+            };
             _currentObstacles.Add(obstacle);
         }
-        else // 서류철, 폴더
+        else
         {
-            var obstacle = new ObstacleInstance();
-            obstacle.obstacleObjIdx = obstacleType;
-            obstacle.prefab = _obstacleObjDatas[obstacleType].obstaclePrefab;
-            obstacle.spawnPos = Vector2.zero;
-            obstacle.processCount = diffiycult;
+            var obstacle = new ObstacleInstance
+            {
+                obstacleObjIdx = obstacleType,
+                prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
+                processCount = difficulty,
+                spawnPos = Vector2.zero
+            };
             _currentObstacles.Add(obstacle);
         }
-        
-        //서류 생성 함수로
+
         SpawnDocument();
     }
 
-    // 서류 생성 함수
-    void SpawnDocument()
+    private void SpawnDocument()
     {
         _obstacleObjs.Clear();
-        
-        // 서류 생성
-        _docObj = DocumentPool.Instance.GetObject(_documentPrefab, new Vector3(7, 0.5f, 0), Quaternion.identity);
-        _docObj.transform.SetParent(this.transform, true);
 
-        // 서류 타입에 따라 반려 요소 생성
+        // 문서 생성
+        _docObj = DocumentPool.Instance.GetObject(_documentPrefab, _docSpawnPos);
+        _docObj.GetComponent<RectTransform>().SetParent(this.GetComponent<RectTransform>(), false);
+
+        // 반려 요소 생성
         if (!_currentDocument.documentType)
         {
             _rejectObj = DocumentPool.Instance.GetObject(
-                _rejectObjPrefabs[_currentDocument.rejectObjIdx], Vector3.zero, Quaternion.identity
+                _rejectObjPrefabs[_currentDocument.rejectObjIdx],
+                new Vector2(_currentDocument.spawnPosX, _currentDocument.spawnPosY)
             );
-            
-            // (부모: 서류 오브젝트)
-            _rejectObj.transform.SetParent(_docObj.transform, false);
-            _rejectObj.transform.localPosition = new Vector3(
-                _currentDocument.spawnPosX, _currentDocument.spawnPosY, 0f
-            );
+            _rejectObj.GetComponent<RectTransform>().SetParent(_docObj.GetComponent<RectTransform>(), false);
         }
-        
-        
-        // 확률에 따라 장애물 생성
-        float chance = Mathf.Clamp(_day * 5f, 0f, 100f);
-        if (Random.Range(0f, 100f) < chance)
+
+        // 장애물 생성
+        float chance = Mathf.Clamp(GameManager.Instance.GetTimeController()._day * 5f, 0f, 100f);
+        if (!GameManager.Instance.GetClassification().fever && Random.Range(0f, 100f) < chance)
         {
             GameManager.Instance.GetClassification().obstacle = true;
 
-            foreach (ObstacleInstance obstacle in _currentObstacles)
+            foreach (var obstacle in _currentObstacles)
             {
-                var obj = DocumentPool.Instance.GetObject(obstacle.prefab, Vector3.zero, Quaternion.identity);
-                
-                //(부모: 서류 오브젝트)
-                obj.transform.SetParent(_docObj.transform, false);
-                obj.transform.localPosition = new Vector3(
-                    obstacle.spawnPos.x, 
-                    obstacle.spawnPos.y, 
-                    0f
-                );
-
+                var obj = DocumentPool.Instance.GetObject(obstacle.prefab, obstacle.spawnPos);
+                obj.GetComponent<RectTransform>().SetParent(_docObj.GetComponent<RectTransform>(), false);
                 _obstacleObjs.Add(obj);
 
-                var obstacleController = obj.GetComponent<ObstacleController>();
-                if (obstacleController != null)
-                {
-                    obstacleController.Initialize(this, obstacle.processCount);
-                }
+                var controller = obj.GetComponent<ObstacleController>();
+                if (controller != null) controller.Initialize(this, obstacle.processCount);
             }
         }
         
-        //서류 등장 연출
-        _docObj.transform.DOMove(new Vector3(_docStopPosX, _docObj.transform.position.y, _docObj.transform.position.z), _duration)
+        var docRect = _docObj.GetComponent<RectTransform>();
+        // 등장 연출
+        docRect.DOAnchorPosX(_docStopPos.x, _duration)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
-                _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docStopPosY, _docObj.transform.position.z), _duration)
+                // X 이동 완료 후 Y 이동
+                docRect.DOAnchorPosY(_docStopPos.y, _duration)
                     .SetEase(Ease.Linear);
             });
-
         _isClickable = true;
     }
-    
-    
-    //장애물이 치워지면 호출될 함수
+
+    public void ShowStamp(bool isApproved)
+    {
+        if (_docObj == null) return;
+
+        GameObject prefab = isApproved ? approvalStampPrefab : deniedStampPrefab;
+        GameObject stamp = Instantiate(prefab, _docObj.transform, false);
+        stamp.GetComponent<RectTransform>().anchoredPosition = new Vector2(1f, -2f);
+    }
+
     public void ObstacleCleared(GameObject obstacleObj)
     {
         if (_obstacleObjs.Contains(obstacleObj))
-        {
             _obstacleObjs.Remove(obstacleObj);
-        }
 
         if (_obstacleObjs.Count == 0)
-        {
             GameManager.Instance.GetClassification().obstacle = false;
-        }
     }
-    
-    // 서류 치우기 함수
+
     public void RemoveDocument()
     {
         _isClickable = false;
-        
-        //서류 퇴장 연출
-        _docObj.transform.DOMove(new Vector3(_docObj.transform.position.x, _docDespawnY, _docObj.transform.position.z), _duration)
+        var docRect = _docObj.GetComponent<RectTransform>();
+
+        // Y 먼저 이동
+        docRect.DOAnchorPosY(_docDespawnPos.y, _duration)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
             {
-                _docObj.transform.DOMove(new Vector3(_docDespawnX, _docObj.transform.position.y, _docObj.transform.position.z), _duration)
+                // Y 이동 완료 후 X 이동
+                docRect.DOAnchorPosX(_docDespawnPos.x, _duration)
                     .SetEase(Ease.Linear)
-                    .OnComplete(() => ReloadDocument());
+                    .OnComplete(() =>
+                    {
+                        // X 이동 완료 후 ReloadDocument 호출
+                        ReloadDocument();
+                    });
             });
     }
 
@@ -240,14 +223,14 @@ public class DocumentController : MonoBehaviour
     {
         if (_docObj != null)
         {
-            // 자식 오브젝트들을 먼저 풀에 반환
             for (int i = _docObj.transform.childCount - 1; i >= 0; i--)
             {
                 var child = _docObj.transform.GetChild(i).gameObject;
-                DocumentPool.Instance.ReturnObject(child);
+                if (child.CompareTag("Stamp"))
+                    Destroy(child);
+                else
+                    DocumentPool.Instance.ReturnObject(child);
             }
-
-            // 마지막에 서류 자체 반환
             DocumentPool.Instance.ReturnObject(_docObj);
         }
 
@@ -257,43 +240,48 @@ public class DocumentController : MonoBehaviour
         _docObj = null;
         GameManager.Instance.GetClassification().obstacle = false;
 
-        if(!noLoop) CreateDocument();
+        if (!noLoop) CreateDocument();
     }
-    void Update()
-    {
-        if (IsInputDown(out Vector2 inputPos))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(inputPos, Vector2.zero);
 
-            if (hit.collider != null)
+    private void Update()
+    {
+        if (!_isClickable) return;
+
+        if (TryGetInputPosition(out Vector2 inputPos))
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            pointerData.position = inputPos;
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+
+            foreach (var result in results)
             {
-                ObstacleController obstacle = hit.collider.GetComponent<ObstacleController>();
+                var obstacle = result.gameObject.GetComponent<ObstacleController>();
                 if (obstacle != null)
-                {
                     obstacle.ProcessHit();
-                }
             }
         }
     }
 
-    private bool IsInputDown(out Vector2 inputPos)
+    private bool TryGetInputPosition(out Vector2 inputPos)
     {
         inputPos = Vector2.zero;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0)
         {
-            inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                inputPos = touch.position;
+                return true;
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            inputPos = Input.mousePosition;
             return true;
         }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
-        {
-            inputPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-            return true;
-        }
-#endif
+
         return false;
     }
-
 }
