@@ -275,7 +275,14 @@ public class DocumentController : MonoBehaviour
             for (int i = _docObj.transform.childCount - 1; i >= 0; i--)
             {
                 var child = _docObj.transform.GetChild(i).gameObject;
-                DocumentPool.Instance.ReturnObject(child);
+                if (child.CompareTag("Stamp"))
+                {
+                    Destroy(child);     // 도장 프리팹은 Pool에 영향 받지 않도록 따로 제거
+                }
+                else
+                {
+                    DocumentPool.Instance.ReturnObject(child);
+                }
             }
 
             // 마지막에 서류 자체 반환
