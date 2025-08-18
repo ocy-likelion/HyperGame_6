@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateDaycycle : Singleton<RotateDaycycle>
+public class RotateDaycycle : MonoBehaviour
 {
     Quaternion initRotate;      // 초기 회전값
     bool isPaused = false;      // 회전 정지

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class BackgroundUIController : MonoBehaviour
 {
-
+    public RotateDaycycle rotateDaycycle;
 }
