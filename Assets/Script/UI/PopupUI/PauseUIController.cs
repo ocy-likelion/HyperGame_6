@@ -42,7 +42,11 @@ public class PauseUIController : PopupController
     
     public void OnClickRetryButton()
     {
-        GameManager.Instance.GoToInGame();
+        GameManager.Instance.ResumeGame();
+        GameManager.Instance.inGameController.Dispose();
+        GameManager.Instance.inGameController.UseRetry();
+        GameManager.Instance.inGameController.SkipResultUI();
+        GameManager.Instance.inGameController.QuitGame();
         ClosePopup();
     }
     
@@ -50,13 +54,14 @@ public class PauseUIController : PopupController
     {
         ClosePopup();
         GameManager.Instance.ResumeGame();
+        GameManager.Instance.inGameController.SkipResultUI();
         GameManager.Instance.inGameController.Dispose();
         GameManager.Instance.inGameController.QuitGame();
     }
     
     public void OnClickAudioToggleButton()
     {
-        
+        AudioManager.Instance.ToggleAudio();
     }
     
     public void OnClickVibrateToggleButton()

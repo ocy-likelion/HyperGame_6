@@ -19,11 +19,12 @@ public class SubMenuUIController : MonoBehaviour
     
     public void OnClickGameSettingButton()
     {
-        Debug.Log("OnClickGameSettingButton");
+        AudioManager.Instance.ToggleAudio();
     }
 
     public void OnClickLeaderBoardButton()
     {
         Debug.Log("OnClickLeaderBoardButton");
+        AudioManager.Instance.SFX.PlayButtonClick();
     }
 }

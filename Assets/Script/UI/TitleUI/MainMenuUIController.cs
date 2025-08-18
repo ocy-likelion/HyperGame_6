@@ -20,10 +20,12 @@ public class MainMenuUIController : MonoBehaviour
     public void OnClickGameStartButton()
     {
         GameManager.Instance.GoToInGame();
+        AudioManager.Instance.SFX.PlayButtonClick();
     }
 
     public void OnClickGameTutotialButton()
     {
         PopupUIController.Instance.ShowTutorialUI();
+        AudioManager.Instance.SFX.PlayButtonClick();
     }
 }
