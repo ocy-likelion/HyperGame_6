@@ -38,6 +38,11 @@ public class TimeController : Singleton<TimeController>
         StartCoroutine(Timer());
     }
 
+    public void StopTime()
+    {
+        isTimeRunning = false;
+    }
+
     IEnumerator Timer()
     {
         while (isTimeRunning)
