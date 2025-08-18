@@ -284,15 +284,7 @@ public class DocumentController : MonoBehaviour
     private bool TryGetInputPosition(out Vector2 inputPos)
     {
         inputPos = Vector2.zero;
-
-        // PC / Editor / WebGL: 마우스 클릭
-        if (Input.GetMouseButtonDown(0))
-        {
-            inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            return true;
-        }
-
-        // 모바일: 터치 입력
+        
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -301,6 +293,11 @@ public class DocumentController : MonoBehaviour
                 inputPos = Camera.main.ScreenToWorldPoint(touch.position);
                 return true;
             }
+        }
+        else if (Input.GetMouseButtonDown(0)) // PC / Editor / WebGL: 마우스 클릭
+        {
+            inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return true;
         }
 
         return false;
