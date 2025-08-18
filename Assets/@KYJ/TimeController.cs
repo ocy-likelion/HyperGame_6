@@ -26,10 +26,7 @@ public class TimeController : Singleton<TimeController>
 
     public void InitTimeController()
     {
-        remainedTimerTime = timer;
-        elapsedDayTime = 0f;
-        UpdateTimeUI();
-        UpdateDayUI();
+        ResetTimer();
     }
 
     public void StartRunningTimer()
@@ -42,11 +39,13 @@ public class TimeController : Singleton<TimeController>
     public void StopTime()
     {
         isTimeRunning = false;
-        RotateDaycycle.Instance.PauseCycle();
+        UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.PauseCycle();
     }
 
     IEnumerator Timer()
     {
+        UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResumeCycle();
+        
         while (isTimeRunning)
         {
             remainedTimerTime -= Time.deltaTime; // 일과 시간 감소
@@ -83,7 +82,7 @@ public class TimeController : Singleton<TimeController>
         remainedTimerTime = timer;
         elapsedDayTime = 0f;
         isTimeRunning = false;
-        RotateDaycycle.Instance.ResetCycle();
+        UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResetCycle();
         UpdateTimeUI();
         UpdateDayUI();
     }

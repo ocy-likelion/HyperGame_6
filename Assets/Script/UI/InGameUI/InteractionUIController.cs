@@ -51,7 +51,7 @@ public class InteractionUIController : MonoBehaviour
         GameManager.Instance.GetClassification().DocumentClassification(); // 서류 분류 메소드 호출
         
         //VFX 테스트 예시. 
-        VfxManager.Instance.GetVFX(VFXType.TEST, new Vector2(0,0) , Quaternion.identity, Vector2.one);
+        //VfxManager.Instance.GetVFX(VFXType.TEST, new Vector2(0,0) , Quaternion.identity, Vector2.one);
     }
 
     public void OnClickNegativeButton()
