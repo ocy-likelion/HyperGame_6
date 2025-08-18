@@ -31,8 +31,7 @@ public class GameManager : Singleton<GameManager>
         _states[GameState.Pause] = new PauseState();
         
         inGameController = new InGameController();
-        inGameController.Initialize();
-
+        
         _isPaused = false;
         
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -41,6 +40,13 @@ public class GameManager : Singleton<GameManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        StartCoroutine(LoadGameSystem());
+    }
+
+    //최초 실행시 초기화 진행
+    private IEnumerator LoadGameSystem()
+    {
+        yield return StartCoroutine(inGameController.Initialize());
     }
     
     private void Update()
@@ -50,25 +56,25 @@ public class GameManager : Singleton<GameManager>
             _states[_currentState].OnUpdate();
         }
         
-        //테스트용 입력
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            GoToInGame();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            //게임오버 시키기
-            inGameController.QuitGame();
-            //ReturnToTitle();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            PauseGame();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ResumeGame();
-        }
+        // //테스트용 입력
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     GoToInGame();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     //게임오버 시키기
+        //     inGameController.QuitGame();
+        //     //ReturnToTitle();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha3))
+        // {
+        //     PauseGame();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha4))
+        // {
+        //     ResumeGame();
+        // }
     }
     
     ///게임을 시작합니다.

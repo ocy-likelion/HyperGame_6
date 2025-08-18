@@ -18,6 +18,12 @@ public class Classification : MonoBehaviour
 
     public ScoreUIController scoreUIController; //점수 UI 컨트롤러
     public DocumentController docController;
+
+    public void Initialize()
+    {
+        docController = GameManager.Instance.GetDocumentController();
+    }
+    
     public void scoreMagnification()
     {
         switch (combo)

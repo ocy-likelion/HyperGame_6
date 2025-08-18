@@ -1,14 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InGameState : IGameState
 {
     public void OnEnter()
-    {
-        SceneController.TransitionToScene(SceneState.InGame, 
-            GameManager.Instance.inGameController.SetInitGame,
-            GameManager.Instance.inGameController.RunSequence
-            );
+    { 
+       GameManager.Instance.StartCoroutine(StartGame());
        UIManager.Instance.inGameUIController.ShowInGameUI();
     }
     
@@ -20,5 +19,11 @@ public class InGameState : IGameState
     public void OnExit()
     {
        
+    }
+
+    IEnumerator StartGame()
+    {
+        yield return GameManager.Instance.inGameController.SetInitGame();
+        yield return GameManager.Instance.inGameController.RunSequence();
     }
 }
