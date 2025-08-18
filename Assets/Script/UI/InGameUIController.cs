@@ -15,6 +15,7 @@ public class InGameUIController : Singleton<InGameUIController>
     public ScoreUIController scoreUIController;
     public ComboUIController comboUIController;
     public FeverUIController feverUIController;
+    public BackgroundUIController backGroundUIController;
 
     //여기까지
 
@@ -84,6 +85,18 @@ public class InGameUIController : Singleton<InGameUIController>
     public void HideFeverUI()
     {
         feverUIController.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region BackgroundUI
+    public void ShowBackgroundUI()
+    {
+        backGroundUIController.gameObject.SetActive(true);
+    }
+
+    public void HideBackgroundUI()
+    {
+        backGroundUIController.gameObject.SetActive(false);
     }
     #endregion
 }

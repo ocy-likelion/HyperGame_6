@@ -41,7 +41,6 @@ public class GameManager : Singleton<GameManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        ChangeGameState(GameState.Title);
     }
     
     private void Update()
