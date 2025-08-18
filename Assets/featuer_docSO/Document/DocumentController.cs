@@ -45,6 +45,10 @@ public class DocumentController : MonoBehaviour
     
     //이동 시간
     [SerializeField] private float _duration;
+
+    [Header("도장 관련")]
+    [SerializeField] private GameObject approvalStampPrefab;
+    [SerializeField] private GameObject deniedStampPrefab;
     
     //버튼 연타 방지용 변수
     [NonSerialized] public bool _isClickable;
@@ -219,6 +223,19 @@ public class DocumentController : MonoBehaviour
         _isClickable = true;
     }
     
+    // 도장 생성 함수
+    public void ShowStamp(bool isApproved)
+    {
+        if (_docObj == null) return;
+
+        GameObject prefab = isApproved ? approvalStampPrefab : deniedStampPrefab;
+        GameObject currentStamp = Instantiate(prefab, _docObj.transform, false);
+
+        currentStamp.transform.localPosition = new Vector2(1f, -2f);
+        
+        // TODO: 도장 찍히는 연출
+    }
+    
     
     //장애물이 치워지면 호출될 함수
     public void ObstacleCleared(GameObject obstacleObj)
@@ -258,7 +275,14 @@ public class DocumentController : MonoBehaviour
             for (int i = _docObj.transform.childCount - 1; i >= 0; i--)
             {
                 var child = _docObj.transform.GetChild(i).gameObject;
-                DocumentPool.Instance.ReturnObject(child);
+                if (child.CompareTag("Stamp"))
+                {
+                    Destroy(child);     // 도장 프리팹은 Pool에 영향 받지 않도록 따로 제거
+                }
+                else
+                {
+                    DocumentPool.Instance.ReturnObject(child);
+                }
             }
 
             // 마지막에 서류 자체 반환
