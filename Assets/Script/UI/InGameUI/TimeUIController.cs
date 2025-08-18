@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class TimeUIController : MonoBehaviour
 {
-    public TMP_Text workTimeText;
+    public TMP_Text timerText;
     public TMP_Text dayText;
 }
