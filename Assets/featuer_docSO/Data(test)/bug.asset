@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced56e6705d860e4f9ef1b5a7450a519, type: 3}
   m_Name: bug
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 8488175749631518371, guid: ba77760a48db4fe41b19b5bf6e88bc28, type: 3}
+  obstaclePrefab: {fileID: 6227688284826220418, guid: ba77760a48db4fe41b19b5bf6e88bc28, type: 3}
   obstacleObjIdx: 0
