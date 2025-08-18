@@ -66,7 +66,17 @@ public class DocumentController : MonoBehaviour
     {
         _currentDocument = new DocumentData();
         
-        _currentDocument.documentType = (Random.Range(0, 2) == 0);
+        if(GameManager.Instance.GetClassification().fever)
+        {
+            // 피버타임일 경우 무조건 청결한 서류
+            _currentDocument.documentType = true;
+        }
+        else
+        {
+            // 일반 서류 생성
+            _currentDocument.documentType = (Random.Range(0, 2) == 0);
+        }
+        //_currentDocument.documentType = (Random.Range(0, 2) == 0);
         GameManager.Instance.GetClassification().clean = _currentDocument.documentType;
         
         _currentDocument.rejectObjIdx = Random.Range(0, _rejectObjPrefabs.Count);
@@ -167,7 +177,11 @@ public class DocumentController : MonoBehaviour
         
         // 확률에 따라 장애물 생성
         float chance = Mathf.Clamp(_day * 5f, 0f, 100f);
-        if (Random.Range(0f, 100f) < chance)
+        //if (GameManager.Instance.GetClassification().fever)
+        //{
+        //    chance = 0f; // 피버타임에는 장애물 없음
+        //}
+        if (!GameManager.Instance.GetClassification().fever && Random.Range(0f, 100f) < chance)
         {
             GameManager.Instance.GetClassification().obstacle = true;
 
