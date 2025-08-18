@@ -26,5 +26,23 @@ public class SubMenuUIController : MonoBehaviour
     {
         Debug.Log("OnClickLeaderBoardButton");
         AudioManager.Instance.SFX.PlayButtonClick();
+        
+        // //점수를 보내는 함수.
+        // var gameInfo = new GameInfo { score = 123 };
+        // NetworkManager.Instance.SendScore(gameInfo, () =>{
+        //         Debug.Log("Send Success");
+        //     },
+        //     () => {
+        //         Debug.Log("Send Fail");
+        //     });
+        
+        //점수를 받는 함수.
+        NetworkManager.Instance.RecieveScore((gameInfo) =>{
+                Debug.Log($"Send Success = {gameInfo.score}");
+                VfxManager.Instance.GetVFX(VFXType.TEST, new Vector2(0,0) , Quaternion.identity, Vector2.one);
+            },
+            () => {
+                Debug.Log("Send Fail");
+            });
     }
 }
