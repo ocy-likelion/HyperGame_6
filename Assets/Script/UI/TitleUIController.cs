@@ -25,6 +25,7 @@ public class TitleUIController : Singleton<TitleUIController>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         UIManager.Instance.SetTitleUIController(this);
+        GameManager.Instance.ChangeGameState(Constants.GameState.Title);
     }
     
     public void ShowTitleUI()
