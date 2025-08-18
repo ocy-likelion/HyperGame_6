@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c075d9c48541a4b979663a8aebf531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleUIController: {fileID: 0}
-  inGameUIController: {fileID: 0}
-  popupUIController: {fileID: 0}
+  titleUIController: {fileID: 1714326525}
+  inGameUIController: {fileID: 2077769554}
+  popupUIController: {fileID: 1104112741}
   panelController: {fileID: 0}
   popupController: {fileID: 0}
 --- !u!4 &108188329
@@ -716,6 +716,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1104112741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4885675662937442339, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
+  m_PrefabInstance: {fileID: 834013603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4282d9bdb4ed0b9499ee659994c7b171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1186379683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1035,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1714326525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4841754504227830220, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+  m_PrefabInstance: {fileID: 314047329}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b547e3a9e86e8bb4d8f2efef0e68e376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1860846750 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8601002942268772781, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
@@ -1033,6 +1055,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5974a9659c2b4324bb156b1751d86831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2077769554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7102147284085235431, guid: 2107a06927f07d743a78a1f9f57a8617, type: 3}
+  m_PrefabInstance: {fileID: 1238528933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3775782ff1e7fb24294348a02db7e638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &497560106735140810

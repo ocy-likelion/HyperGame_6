@@ -261,12 +261,14 @@ public class DocumentController : MonoBehaviour
     }
     void Update()
     {
-        if (IsInputDown(out Vector2 inputPos))
+        if (TryGetInputPosition(out Vector2 inputPos))
         {
+            // 2D 레이캐스트
             RaycastHit2D hit = Physics2D.Raycast(inputPos, Vector2.zero);
 
             if (hit.collider != null)
             {
+                // 장애물 처리
                 ObstacleController obstacle = hit.collider.GetComponent<ObstacleController>();
                 if (obstacle != null)
                 {
@@ -276,23 +278,31 @@ public class DocumentController : MonoBehaviour
         }
     }
 
-    private bool IsInputDown(out Vector2 inputPos)
+    /// <summary>
+    /// 모든 플랫폼(WebGL, PC, 모바일)에서 클릭/터치 입력을 통합 처리
+    /// </summary>
+    private bool TryGetInputPosition(out Vector2 inputPos)
     {
         inputPos = Vector2.zero;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+        // PC / Editor / WebGL: 마우스 클릭
         if (Input.GetMouseButtonDown(0))
         {
             inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             return true;
         }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+
+        // 모바일: 터치 입력
+        if (Input.touchCount > 0)
         {
-            inputPos = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-            return true;
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                inputPos = Camera.main.ScreenToWorldPoint(touch.position);
+                return true;
+            }
         }
-#endif
+
         return false;
     }
 
