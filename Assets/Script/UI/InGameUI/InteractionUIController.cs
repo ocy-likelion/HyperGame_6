@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InteractionUIController : MonoBehaviour
@@ -10,14 +13,35 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private Button _acceptButton;
     [SerializeField] private Button _negativeButton;
     [SerializeField] private Button _pauseButton;
+    // [SerializeField] private Sprite[] _buttonSprites;
+    //
+    // private Sprite _acceptUpSprite;
+    // private Sprite _acceptDownSprite;
+    // private Sprite _negativeUpSprite;
+    // private Sprite _negativeDownSprite;
+    // private Sprite _pauseUpSprite;
+    // private Sprite _pauseDownSprite;
     
     private void Awake()
     {
         //버튼 클릭이벤트 등록
         _acceptButton.onClick.AddListener(OnClickAcceptButton);
+        // _acceptUpSprite = FindSprite(Constants.SprAcceptUp);
+        //_acceptDownSprite = FindSprite(Constants.SprAcceptDown);
+        
         _negativeButton.onClick.AddListener(OnClickNegativeButton);
+        // _negativeUpSprite = FindSprite(Constants.SprNegativeUp);
+        // _negativeDownSprite = FindSprite(Constants.SprNegativeDown);;
+        
         _pauseButton.onClick.AddListener(OnClickPauseButton);
+        // _pauseUpSprite = FindSprite(Constants.SprPauseUp);
+        // _pauseDownSprite = FindSprite(Constants.SprPauseDown);
     }
+    
+    // public Sprite FindSprite(string spriteName)
+    // {
+    //     return _buttonSprites.FirstOrDefault(sprite => sprite.name == spriteName);
+    // }
     
     public void OnClickAcceptButton()
     {
