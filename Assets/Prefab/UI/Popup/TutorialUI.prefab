@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 7341253862038413582}
   - component: {fileID: 4638053529381044627}
   - component: {fileID: 1890984763699905188}
-  - component: {fileID: 8669625217953256080}
+  - component: {fileID: 7133079661796133348}
   m_Layer: 5
   m_Name: TutorialUI
   m_TagString: Untagged
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8669625217953256080
+--- !u!114 &7133079661796133348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3291856181431125545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5974a9659c2b4324bb156b1751d86831, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e1ba9214092d2d41b86624d763796b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ruleText: {fileID: 3039873148100772601}

@@ -14,7 +14,7 @@ public class PopupUIController : Singleton<PopupUIController>
     public PauseUIController pauseUIController;
     public ResultUIController resultUIController;
     public GameOverUIController gameOverUIController;
-    public TutorialUIController tutorialUIController;
+    public TutorialUIControllerRE tutorialUIController;
     
     //여기까지
     

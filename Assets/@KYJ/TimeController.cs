@@ -6,9 +6,9 @@ using TMPro;
 public class TimeController : Singleton<TimeController>
 {
     [Header("타이머 설정")]
-    [SerializeField] float timer = 60f;       // 타이머 시간
-    bool isTimeRunning = false;                 // 타이머 작동 여부
-    float remainedTimerTime;                     // 타이머 남은 시간
+    [SerializeField] float timer = 60f;       // 일과 시간 타이머
+    bool isTimeRunning = false;                 // 일과 시간 타이머 작동 여부
+    float remainedTimerTime;                     // 남은 일과 시간
 
     [Header("하루 길이 설정")]
     [SerializeField] float dayTime = 120f;    // 하루 길이
@@ -19,6 +19,7 @@ public class TimeController : Singleton<TimeController>
     public float _remainedDayTime => dayTime - elapsedDayTime; // 하루 남은 시간
     public float _dayTime => dayTime;
     public int _day => day;
+    public bool _isTimeRunning => isTimeRunning;
 
     public void SetRemainedTimer(float value) => remainedTimerTime = Mathf.Max(0f, value);
     public void SetDay(int value) => day = Mathf.Max(1, value);
@@ -48,33 +49,32 @@ public class TimeController : Singleton<TimeController>
     {
         while (isTimeRunning)
         {
-            // 타이머 감소
-            remainedTimerTime -= Time.deltaTime;
-            if (remainedTimerTime < 0f) remainedTimerTime = 0f;
+            remainedTimerTime -= Time.deltaTime; // 일과 시간 감소
 
-            // 하루 시간 증가
-            elapsedDayTime += Time.deltaTime;
-            if (elapsedDayTime > dayTime) elapsedDayTime = dayTime;
+            if (remainedTimerTime <= 0f)
+            {
+                remainedTimerTime = 0f; // 일과 시간이 0초 이하로 내려가면 0으로 설정
+                UpdateTimeUI();
+                GameManager.Instance.inGameController.Dispose(); // 일과 시간이 0초 이하면 게임 종료 처리
+                StopTime();
+                yield break;
+            }
+
+            elapsedDayTime += Time.deltaTime; // 남은 하루 길이 계산
+            if (elapsedDayTime >= dayTime) HandleDayEnd();
 
             UpdateTimeUI();
             UpdateDayUI();
-
-            // 하루가 지났는지 체크
-            if (elapsedDayTime >= dayTime)
-            {
-                HandleDayEnd();
-            }
 
             yield return null;
         }
     }
 
-    void HandleDayEnd()
+    void HandleDayEnd() // 하루가 끝나면 일과 시간 및 남은 시간 초기화
     {
         day++;                  // 하루 일수 증가
         elapsedDayTime = 0f;    // 하루 남은 시간 초기화
         remainedTimerTime = timer; // 타이머 초기화
-
         Debug.Log($"하루가 지났습니다. 현재 {day}일차");
     }
 
