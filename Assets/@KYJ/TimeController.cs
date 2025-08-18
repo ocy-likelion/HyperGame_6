@@ -41,6 +41,7 @@ public class TimeController : Singleton<TimeController>
     public void StopTime()
     {
         isTimeRunning = false;
+        RotateDaycycle.Instance.PauseCycle();
     }
 
     IEnumerator Timer()
@@ -74,7 +75,7 @@ public class TimeController : Singleton<TimeController>
         elapsedDayTime = 0f;    // 하루 남은 시간 초기화
         remainedTimerTime = timer; // 타이머 초기화
 
-        Debug.Log($"하루 지남. {day}일차");
+        Debug.Log($"하루가 지났습니다. 현재 {day}일차");
     }
 
     public void ResetTimer()
@@ -82,6 +83,7 @@ public class TimeController : Singleton<TimeController>
         remainedTimerTime = timer;
         elapsedDayTime = 0f;
         isTimeRunning = false;
+        RotateDaycycle.Instance.ResetCycle();
         UpdateTimeUI();
         UpdateDayUI();
     }

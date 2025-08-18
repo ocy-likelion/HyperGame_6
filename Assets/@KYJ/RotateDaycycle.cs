@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateDaycycle : MonoBehaviour
+public class RotateDaycycle : Singleton<RotateDaycycle>
 {
-    Quaternion initRotate;      // ÃÊ±â È¸Àü°ª ÀúÀå
-    bool isPaused = false;      // È¸Àü ÀÏ½Ã Á¤Áö ¿©ºÎ
+    Quaternion initRotate;      // ì´ˆê¸° íšŒì „ê°’
+    bool isPaused = false;      // íšŒì „ ì •ì§€
 
     void Start()
     {
@@ -16,12 +16,13 @@ public class RotateDaycycle : MonoBehaviour
     {
         if (isPaused) return;
 
-        // ÇÏ·ç ½Ã°£ ±âÁØ È¸Àü
+        // í•˜ë£¨ ì‹œê°„ ê¸°ì¤€ íšŒì „
         float rotateSpeed = 180f / TimeController.Instance._dayTime;
         transform.Rotate(0f, 0f, -rotateSpeed * Time.deltaTime);
     }
 
     public void PauseCycle() => isPaused = true;
+
     public void ResumeCycle() => isPaused = false;
 
     public void ResetCycle() => transform.rotation = initRotate;
