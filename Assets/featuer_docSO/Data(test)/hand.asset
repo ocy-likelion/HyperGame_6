@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced56e6705d860e4f9ef1b5a7450a519, type: 3}
   m_Name: hand
   m_EditorClassIdentifier: 
-  obstaclePrefab: {fileID: 4890631209711065255, guid: 85608016ddc5f914eb8dc3ef913edf2d, type: 3}
+  obstaclePrefab: {fileID: 8889507456180035460, guid: 85608016ddc5f914eb8dc3ef913edf2d, type: 3}
   obstacleObjIdx: 2
