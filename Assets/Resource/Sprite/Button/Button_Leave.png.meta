@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e61a8c3ae90baac4a8b60239c960fed1
+guid: 7361229a379810842bf73a111f20208e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Button_Leave_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 726.5
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2011b57223ac5ac4db1415115d4eb233
+      internalID: -1273028252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_Leave_1
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 0
+        width: 726.5
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be755652f8048da47a8df27bfe7ae82b
+      internalID: 667737460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +148,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Button_Leave_0: -1273028252
+      Button_Leave_1: 667737460
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
