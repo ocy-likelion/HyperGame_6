@@ -259,11 +259,28 @@ public class DocumentController : MonoBehaviour
                 var obstacle = result.gameObject.GetComponent<ObstacleController>();
                 if (obstacle != null)
                 {
+                    // 스크린 좌표를 Canvas 좌표로 변환
+                    Vector2 canvasPos = ScreenToCanvasPosition(inputPos);
+                    VfxManager.Instance.GetVFX(VFXType.OBSTOUCH, canvasPos, Quaternion.identity, Vector2.one);
+                    
                     obstacle.ProcessHit();
                     return;
                 }
             }
         }
+    }
+    
+    private Vector2 ScreenToCanvasPosition(Vector2 screenPos)
+    {
+        Vector2 canvasPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _canvas.transform as RectTransform,
+            screenPos,
+            _canvas.worldCamera,
+            out canvasPos
+        );
+    
+        return canvasPos;
     }
 
     private bool TryGetInputPosition(out Vector2 inputPos)
