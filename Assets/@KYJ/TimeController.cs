@@ -5,15 +5,17 @@ using TMPro;
 
 public class TimeController : Singleton<TimeController>
 {
-    [Header("타이머 설정")]
-    [SerializeField] float timer = 60f;       // 일과 시간 타이머
-    bool isTimeRunning = false;                 // 일과 시간 타이머 작동 여부
-    float remainedTimerTime;                     // 남은 일과 시간
+    [Header("타이머 길이")]
+    [SerializeField] float constTimerValue = 60.0f;
+    bool isTimeRunning = false; // 타이머 실행 중인지
+    float remainedTimerTime; // 남은 일과 시간
 
-    [Header("하루 길이 설정")]
-    [SerializeField] float dayTime = 120f;    // 하루 길이
-    int day = 1;                                // 현재 일수
-    float elapsedDayTime = 0f;                  // 하루 경과 시간
+    [Header("하루 길이")]
+    [SerializeField] float dayTime = 120.0f;
+    float elapsedDayTime = 0f; // 하루 중 몇시간 얼마나 지났는지
+
+    [Header("현재 날짜")]
+    [SerializeField] int day = 1;
 
     public float _remainedTimerTime => remainedTimerTime;
     public float _remainedDayTime => dayTime - elapsedDayTime; // 하루 남은 시간
@@ -73,13 +75,13 @@ public class TimeController : Singleton<TimeController>
     {
         day++;                  // 하루 일수 증가
         elapsedDayTime = 0f;    // 하루 남은 시간 초기화
-        remainedTimerTime = timer; // 타이머 초기화
-        Debug.Log($"하루가 지났습니다. 현재 {day}일차");
+        remainedTimerTime = constTimerValue; // 타이머 초기화
+        // Debug.Log($"하루가 지났습니다. 현재 {day}일차");
     }
 
     public void ResetTimer()
     {
-        remainedTimerTime = timer;
+        remainedTimerTime = constTimerValue;
         elapsedDayTime = 0f;
         isTimeRunning = false;
         UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResetCycle();
@@ -90,12 +92,12 @@ public class TimeController : Singleton<TimeController>
     void UpdateTimeUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.timerText is var timeText && timeText != null)
-            timeText.text = remainedTimerTime.ToString("F1");
+            timeText.text = $"{remainedTimerTime:F0}";
     }
 
     void UpdateDayUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.dayText is var dayText && dayText != null)
-            dayText.text = $"{day} Day";
+            dayText.text = $"{day}";
     }
 }

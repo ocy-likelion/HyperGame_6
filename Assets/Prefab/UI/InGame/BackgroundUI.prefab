@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateDaycycle: {fileID: 6730480728606961853}
+  backgroundImage: {fileID: 1695035500052877565}
 --- !u!1 &827035835930553255
 GameObject:
   m_ObjectHideFlags: 0
