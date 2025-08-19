@@ -17,7 +17,7 @@ public class InGameUIController : Singleton<InGameUIController>
     public FeverUIController feverUIController;
     public BackgroundUIController backGroundUIController;
     public ClockUIController clockUIController;
-
+    public ClassificationUIController classificationUIController;
     //여기까지
 
     protected override void Initialize()
@@ -109,6 +109,17 @@ public class InGameUIController : Singleton<InGameUIController>
     public void HideClockUI()
     {
         clockUIController.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region ClassificationUI
+    public void ShowClassificationUI()
+    {
+        classificationUIController.gameObject.SetActive(true);
+    }
+    public void HideClassificationUI()
+    {
+        classificationUIController.gameObject.SetActive(false);
     }
     #endregion
 
