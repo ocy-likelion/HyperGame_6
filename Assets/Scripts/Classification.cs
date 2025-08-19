@@ -20,13 +20,10 @@ public class Classification : MonoBehaviour
     public DocumentController docController;
     private ClassificationUIController classificationUIController; //분류 UI 컨트롤러
 
-    private void Awake()
-    {
-        classificationUIController = UIManager.Instance.inGameUIController.classificationUIController;
-    }
     public void Initialize()
     {
         docController = GameManager.Instance.GetDocumentController();
+        classificationUIController = UIManager.Instance.inGameUIController.classificationUIController;
     }
 
     public void scoreMagnification()
