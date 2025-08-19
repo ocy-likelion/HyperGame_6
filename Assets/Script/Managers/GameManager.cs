@@ -159,6 +159,11 @@ public class GameManager : Singleton<GameManager>
         return inGameController.classification != null ? inGameController.classification : null;
     }
 
+    public GameState GetGameState()
+    {
+        return _currentState;
+    }
+
     ///일시정지(백그라운드 상태) 되었을 때
     private void OnApplicationPause(bool pauseStatus)
     {

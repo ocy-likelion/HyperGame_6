@@ -95,6 +95,9 @@ public class InGameController
         UIManager.Instance.inGameUIController.ShowFeverUI();
         UIManager.Instance.inGameUIController.ShowBackgroundUI();
         UIManager.Instance.inGameUIController.ShowClockUI();
+        
+        // BGM 재생
+        AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
 
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
@@ -167,6 +170,9 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideFeverUI();
         UIManager.Instance.inGameUIController.HideBackgroundUI();
         UIManager.Instance.inGameUIController.HideClockUI();
+        
+        // BGM 종료
+        AudioManager.Instance.BGM.StopBGM();
 
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
