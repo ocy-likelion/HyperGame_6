@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0a17d3da9f44ed980a198e8405c793, type: 3}
   m_Name: ObsTouchVfx
   m_EditorClassIdentifier: 
-  vfxPrefab: {fileID: 4738018394980312597, guid: 667e22153e2fc8a4e84c54978874d7c0, type: 3}
-  duration: 0.2
+  vfxPrefab: {fileID: 8680598818964007281, guid: dcd90c4976197424b9958a7c54b6bb8c, type: 3}
+  duration: 4
   poolSize: 3

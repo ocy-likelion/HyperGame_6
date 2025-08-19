@@ -14,4 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VFXList:
   - {fileID: 11400000, guid: 6284a0f9c36c094439c79a9aff45098b, type: 2}
-  - {fileID: 11400000, guid: 3472cd7736962744f8f5e267601579b0, type: 2}
