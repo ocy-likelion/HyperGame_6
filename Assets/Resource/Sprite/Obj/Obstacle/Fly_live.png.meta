@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40cb7712dbe1ab74fb647d973a65509a
+guid: 27288e673e2fb044796d2bdb7c1ac645
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -95,7 +95,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Fly_live_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 150.5
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f41076e1b85166342a3c512b9e0a9349
+      internalID: -1299199317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fly_live_1
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 150.5
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 630bc2d57e0dcf04a80f39548454a0b4
+      internalID: -1997512821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +148,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Fly_live_0: -1299199317
+      Fly_live_1: -1997512821
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
