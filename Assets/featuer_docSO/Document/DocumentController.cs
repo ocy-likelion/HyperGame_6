@@ -258,7 +258,10 @@ public class DocumentController : MonoBehaviour
             {
                 var obstacle = result.gameObject.GetComponent<ObstacleController>();
                 if (obstacle != null)
+                {
                     obstacle.ProcessHit();
+                    return;
+                }
             }
         }
     }
