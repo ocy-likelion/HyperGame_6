@@ -67,7 +67,7 @@ MonoBehaviour:
   approvalStampPrefab: {fileID: 2200974918601828851, guid: acdf325362be2ec438d904721c364790, type: 3}
   deniedStampPrefab: {fileID: 2302917470449780404, guid: ec58cbd6355eee5409e2f3b874748fab, type: 3}
   _docSpawnPos: {x: 1000, y: -100}
-  _docStopPos: {x: 0, y: -175}
+  _docStopPos: {x: 0, y: -232}
   _docDespawnPos: {x: -1000, y: -100}
   _duration: 0.1
 --- !u!114 &3335419393325335029
