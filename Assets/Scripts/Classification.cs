@@ -18,12 +18,17 @@ public class Classification : MonoBehaviour
 
     public ScoreUIController scoreUIController; //점수 UI 컨트롤러
     public DocumentController docController;
+    private ClassificationUIController classificationUIController; //분류 UI 컨트롤러
 
+    private void Awake()
+    {
+        classificationUIController = UIManager.Instance.inGameUIController.classificationUIController;
+    }
     public void Initialize()
     {
         docController = GameManager.Instance.GetDocumentController();
     }
-    
+
     public void scoreMagnification()
     {
         switch (combo)
@@ -83,6 +88,7 @@ public class Classification : MonoBehaviour
             UpdateScoreMagUI(); //점수 배율 UI 갱신
             UpdateComboUI();
             UpdateFeverUI(); //피버 게이지 UI 갱신
+            classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
             Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
         }
         else // 장애물이 없을 때
@@ -102,6 +108,7 @@ public class Classification : MonoBehaviour
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
@@ -124,6 +131,7 @@ public class Classification : MonoBehaviour
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
             }
@@ -139,6 +147,7 @@ public class Classification : MonoBehaviour
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
@@ -154,6 +163,7 @@ public class Classification : MonoBehaviour
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
