@@ -41,7 +41,7 @@ public class ClockUIController : MonoBehaviour
     public void ClockFrameColor() // 시계 프레임 색상 변경 기능
     {
         float remainedTime = TimeController.Instance._remainedTimerTime;
-        Debug.Log(remainedTime);
+        //Debug.Log(remainedTime);
 
         if (remainedTime <= 30) // 일과 시간이 30초 이하일 때
         {

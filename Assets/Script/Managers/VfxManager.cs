@@ -30,6 +30,7 @@ public static class VFXType
     //새 VFX 등록 시 public const string '호출때 쓸 변수명' = "생성한 VfxDataSO의 파일명" 이렇게 작성해주세요.
     //public const string FireWork = "Firreeee";
     public const string TEST = "TestVfx";
+    public const string OBSTOUCH = "ObsTouchVfx";
 }
 
 /// <summary>
