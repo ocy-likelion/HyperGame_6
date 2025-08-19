@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3174162684725693084}
   m_Layer: 5
   m_Name: approvalStamp
-  m_TagString: Untagged
+  m_TagString: Stamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
