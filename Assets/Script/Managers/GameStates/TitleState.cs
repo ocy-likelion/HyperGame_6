@@ -9,6 +9,9 @@ public class TitleState : IGameState
         UIManager.Instance.titleUIController.ShowTitleUI();
         UIManager.Instance.titleUIController.ShowMainMenuUI();
         UIManager.Instance.titleUIController.ShowSubMenuUI();
+        
+        // BGM 재생
+        AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
     }
 
     public void OnUpdate()

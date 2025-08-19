@@ -25,23 +25,9 @@ public class BGMController : Singleton<BGMController>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
         AudioManager.Instance.SetBGMController(this);
         
-        // Scene 이름에 맞게 BGM 재생
         // TODO: 유저 정보에 소리 설정이 OFF라면 재생되지 않도록
-        switch (scene.name)
-        {
-            case TitleSceneName:
-                PlayTitleBGM();
-                break;
-            case GameSceneName:
-                PlayGameBGM();
-                break;
-            default:
-                StopBGM();
-                break;
-        }
     }
 
     // BGM를 추가하신 뒤, 아래 함수 모음에 재생 함수를 작성해주세요. 그리고 작성하신 함수를 통해 사용하시면 됩니다.
@@ -53,6 +39,23 @@ public class BGMController : Singleton<BGMController>
 
     #endregion
 
+    // Scene에 따라 BGM 재생
+    public void PlayBGMByState(GameState currentState)
+    {
+        switch (currentState)
+        {
+            case GameState.Title:
+                PlayTitleBGM();
+                break;
+            case GameState.InGame:
+                PlayGameBGM();
+                break;
+            default:
+                StopBGM();
+                break;
+        }
+    }
+    
     // BGM 재생 (반복 O)
     private void PlayBGM(AudioClip clip)
     {
@@ -65,7 +68,7 @@ public class BGMController : Singleton<BGMController>
     }
 
     // BGM 중지
-    private void StopBGM()
+    public void StopBGM()
     {
         if (_bgmSource != null)
         {
