@@ -45,6 +45,9 @@ public class InteractionUIController : MonoBehaviour
     
     public void OnClickAcceptButton()
     {
+        //서류 처리가능이 true일때만 진행
+        if (!GameManager.Instance.GetDocumentController()._isClickable) return;
+        
         GameManager.Instance.GetClassification().confirm = true; //승인버튼 클릭시 서류 승인
         AudioManager.Instance.SFX.PlayStamp();
         GameManager.Instance.GetDocumentController().ShowStamp(true);
@@ -56,6 +59,9 @@ public class InteractionUIController : MonoBehaviour
 
     public void OnClickNegativeButton()
     {
+        //서류 처리가능이 true일때만 진행
+        if (!GameManager.Instance.GetDocumentController()._isClickable) return;
+        
         GameManager.Instance.GetClassification().confirm = false; //반려버튼 클릭시 서류 반려
         AudioManager.Instance.SFX.PlayStamp();
         GameManager.Instance.GetDocumentController().ShowStamp(false);
