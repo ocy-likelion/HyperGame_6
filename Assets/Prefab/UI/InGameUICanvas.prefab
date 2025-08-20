@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inGameUI: {fileID: 3412576542313236916}
+  canvasGroup: {fileID: 0}
   timeUIController: {fileID: 8238745444136395547}
   interactionUIController: {fileID: 2876539854829689405}
   scoreUIController: {fileID: 3921295534812970296}
@@ -134,6 +135,7 @@ MonoBehaviour:
   backGroundUIController: {fileID: 8779504253141140416}
   clockUIController: {fileID: 4621686428516863094}
   classificationUIController: {fileID: 7652241987793590518}
+  waitThreeSecondsUI: {fileID: 0}
 --- !u!222 &8229386343666124454
 CanvasRenderer:
   m_ObjectHideFlags: 0

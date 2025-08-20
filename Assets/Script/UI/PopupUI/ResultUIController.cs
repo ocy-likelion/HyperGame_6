@@ -14,9 +14,9 @@ public class ResultUIController : PopupController
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text maxComboText;
     [SerializeField] private TMP_Text scoreText;
-
-    [Header("New Record UI")]
+    
     [SerializeField] private Image newRecordImage;
+    [SerializeField] private CanvasGroup fadeOutCanvasGroup;
 
     void Awake()
     {
@@ -37,6 +37,12 @@ public class ResultUIController : PopupController
     
     public void InitResultItem(GameResultData resultData)
     {
+        // FadeOut Panel 초기화
+        fadeOutCanvasGroup.alpha = 0;
+        
+        // 퇴근 버튼 비활성화
+        _quitButton.gameObject.SetActive(false);
+        
         // 처음에는 0으로 초기화
         dayText.text = "0";
         maxComboText.text = "0";
@@ -56,20 +62,23 @@ public class ResultUIController : PopupController
         seq.AppendInterval(0.2f);
 
         // Score Count Up
-        seq.Append(DOTween.To(() => 0, x => scoreText.text = x.ToString(), resultData.Score, 1.5f)
+        seq.Append(DOTween.To(() => 0, x => scoreText.text = x.ToString("N0"), resultData.Score, 1.5f)
             .OnComplete(() =>
             {
-                ShowNewRecordEffect();
+                // 퇴근 버튼 활성화
+                _quitButton.gameObject.SetActive(true);
+                
                 // New Record 체크
                 if (resultData.Score > bestScore)
                 {
                     PlayerPrefs.SetFloat("BestScore", resultData.Score);
+                    ShowNewRecordEffect();
                 }
             }));
     }
 
     // New Record 시, 효과
-    public void ShowNewRecordEffect()
+    private void ShowNewRecordEffect()
     {
         newRecordImage.gameObject.SetActive(true);
         
@@ -83,21 +92,20 @@ public class ResultUIController : PopupController
         seq.Join(newRecordImage.rectTransform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
         // 살짝 튕기면서 원래 크기로
         seq.Append(newRecordImage.rectTransform.DOScale(1f, 0.2f).SetEase(Ease.OutBack));
-        // 착!
+        // 착! 강조
         seq.Append(newRecordImage.rectTransform.DOScale(0.95f, 0.1f).SetEase(Ease.InQuad));
         seq.Append(newRecordImage.rectTransform.DOScale(1f, 0.15f).SetEase(Ease.OutQuad));
-        
-        // 
-        seq.OnComplete(() =>
-        {
-            
-        });
     }
 
     public void OnClickQuitButton()
     {
-        ClosePopup();
-        GameManager.Instance.ResumeGame();
-        GameManager.Instance.inGameController.QuitGame();
+        // Title로 가기 전, FadeOut
+        fadeOutCanvasGroup.DOFade(1f, 1f)
+            .OnComplete(() =>
+            {
+                ClosePopup();
+                GameManager.Instance.ResumeGame();
+                GameManager.Instance.inGameController.QuitGame();
+            });
     }
 }
