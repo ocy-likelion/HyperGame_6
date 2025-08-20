@@ -98,7 +98,7 @@ public class Classification : MonoBehaviour
                     time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3 * scoreMag;
+                        feverValue += 3;
                     score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
@@ -153,7 +153,7 @@ public class Classification : MonoBehaviour
                     time += 1 * day; //일과시간 증가
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3 * scoreMag;
+                        feverValue += 3;
                     score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신

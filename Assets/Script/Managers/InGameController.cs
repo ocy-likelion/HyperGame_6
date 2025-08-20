@@ -101,6 +101,7 @@ public class InGameController
         yield return UIManager.Instance.StartCoroutine(
             UIManager.Instance.inGameUIController.waitThreeSecondsUI.WaitThreeSeconds()
         );
+
         // BGM 재생
         AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
 
