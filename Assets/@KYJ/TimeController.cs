@@ -83,6 +83,7 @@ public class TimeController : Singleton<TimeController>
     {
         remainedTimerTime = constTimerValue;
         elapsedDayTime = 0f;
+        day = 1;
         isTimeRunning = false;
         UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResetCycle();
         UpdateTimeUI();
