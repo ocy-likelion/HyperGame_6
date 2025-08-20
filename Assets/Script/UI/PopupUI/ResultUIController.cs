@@ -63,7 +63,7 @@ public class ResultUIController : PopupController
                 // New Record 체크
                 if (resultData.Score > bestScore)
                 {
-                    PlayerPrefs.SetInt("BestScore", resultData.Score);
+                    PlayerPrefs.SetFloat("BestScore", resultData.Score);
                 }
             }));
     }

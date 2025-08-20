@@ -14,7 +14,7 @@ public class Classification : MonoBehaviour
     int maxCombo = 0; //최대 콤보 횟수
     float feverValue = 0; //피버 게이지
     float scoreMag = 1.0f; //점수 배율
-    int score = 0; //점수
+    float score = 0; //점수
 
     public ScoreUIController scoreUIController; //점수 UI 컨트롤러
     public DocumentController docController;
@@ -99,7 +99,7 @@ public class Classification : MonoBehaviour
                     combo += 1; //콤보 증가
                     if (!fever)
                         feverValue += 3 * scoreMag;
-                    score += (int)((1 * day) * scoreMag); //점수 증가
+                    score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
@@ -154,7 +154,7 @@ public class Classification : MonoBehaviour
                     combo += 1; //콤보 증가
                     if (!fever)
                         feverValue += 3 * scoreMag;
-                    score += (int)((1 * day) * scoreMag); //점수 증가
+                    score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
@@ -225,7 +225,7 @@ public class Classification : MonoBehaviour
         return maxCombo;
     }
 
-    public int GetScore()
+    public float GetScore()
     {
         return score;
     }
