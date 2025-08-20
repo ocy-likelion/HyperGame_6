@@ -18,6 +18,7 @@ public class InGameUIController : Singleton<InGameUIController>
     public BackgroundUIController backGroundUIController;
     public ClockUIController clockUIController;
     public ClassificationUIController classificationUIController;
+    public WaitThreeSecondsUI waitThreeSecondsUI;
     //여기까지
 
     protected override void Initialize()
@@ -123,4 +124,14 @@ public class InGameUIController : Singleton<InGameUIController>
     }
     #endregion
 
+    #region WaitThreeSecondsUI
+    public void ShowWaitThreeSecondsUI()
+    {
+        waitThreeSecondsUI.gameObject.SetActive(true);
+    }
+    public void HideWaitThreeSecondsUI()
+    {
+        waitThreeSecondsUI.gameObject.SetActive(false);
+    }
+    #endregion
 }
