@@ -16,13 +16,13 @@ public class ResultUIController : PopupController
     [SerializeField] private TMP_Text scoreText;
 
     [Header("New Record UI")]
-    [SerializeField] private TMP_Text newRecordText;
+    [SerializeField] private Image newRecordImage;
 
     void Awake()
     {
         _quitButton.onClick.AddListener(OnClickQuitButton);
-        if (newRecordText != null)
-            newRecordText.gameObject.SetActive(false);
+        if (newRecordImage != null)
+            newRecordImage.gameObject.SetActive(false);
     }
     
     public void ShowPopup()
@@ -59,11 +59,11 @@ public class ResultUIController : PopupController
         seq.Append(DOTween.To(() => 0, x => scoreText.text = x.ToString(), resultData.Score, 1.5f)
             .OnComplete(() =>
             {
+                ShowNewRecordEffect();
                 // New Record 체크
                 if (resultData.Score > bestScore)
                 {
                     PlayerPrefs.SetInt("BestScore", resultData.Score);
-                    ShowNewRecordEffect();
                 }
             }));
     }
@@ -71,26 +71,27 @@ public class ResultUIController : PopupController
     // New Record 시, 효과
     public void ShowNewRecordEffect()
     {
-        if (newRecordText != null)
+        newRecordImage.gameObject.SetActive(true);
+        
+        // 초기화 (작고 안 보이는 상태)
+        newRecordImage.color = new Color(1f, 1f, 1f, 0f);
+        newRecordImage.rectTransform.localScale = Vector3.zero * 0.8f;
+        
+        Sequence seq = DOTween.Sequence();
+        // Fade In + Scale Up
+        seq.Append(newRecordImage.DOFade(1f, 0.5f));
+        seq.Join(newRecordImage.rectTransform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
+        // 살짝 튕기면서 원래 크기로
+        seq.Append(newRecordImage.rectTransform.DOScale(1f, 0.2f).SetEase(Ease.OutBack));
+        // 착!
+        seq.Append(newRecordImage.rectTransform.DOScale(0.95f, 0.1f).SetEase(Ease.InQuad));
+        seq.Append(newRecordImage.rectTransform.DOScale(1f, 0.15f).SetEase(Ease.OutQuad));
+        
+        // 
+        seq.OnComplete(() =>
         {
-            newRecordText.gameObject.SetActive(true);
-            newRecordText.alpha = 0f;
-            newRecordText.transform.localScale = Vector3.zero * 0.8f;
             
-            Sequence seq = DOTween.Sequence();
-            // Fade In
-            seq.Append(newRecordText.DOFade(1f, 0.5f));
-            // 글자가 살짝 커졌다가 원래 크기로
-            seq.Join(newRecordText.transform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
-            seq.Append(newRecordText.transform.DOScale(1f, 0.2f).SetEase(Ease.InOutSine));
-            // 번쩍거리는 효과 무한 반복
-            seq.OnComplete(() =>
-            {
-                newRecordText.DOFade(0.3f, 0.2f)
-                    .SetLoops(-1, LoopType.Yoyo)
-                    .SetEase(Ease.InOutSine);
-            });
-        }
+        });
     }
 
     public void OnClickQuitButton()
