@@ -1,24 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class WaitThreeSecondsUI : MonoBehaviour
 {
-    public TMP_Text SecondsText; // UI¿¡ Ç¥½ÃÇÒ ÅØ½ºÆ® ÄÄÆ÷³ÍÆ®
+    public TMP_Text SecondsText; // UIì— í‘œì‹œí•  í…ìŠ¤íŠ¸ ì»´í¬ë„ŒíŠ¸
 
     public IEnumerator WaitThreeSeconds()
     {
-        Time.timeScale = 0f; // °ÔÀÓ ½Ã°£ Á¤Áö
-        SecondsText.text = "3"; // 3ÃÊ Ç¥½Ã
+        SecondsText.gameObject.SetActive(true); // í…ìŠ¤íŠ¸ í™œì„±í™”
+        Time.timeScale = 0f; // ê²Œì„ ì‹œê°„ ì •ì§€
+        SecondsText.text = "3"; // 3ì´ˆ í‘œì‹œ
         yield return new WaitForSecondsRealtime(1f);
-        SecondsText.text = "2"; // 2ÃÊ Ç¥½Ã
+        SecondsText.text = "2"; // 2ì´ˆ í‘œì‹œ
         yield return new WaitForSecondsRealtime(1f);
-        SecondsText.text = "1"; // 1ÃÊ Ç¥½Ã
+        SecondsText.text = "1"; // 1ì´ˆ í‘œì‹œ
         yield return new WaitForSecondsRealtime(1f);
-        SecondsText.text = "Start!"; // ½ÃÀÛ Ç¥½Ã
+        SecondsText.text = "Start!"; // ì‹œì‘ í‘œì‹œ
         yield return new WaitForSecondsRealtime(1f);
-        SecondsText.gameObject.SetActive(false); // ÅØ½ºÆ® ¼û±è
-        Time.timeScale = 1f; // °ÔÀÓ ½Ã°£ Àç°³
+        SecondsText.gameObject.SetActive(false); // í…ìŠ¤íŠ¸ ìˆ¨ê¹€
+        Time.timeScale = 1f; // ê²Œì„ ì‹œê°„ ì¬ê°œ
     }
 }
