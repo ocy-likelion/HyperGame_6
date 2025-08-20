@@ -163,7 +163,7 @@ public class DocumentController : MonoBehaviour
                 _obstacleObjs.Add(obj);
 
                 var controller = obj.GetComponent<ObstacleController>();
-                if (controller != null) controller.Initialize(this, obstacle.processCount);
+                if (controller != null) controller.Initialize(this, obstacle.processCount, obstacle.obstacleObjIdx);
             }
         }
         

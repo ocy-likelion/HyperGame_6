@@ -22,13 +22,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1baa8298b2856114d841f11833ec38ff
-    m_Address: spr/bug/anim1
+  - m_GUID: 27288e673e2fb044796d2bdb7c1ac645
+    m_Address: spr/bug/anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d9dff903ca6220f4da2cfdf1b25c3d6b
-    m_Address: spr/bug/anim2
+  - m_GUID: 30d691ce9583432419b54d434579e5f2
+    m_Address: spr/hand/anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a6472c17c048348b7d8014fe694943
+    m_Address: spr/envelope/anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

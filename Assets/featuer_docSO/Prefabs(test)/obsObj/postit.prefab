@@ -88,3 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a40a99a1ef84b42babed56bd3e2ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleImage: {fileID: 5624359079579335374}
