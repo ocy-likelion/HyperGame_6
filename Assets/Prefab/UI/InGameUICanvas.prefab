@@ -91,7 +91,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inGameUI: {fileID: 3412576542313236916}
-  canvasGroup: {fileID: 0}
   timeUIController: {fileID: 8238745444136395547}
   interactionUIController: {fileID: 2876539854829689405}
   scoreUIController: {fileID: 3921295534812970296}
@@ -199,10 +198,6 @@ PrefabInstance:
     - target: {fileID: 510070062765840895, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
       propertyPath: m_Name
       value: WaitThreeSecondsUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 510070062765840895, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4285792705490048267, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
       propertyPath: m_Pivot.x
@@ -283,22 +278,6 @@ PrefabInstance:
     - target: {fileID: 4285792705490048267, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002034066841226322, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002034066841226322, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002034066841226322, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
-      propertyPath: m_fontColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8002034066841226322, guid: 0452e3ced8074634da5031a364ba2cec, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4278190080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
