@@ -33,6 +33,7 @@ public class GameManager : Singleton<GameManager>
         
         inGameController = new InGameController();
         obstacleClearEffect = new ObstacleClearEffect();
+        obstacleClearEffect.Initialize();
         
         _isPaused = false;
         

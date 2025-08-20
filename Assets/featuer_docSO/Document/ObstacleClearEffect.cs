@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 
 public class ObstacleClearEffect
@@ -14,9 +17,25 @@ public class ObstacleClearEffect
     private List<Sprite> _handAnim = new List<Sprite>();
     private List<Sprite> _envelopeAnim = new List<Sprite>();
     
+    //퇴장 속도
+    [NonSerialized] public float bugThrowSpeed;
+    [NonSerialized] public float postitThrowSpeed;
+    [NonSerialized] public float handMoveSpeed;
+    [NonSerialized] public float filerOutSpeed;
+    [NonSerialized] public float envelopeOutSpeed;
+    
     //로드 확인용
     private bool _loadComplete = false;
 
+    public void Initialize()
+    {
+        bugThrowSpeed = 1000f;
+        postitThrowSpeed = 1000f;
+        handMoveSpeed = 1000f;
+        filerOutSpeed = 500f;
+        envelopeOutSpeed = 500f;
+    }
+    
     public IEnumerator LoadData()
     {
         LoadSprites();
@@ -100,9 +119,11 @@ public class ObstacleClearEffect
     public IEnumerator DefuseEffect(ObstacleController obstacle, int id)
     {
         Action obstacleDefuseAction = null;
+        Action endAction = null;
         var seq = DOTween.Sequence();
         var obsRect = obstacle.transform as RectTransform;
         var totalDuration = 0f;
+        var targetPos = Vector3.zero;
         
         //방향 기본 설정
         var rad = Random.Range(0, 360) * Mathf.Deg2Rad;
@@ -118,10 +139,11 @@ public class ObstacleClearEffect
             case 0:
                  //TODO: 눈이 X로 바뀌며 빙글빙글 돌며 바깥으로 날아간다.
                  obstacle.obstacleImage.sprite = _bugAnim[0];//기절 스프라이트
+                 endAction = ()=> obstacle.obstacleImage.sprite = _bugAnim[1];
                  totalDuration = 1f;//지속시간 설정
                  
                  //개별 설정
-                 var bugThrowSpeed = 100f;
+                 targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * bugThrowSpeed;
                  
                  //행동할 액션 등록
                  obstacleDefuseAction = () =>
@@ -133,7 +155,7 @@ public class ObstacleClearEffect
                          .SetRelative(true)
                          .SetEase(Ease.Linear)
                          .SetLoops((int)totalDuration, LoopType.Restart);;
-                     obsRect.DOMove(dir*bugThrowSpeed, totalDuration).SetEase(Ease.Linear);
+                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                  };
                 break;
             
@@ -142,9 +164,8 @@ public class ObstacleClearEffect
                 //TODO: 바깥쪽으로 날아간다.
                 totalDuration = 1f;//지속시간 설정
                 
-                //개별 설정
-                var postitThrowSpeed = 50f;
-                //dir = obstacle.transform.position + dir;
+                //개별 설정;
+                targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * postitThrowSpeed;
                 
                 //행동할 액션 등록
                 obstacleDefuseAction = () =>
@@ -152,7 +173,7 @@ public class ObstacleClearEffect
                     //--SFX 추가 삽입구간--//
                      
                     //---------------------//
-                    obsRect.DOMove(dir*postitThrowSpeed, totalDuration).SetEase(Ease.Linear);
+                    obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };
                 break;
             
@@ -160,12 +181,12 @@ public class ObstacleClearEffect
             case 2:
                 //TODO: 아야하는 스프라이트로 바뀌며 진행하며 바깥으로 밀려나고 사라진다.
                 obstacle.obstacleImage.sprite = _handAnim[1];//맞은 스프라이트
-                totalDuration = 2f;//지속시간 설정
+                endAction = () => obstacle.obstacleImage.sprite = _handAnim[0];
+                totalDuration = 0.5f;//지속시간 설정
                 
                 //개별 설정
-                var subDuration = 0.5f;
-                var handMoveSpeed =100f;
-                dir = new Vector3(dir.x, dir.y, 0);
+                var subDuration = 0.25f;
+                targetPos = obstacle.transform.position + Vector3.right * handMoveSpeed;
                 
                 //행동할 액션 등록
                 obstacleDefuseAction = () =>
@@ -173,23 +194,51 @@ public class ObstacleClearEffect
                     //--SFX 추가 삽입구간--//
                      
                     //---------------------//
-                    seq.Append(obsRect.DOMove(dir*handMoveSpeed, subDuration).SetEase(Ease.Linear));
-                    seq.Join(obsRect.DOShakeAnchorPos(subDuration, 100f, 30, 360));
+                    obsRect.DOShakePosition(subDuration, 200f, 50, 360).OnComplete(() =>
+                    {
+                        obsRect.DOMove(targetPos, 0.1f).SetEase(Ease.Linear);
+                    });
+
                 };
                 break;
             
             //파일철
             case 3:
                 //TODO: 진동여러번 하다가 "파일철이 바깥으로 빠진다."
+                totalDuration = 0.25f;//지속시간 설정
                 
+                //개별 설정
+                targetPos = obstacle.transform.position + Vector3.left * filerOutSpeed;
+                
+                //행동할 액션 등록
+                obstacleDefuseAction = () =>
+                {
+                    //--SFX 추가 삽입구간--//
+                     
+                    //---------------------//
+                    obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
+                };
                 break;
             
             //서류봉투
             case 4:
                 //TODO: 1단 서류봉투 열림, 2단 서류 삐져나옴, 3~5단 진동 마지막 단에는 "서류봉투가 아래로빠진다."
                 //여기는 완전 제거연출이니까 봉투 빠지는걸로.
+                obstacle.obstacleImage.sprite = _envelopeAnim[1];//기절 스프라이트
+                endAction = ()=> obstacle.obstacleImage.sprite = _envelopeAnim[0];
+                totalDuration = 0.25f;//지속시간 설정
                 
+                //개별 설정
+                targetPos = obstacle.transform.position + Vector3.down * envelopeOutSpeed;
                 
+                //행동할 액션 등록
+                obstacleDefuseAction = () =>
+                {
+                    //--SFX 추가 삽입구간--//
+                     
+                    //---------------------//
+                    obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
+                };
                 break;
         }
 
@@ -203,6 +252,8 @@ public class ObstacleClearEffect
                 yield return null;
             }
         }
+        
+        endAction?.Invoke();
         yield return null;
     }
 }
