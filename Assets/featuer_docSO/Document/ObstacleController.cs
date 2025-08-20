@@ -40,12 +40,12 @@ public class ObstacleController : MonoBehaviour
 
     public IEnumerator TerminateSeq()
     {
+        // DocumentController에 처리 완료 알림
+        _documentController?.ObstacleCleared(gameObject);
+        
         //장애물 처리 연출
         yield return StartCoroutine(GameManager.Instance.
             obstacleClearEffect.DefuseEffect(this, _obstacleObjIdx));
-        
-        // DocumentController에 처리 완료 알림
-        _documentController?.ObstacleCleared(gameObject);
 
         // 풀에 반환 (UI 풀에도 동일하게 적용)
         DocumentPool.Instance.ReturnObject(gameObject);
