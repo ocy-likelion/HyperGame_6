@@ -254,17 +254,17 @@ public class DocumentController : MonoBehaviour
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
 
-            foreach (var result in results)
+            if (results.Count > 0)
             {
-                var obstacle = result.gameObject.GetComponent<ObstacleController>();
+                var firstHit = results[0];
+                var obstacle = firstHit.gameObject.GetComponent<ObstacleController>();
+
                 if (obstacle != null)
                 {
-                    // 스크린 좌표를 Canvas 좌표로 변환
                     Vector2 canvasPos = ScreenToCanvasPosition(inputPos);
                     VfxManager.Instance.GetVFX(VFXType.OBSTOUCH, canvasPos, Quaternion.identity, Vector2.one);
-                    
+
                     obstacle.ProcessHit();
-                    return;
                 }
             }
         }
