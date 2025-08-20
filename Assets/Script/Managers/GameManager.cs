@@ -8,6 +8,7 @@ using static Constants;
 public class GameManager : Singleton<GameManager>
 {
     public InGameController inGameController;
+    public ObstacleClearEffect obstacleClearEffect;
     
     /// <summary>
     /// 게임은 상태패턴으로 관리됩니다. Title, InGame, Pause 세가지로 관리됩니다.
@@ -31,6 +32,7 @@ public class GameManager : Singleton<GameManager>
         _states[GameState.Pause] = new PauseState();
         
         inGameController = new InGameController();
+        obstacleClearEffect = new ObstacleClearEffect();
         
         _isPaused = false;
         
@@ -46,6 +48,7 @@ public class GameManager : Singleton<GameManager>
     //최초 실행시 초기화 진행
     private IEnumerator LoadGameSystem()
     {
+        yield return StartCoroutine(obstacleClearEffect.LoadData());
         yield return StartCoroutine(inGameController.Initialize());
     }
     
@@ -178,6 +181,7 @@ public class GameManager : Singleton<GameManager>
 
     public new void OnDestroy()
     {
+        obstacleClearEffect.ClearSprites();//List에 로드한 스프라이트 해제
         base.OnDestroy();
     }
 }
