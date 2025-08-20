@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,13 +9,21 @@ public class ClassificationUIController : MonoBehaviour
 {
     [SerializeField] private Image greenBox;
     [SerializeField] private Image redBox;
-
+    
     private Tweener effectTweener;
 
+    [SerializeField] private TMP_Text _timerEffectText;
+    private RectTransform _timerEffectRect;
+    private Vector2 _timerEffectStartAnchoredPos;
+    
     private void Awake()
     {
         InitBox(greenBox);
         InitBox(redBox);
+        
+        _timerEffectRect = _timerEffectText.GetComponent<RectTransform>();
+        _timerEffectStartAnchoredPos = _timerEffectRect.anchoredPosition; // ì‹œì‘ ìœ„ì¹˜ 
+        Debug.Log(_timerEffectStartAnchoredPos);
     }
 
     private void InitBox(Image box)
@@ -22,38 +31,64 @@ public class ClassificationUIController : MonoBehaviour
         if (box != null)
         {
             var c = box.color;
-            c.a = 0f; // ½ÃÀÛ ½Ã Åõ¸í
+            c.a = 0f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             box.color = c;
-            box.raycastTarget = false; // UI Å¬¸¯ ¹æÁö
+            box.raycastTarget = false; // UI Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
     public void TriggerSuccessEffect()
     {
         TriggerEffect(greenBox);
+        RisingEffect(true);
     }
 
     public void TriggerFailEffect()
     {
         TriggerEffect(redBox);
+        RisingEffect(false);
     }
 
     private void TriggerEffect(Image box)
     {
         if (box == null) return;
 
-        // ±âÁ¸ Æ®À© Á¤Áö
+        // ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         effectTweener?.Kill();
 
-        // ¾ËÆÄ¸¦ ÀÏÁ¤ °ª(¿¹: 0.3)À¸·Î ¼¼ÆÃ
+        // ï¿½ï¿½ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½: 0.3)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         var c = box.color;
         c.a = 0.5f;
         box.color = c;
 
-        // ±ôºıÀÌ°í Åõ¸íÇØÁöµµ·Ï
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         effectTweener = box.DOFade(0f, 0.5f).OnComplete(() =>
         {
             effectTweener = null;
         });
+    }
+
+    private void RisingEffect(bool isCorrect)
+    {
+        // íŠ¸ìœˆ ì •ë¦¬ (ê¸°ì¡´ íš¨ê³¼ ì¦‰ì‹œ ëŠê¸°)
+        _timerEffectRect.DOKill(true);   // true = ë§ˆì§€ë§‰ ê°’ì„ ì ìš©í•˜ê³  ì¢…ë£Œ
+        _timerEffectText.DOKill(true);
+
+        // ì´ˆê¸°í™”
+        _timerEffectText.gameObject.SetActive(true);
+        _timerEffectText.text = isCorrect ? "+ ì‹œê°„ ì¦ê°€!!" : "- ì‹œê°„ ê°ì†Œ...";
+        _timerEffectText.color = isCorrect ? Color.green : Color.red;
+
+        // ì•ŒíŒŒê°’ ê°•ì œ ì„¸íŒ…
+        var col = _timerEffectText.color;
+        col.a = 1f;
+        _timerEffectText.color = col;
+
+        // ìœ„ì¹˜ ì´ˆê¸°í™”
+        _timerEffectRect.anchoredPosition = _timerEffectStartAnchoredPos;
+
+        // ìƒˆ ì—°ì¶œ ì‹œì‘ (OnComplete ì•ˆ ì”€)
+        _timerEffectRect.DOAnchorPosY(_timerEffectStartAnchoredPos.y + 50f, 1f);
+        _timerEffectText.DOFade(0f, 1f);
     }
 }
