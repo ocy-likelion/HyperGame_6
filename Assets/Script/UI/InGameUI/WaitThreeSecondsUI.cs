@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaitThreeSecondsUI : MonoBehaviour
 {
     public TMP_Text SecondsText; // UI에 표시할 텍스트 컴포넌트
+    public Image TouchBlockPanel; // UI에 표시할 텍스트 컴포넌트
 
     public IEnumerator WaitThreeSeconds()
     {
         SecondsText.gameObject.SetActive(true); // 텍스트 활성화
+        TouchBlockPanel.gameObject.SetActive(true); //터치 막는 패널 활성화
         Time.timeScale = 0f; // 게임 시간 정지
         SecondsText.text = "3"; // 3초 표시
         yield return new WaitForSecondsRealtime(1f);
@@ -20,6 +23,7 @@ public class WaitThreeSecondsUI : MonoBehaviour
         SecondsText.text = "Start!"; // 시작 표시
         yield return new WaitForSecondsRealtime(1f);
         SecondsText.gameObject.SetActive(false); // 텍스트 숨김
+        TouchBlockPanel.gameObject.SetActive(false); //터치 막는 패널 비활성화
         Time.timeScale = 1f; // 게임 시간 재개
     }
 }
