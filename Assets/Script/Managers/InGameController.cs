@@ -80,6 +80,9 @@ public class InGameController
         //classification.InitScore();
         GameManager.Instance.GetClassification().InitScore();
         _initComplete = true;
+        
+        // NewRecord 이미지 위치 초기화
+        InGameUIController.Instance.scoreUIController.InitNewRecordImage();
     }
 
     
