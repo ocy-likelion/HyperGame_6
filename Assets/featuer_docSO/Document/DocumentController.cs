@@ -83,7 +83,7 @@ public class DocumentController : MonoBehaviour
     private void CreateObstacle()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        int difficulty = (day / 5) + 1;
+        int difficulty = DifficultyManager.Instance.GetLevel(day) + 1;
         int obstacleType = Random.Range(0, _obstacleObjDatas.Count);
 
         // 장애물 인스턴스 생성
@@ -134,6 +134,8 @@ public class DocumentController : MonoBehaviour
 
     private void SpawnDocument()
     {
+        int day = GameManager.Instance.GetTimeController()._day;
+        
         _obstacleObjs.Clear();
 
         // 문서 생성
@@ -151,7 +153,7 @@ public class DocumentController : MonoBehaviour
         }
 
         // 장애물 생성
-        float chance = Mathf.Clamp(GameManager.Instance.GetTimeController()._day * 5f, 0f, 100f);
+        float chance = DifficultyManager.Instance.GetObstacleSpawnProbability(day);
         if (!GameManager.Instance.GetClassification().fever && Random.Range(0f, 100f) < chance)
         {
             GameManager.Instance.GetClassification().obstacle = true;
