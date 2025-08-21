@@ -83,7 +83,7 @@ public class DocumentController : MonoBehaviour
     private void CreateObstacle()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        int difficulty = DifficultyManager.Instance.GetLevel(day) + 1;
+        int difficulty = Mathf.Min(DifficultyManager.Instance.GetLevel(day) + 1, 3);
         int obstacleType = Random.Range(0, _obstacleObjDatas.Count);
 
         // 장애물 인스턴스 생성
