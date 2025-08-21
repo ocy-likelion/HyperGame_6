@@ -83,6 +83,9 @@ public class InGameController
         
         // NewRecord 이미지 위치 초기화
         InGameUIController.Instance.scoreUIController.InitNewRecordImage();
+        
+        // 시계 프레임 색상 초기화
+        InGameUIController.Instance.clockUIController.InitClockFrameColor();
     }
 
     

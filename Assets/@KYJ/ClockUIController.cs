@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ClockUIController : MonoBehaviour
 {
-    GameObject clockHandle;
-    Image clockFrame;
+    [SerializeField] GameObject clockHandle;
+    [SerializeField] Image clockFrame;
 
     [Header("각도 변화량")]
     public float stepAngle = 30f;
@@ -19,23 +19,6 @@ public class ClockUIController : MonoBehaviour
 
     float targetZ;
     float timer;
-
-    void Awake()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            var child = transform.GetChild(i).gameObject;
-            switch (child.name)
-            {
-                case "Hand":
-                    clockHandle = child;
-                    break;
-                case "Frame":
-                    clockFrame = child.GetComponent<Image>();
-                    break;
-            }
-        }
-    }
 
     void Update()
     {
@@ -73,7 +56,12 @@ public class ClockUIController : MonoBehaviour
         }
         else
         {
-            clockFrame.color = Color.white; // 기본 색상으로 설정
+            InitClockFrameColor(); // 기본 색상으로 설정
         }
+    }
+    
+    public void InitClockFrameColor() // 시계 프레임 색상 초기화
+    {
+        clockFrame.color = Color.white;
     }
 }
