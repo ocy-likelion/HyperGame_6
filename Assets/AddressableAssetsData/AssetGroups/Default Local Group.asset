@@ -18,22 +18,27 @@ MonoBehaviour:
   m_GUID: 0080fc903bf893c46b64adaa74c3ba96
   m_SerializeEntries:
   - m_GUID: 06755db02994d0c44b51c4d2d2b57fe5
-    m_Address: spr/bug/dead
+    m_Address: spr/obstacles/bug/dead
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 171e7445062a1b2449ac727fc98fea58
+    m_Address: spr/obstacles/sounds/onoff
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 27288e673e2fb044796d2bdb7c1ac645
-    m_Address: spr/bug/anim
+    m_Address: spr/obstacles/bug/anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30d691ce9583432419b54d434579e5f2
-    m_Address: spr/hand/anim
+    m_Address: spr/obstacles/hand/anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b6a6472c17c048348b7d8014fe694943
-    m_Address: spr/envelope/anim
+    m_Address: spr/obstacles/envelope/anim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
