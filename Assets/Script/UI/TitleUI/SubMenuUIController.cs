@@ -9,6 +9,8 @@ public class SubMenuUIController : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Button _gameSettingButton;
     [SerializeField] private Button _leaderBoardButton;
+    [SerializeField] private Sprite[] _swapImage = new Sprite[2];
+    private bool _isClicked = false;
 
     private void Awake()
     {
@@ -19,6 +21,16 @@ public class SubMenuUIController : MonoBehaviour
     
     public void OnClickGameSettingButton()
     {
+        if (!_isClicked)
+        {
+            _gameSettingButton.image.sprite = _swapImage[1];
+            _isClicked = true;
+        }
+        else
+        {
+            _gameSettingButton.image.sprite = _swapImage[0];
+            _isClicked = false;
+        }
         AudioManager.Instance.ToggleAudio();
     }
 
