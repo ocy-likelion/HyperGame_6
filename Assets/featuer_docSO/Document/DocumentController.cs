@@ -83,7 +83,7 @@ public class DocumentController : MonoBehaviour
     private void CreateObstacle()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        int difficulty = (day / 5) + 1;
+        int processCount = DifficultyManager.Instance.GetObstacleProcessingCount(day);
         int obstacleType = Random.Range(0, _obstacleObjDatas.Count);
 
         // 장애물 인스턴스 생성
@@ -91,7 +91,7 @@ public class DocumentController : MonoBehaviour
 
         if (obstacleType == 0 || obstacleType == 1)
         {
-            for (int i = 0; i < difficulty; i++)
+            for (int i = 0; i < processCount; i++)
             {
                 var obstacle = new ObstacleInstance
                 {
@@ -112,7 +112,7 @@ public class DocumentController : MonoBehaviour
             {
                 obstacleObjIdx = obstacleType,
                 prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
-                processCount = difficulty,
+                processCount = processCount,
                 spawnPos = new Vector2(1f, -2f)
             };
             _currentObstacles.Add(obstacle);
@@ -123,7 +123,7 @@ public class DocumentController : MonoBehaviour
             {
                 obstacleObjIdx = obstacleType,
                 prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
-                processCount = difficulty,
+                processCount = processCount,
                 spawnPos = Vector2.zero
             };
             _currentObstacles.Add(obstacle);
@@ -134,6 +134,8 @@ public class DocumentController : MonoBehaviour
 
     private void SpawnDocument()
     {
+        int day = GameManager.Instance.GetTimeController()._day;
+        
         _obstacleObjs.Clear();
 
         // 문서 생성
@@ -151,7 +153,7 @@ public class DocumentController : MonoBehaviour
         }
 
         // 장애물 생성
-        float chance = Mathf.Clamp(GameManager.Instance.GetTimeController()._day * 5f, 0f, 100f);
+        float chance = DifficultyManager.Instance.GetObstacleSpawnProbability(day);
         if (!GameManager.Instance.GetClassification().fever && Random.Range(0f, 100f) < chance)
         {
             GameManager.Instance.GetClassification().obstacle = true;
@@ -163,7 +165,7 @@ public class DocumentController : MonoBehaviour
                 _obstacleObjs.Add(obj);
 
                 var controller = obj.GetComponent<ObstacleController>();
-                if (controller != null) controller.Initialize(this, obstacle.processCount);
+                if (controller != null) controller.Initialize(this, obstacle.processCount, obstacle.obstacleObjIdx);
             }
         }
         
@@ -254,13 +256,33 @@ public class DocumentController : MonoBehaviour
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
 
-            foreach (var result in results)
+            if (results.Count > 0)
             {
-                var obstacle = result.gameObject.GetComponent<ObstacleController>();
+                var firstHit = results[0];
+                var obstacle = firstHit.gameObject.GetComponent<ObstacleController>();
+
                 if (obstacle != null)
+                {
+                    Vector2 canvasPos = ScreenToCanvasPosition(inputPos);
+                    VfxManager.Instance.GetVFX(VFXType.OBSTOUCH, canvasPos, Quaternion.identity, Vector2.one);
+
                     obstacle.ProcessHit();
+                }
             }
         }
+    }
+    
+    private Vector2 ScreenToCanvasPosition(Vector2 screenPos)
+    {
+        Vector2 canvasPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _canvas.transform as RectTransform,
+            screenPos,
+            _canvas.worldCamera,
+            out canvasPos
+        );
+    
+        return canvasPos;
     }
 
     private bool TryGetInputPosition(out Vector2 inputPos)

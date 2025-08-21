@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0080fc903bf893c46b64adaa74c3ba96
+  m_SerializeEntries:
+  - m_GUID: 06755db02994d0c44b51c4d2d2b57fe5
+    m_Address: spr/obstacles/bug/dead
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 171e7445062a1b2449ac727fc98fea58
+    m_Address: spr/buttons/sounds/onoff
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27288e673e2fb044796d2bdb7c1ac645
+    m_Address: spr/obstacles/bug/anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30d691ce9583432419b54d434579e5f2
+    m_Address: spr/obstacles/hand/anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a6472c17c048348b7d8014fe694943
+    m_Address: spr/obstacles/envelope/anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8af34909086dcc147a6c1228efbf1fbb, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ca955ceac5309054988835bf4fe382db, type: 2}
+    - {fileID: 11400000, guid: d93e52caf96725642bf15301b9e6b14f, type: 2}

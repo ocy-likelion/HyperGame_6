@@ -14,16 +14,18 @@ public class Classification : MonoBehaviour
     int maxCombo = 0; //최대 콤보 횟수
     float feverValue = 0; //피버 게이지
     float scoreMag = 1.0f; //점수 배율
-    int score = 0; //점수
+    float score = 0; //점수
 
     public ScoreUIController scoreUIController; //점수 UI 컨트롤러
     public DocumentController docController;
+    private ClassificationUIController classificationUIController; //분류 UI 컨트롤러
 
     public void Initialize()
     {
         docController = GameManager.Instance.GetDocumentController();
+        classificationUIController = UIManager.Instance.inGameUIController.classificationUIController;
     }
-    
+
     public void scoreMagnification()
     {
         switch (combo)
@@ -75,14 +77,15 @@ public class Classification : MonoBehaviour
 
         if (obstacle) // 장애물이 있을 때 
         {
-            //success = false;
-            time -= 5 * day; //일과시간 감소
+            time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
+            GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
             combo = 0; //콤보 초기화
             feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
             scoreMagnification(); //점수 배율 적용
             UpdateScoreMagUI(); //점수 배율 UI 갱신
             UpdateComboUI();
             UpdateFeverUI(); //피버 게이지 UI 갱신
+            classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
             Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
         }
         else // 장애물이 없을 때
@@ -92,16 +95,18 @@ public class Classification : MonoBehaviour
                 if (confirm) // 승인 버튼 클릭 시
                 {
                     //success = true;
-                    time += 1 * day; //일과시간 증가
+                    time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
+                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3 * scoreMag;
-                    score += (int)((1 * day) * scoreMag); //점수 증가
+                        feverValue += 3;
+                    score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
@@ -117,13 +122,15 @@ public class Classification : MonoBehaviour
                 else // 반려 버튼 클릭 시
                 {
                     //success = false;
-                    time -= 5 * day; //일과시간 감소
+                    time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
+                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo = 0; //콤보 초기화
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
             }
@@ -132,28 +139,32 @@ public class Classification : MonoBehaviour
                 if (confirm) // 승인 버튼 클릭 시
                 {
                     //success = false;
-                    time -= 5 * day; //일과시간 감소
+                    time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
+                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo = 0; //콤보 초기화
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
                 {
                     //success = true;
-                    time += 1 * day; //일과시간 증가
+                    time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
+                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3 * scoreMag;
-                    score += (int)((1 * day) * scoreMag); //점수 증가
+                        feverValue += 3;
+                    score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
@@ -218,7 +229,7 @@ public class Classification : MonoBehaviour
         return maxCombo;
     }
 
-    public int GetScore()
+    public float GetScore()
     {
         return score;
     }

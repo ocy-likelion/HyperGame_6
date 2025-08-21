@@ -167,8 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37aa33bcc22ed04c903e4d075214916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 60
+  constTimerValue: 60
   dayTime: 120
+  day: 1
 --- !u!4 &207524410
 Transform:
   m_ObjectHideFlags: 0

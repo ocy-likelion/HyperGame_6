@@ -5,15 +5,18 @@ using TMPro;
 
 public class TimeController : Singleton<TimeController>
 {
-    [Header("타이머 설정")]
-    [SerializeField] float timer = 60f;       // 일과 시간 타이머
-    bool isTimeRunning = false;                 // 일과 시간 타이머 작동 여부
-    float remainedTimerTime;                     // 남은 일과 시간
+    [Header("타이머 길이")]
+    [SerializeField] float constTimerValue = 60.0f;
+    bool isTimeRunning = false; // 타이머 실행 중인지
+    float remainedTimerTime; // 남은 일과 시간
+    private float currentDecreaseInterval; // 현재 감소 간격
 
-    [Header("하루 길이 설정")]
-    [SerializeField] float dayTime = 120f;    // 하루 길이
-    int day = 1;                                // 현재 일수
-    float elapsedDayTime = 0f;                  // 하루 경과 시간
+    //[Header("하루 길이")]
+    private float dayTime;
+    float elapsedDayTime = 0f; // 하루 중 몇시간 얼마나 지났는지
+
+    [Header("현재 날짜")]
+    [SerializeField] int day = 1;
 
     public float _remainedTimerTime => remainedTimerTime;
     public float _remainedDayTime => dayTime - elapsedDayTime; // 하루 남은 시간
@@ -46,23 +49,32 @@ public class TimeController : Singleton<TimeController>
     {
         UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResumeCycle();
         
+        float timerAccumulator = 0f; // 누적 시간
+
         while (isTimeRunning)
         {
-            remainedTimerTime -= Time.deltaTime; // 일과 시간 감소
+            timerAccumulator += Time.deltaTime;
 
-            if (remainedTimerTime <= 0f)
+            // 감소주기 변수 사용
+            while (timerAccumulator >= currentDecreaseInterval)
             {
-                remainedTimerTime = 0f; // 일과 시간이 0초 이하로 내려가면 0으로 설정
+                remainedTimerTime -= 1f;
+                timerAccumulator -= currentDecreaseInterval;
+
+                if (remainedTimerTime <= 0f)
+                {
+                    remainedTimerTime = 0f;
+                    UpdateTimeUI();
+                    GameManager.Instance.inGameController.Dispose();
+                    StopTime();
+                    yield break;
+                }
+
                 UpdateTimeUI();
-                GameManager.Instance.inGameController.Dispose(); // 일과 시간이 0초 이하면 게임 종료 처리
-                StopTime();
-                yield break;
             }
 
-            elapsedDayTime += Time.deltaTime; // 남은 하루 길이 계산
+            elapsedDayTime += Time.deltaTime;
             if (elapsedDayTime >= dayTime) HandleDayEnd();
-
-            UpdateTimeUI();
             UpdateDayUI();
 
             yield return null;
@@ -73,29 +85,37 @@ public class TimeController : Singleton<TimeController>
     {
         day++;                  // 하루 일수 증가
         elapsedDayTime = 0f;    // 하루 남은 시간 초기화
-        remainedTimerTime = timer; // 타이머 초기화
-        Debug.Log($"하루가 지났습니다. 현재 {day}일차");
+        
+        // day가 바뀌었으니 감소 간격 갱신
+        currentDecreaseInterval = DifficultyManager.Instance.GetTimeDecreaseRate(day);
     }
 
     public void ResetTimer()
     {
-        remainedTimerTime = timer;
+        remainedTimerTime = constTimerValue;
         elapsedDayTime = 0f;
+        day = 1;
+        
+        // 하루당 시간 할당
+        dayTime = DifficultyManager.Instance.DayTime;
+        // 초기 감소 간격 할당
+        currentDecreaseInterval = DifficultyManager.Instance.GetTimeDecreaseRate(day);
+        
         isTimeRunning = false;
         UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResetCycle();
         UpdateTimeUI();
         UpdateDayUI();
     }
 
-    void UpdateTimeUI()
+    public void UpdateTimeUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.timerText is var timeText && timeText != null)
-            timeText.text = remainedTimerTime.ToString("F1");
+            timeText.text = $"{remainedTimerTime:F0}";
     }
 
     void UpdateDayUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.dayText is var dayText && dayText != null)
-            dayText.text = $"{day} Day";
+            dayText.text = $"{day}";
     }
 }

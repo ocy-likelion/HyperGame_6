@@ -80,6 +80,12 @@ public class InGameController
         //classification.InitScore();
         GameManager.Instance.GetClassification().InitScore();
         _initComplete = true;
+        
+        // NewRecord 이미지 위치 초기화
+        InGameUIController.Instance.scoreUIController.InitNewRecordImage();
+        
+        // 시계 프레임 색상 초기화
+        InGameUIController.Instance.clockUIController.InitClockFrameColor();
     }
 
     
@@ -87,7 +93,6 @@ public class InGameController
     public IEnumerator StartGame()
     {
         _gameStarted = true;
-        
         //인게임UI 보이기
         UIManager.Instance.inGameUIController.ShowTimeUI();
         UIManager.Instance.inGameUIController.ShowInteractionUI();
@@ -95,6 +100,20 @@ public class InGameController
         UIManager.Instance.inGameUIController.ShowFeverUI();
         UIManager.Instance.inGameUIController.ShowBackgroundUI();
         UIManager.Instance.inGameUIController.ShowClockUI();
+        UIManager.Instance.inGameUIController.ShowClassificationUI();
+        UIManager.Instance.inGameUIController.ShowWaitThreeSecondsUI();
+        UIManager.Instance.inGameUIController.ShowDifficultyUpEffectUI();
+        
+        //321
+        yield return UIManager.Instance.StartCoroutine(
+            UIManager.Instance.inGameUIController.waitThreeSecondsUI.WaitThreeSeconds()
+        );
+
+        //난이도 상승시점 모니터링 시작
+        DifficultyManager.Instance.InitLevelMonitor();
+        
+        // BGM 재생
+        AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
 
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
@@ -167,6 +186,9 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideFeverUI();
         UIManager.Instance.inGameUIController.HideBackgroundUI();
         UIManager.Instance.inGameUIController.HideClockUI();
+        UIManager.Instance.inGameUIController.HideClassificationUI();
+        UIManager.Instance.inGameUIController.HideWaitThreeSecondsUI();
+        UIManager.Instance.inGameUIController.HideDifficultyUpEffectUI();
 
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
@@ -195,5 +217,10 @@ public class InGameController
     public void UseRetry()
     {
         _useRetry = true;
+    }
+
+    public bool GetGameStarted()
+    {
+        return _gameStarted;
     }
 }

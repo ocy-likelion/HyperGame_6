@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+
+public class DifficultyUpEffectUIController : MonoBehaviour
+{
+    [SerializeField] private TMP_Text effectText;
+    [SerializeField] private CanvasGroup canvasGroup;
+    
+    private Vector3 _originVector;
+    private Vector3 _startVector;
+    private Vector3 _endVector;
+    
+    public void Awake()
+    {
+        _originVector = effectText.transform.position;
+        _startVector = _originVector + new Vector3(-1000, 0,0);
+        _endVector = _originVector + new Vector3(1000, 0,0);
+        canvasGroup.alpha = 0;
+        effectText.transform.position = _startVector;
+    }
+
+    public void Initialize()
+    {
+        DifficultyManager.OnLevelChanged += CallLevelUpEffect;
+    }
+
+    public void CallLevelUpEffect()
+    {
+        StartCoroutine(ShowEffectUI());
+    }
+
+    public IEnumerator ShowEffectUI()
+    {
+        var tr = effectText.transform;
+        var seq= DOTween.Sequence();
+        seq.Append(canvasGroup.DOFade(1, 0.1f));
+        seq.Append(tr.DOMove(_startVector, 0));
+        seq.Append(tr.DOMove(_originVector, 0.35f).SetEase(Ease.OutBounce));
+        yield return new WaitForSeconds(2f);
+        seq.Append(tr.DOMove(_endVector, 0.15f)).SetEase(Ease.OutExpo);
+        seq.Append(seq.Append(canvasGroup.DOFade(0, 0.1f)));
+    }
+}

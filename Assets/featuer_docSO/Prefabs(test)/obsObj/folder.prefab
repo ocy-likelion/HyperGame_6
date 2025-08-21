@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3200495210216772474}
   - component: {fileID: 7678387122566282027}
   m_Layer: 5
-  m_Name: Folder
+  m_Name: folder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 833, y: 1155}
+  m_SizeDelta: {x: 734.5, y: 1066}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1799049951651885253
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3ed784f541dfab3498f019f16d427696, type: 3}
+  m_Sprite: {fileID: 1133621159, guid: b6a6472c17c048348b7d8014fe694943, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,3 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a40a99a1ef84b42babed56bd3e2ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacleImage: {fileID: 3200495210216772474}

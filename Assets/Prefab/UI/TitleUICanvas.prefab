@@ -79,9 +79,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 2160}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -127,69 +127,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3412576542313236916}
     m_Modifications:
-    - target: {fileID: 663804523620437860, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 79a2fe6560373444ebc03e62f5a3612b, type: 2}
-    - target: {fileID: 663804523620437860, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 698748919349509037, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
       propertyPath: m_Name
       value: MainMenuUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 698748919349509037, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6034938919821689686, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 79a2fe6560373444ebc03e62f5a3612b, type: 2}
-    - target: {fileID: 6034938919821689686, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391698379299383299, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391698379299383299, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391698379299383299, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391698379299383299, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6391698379299383299, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265763572884598470, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265763572884598470, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265763572884598470, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265763572884598470, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7265763572884598470, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8975620280526064372, guid: 32a8ead72e167ed4b8c44b3eb6d2275f, type: 3}
       propertyPath: m_Pivot.x
@@ -300,42 +240,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3412576542313236916}
     m_Modifications:
-    - target: {fileID: 1293294563902818188, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 79a2fe6560373444ebc03e62f5a3612b, type: 2}
-    - target: {fileID: 1293294563902818188, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706754111037260508, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706754111037260508, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706754111037260508, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2918680535098527169, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2918680535098527169, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3980767422314996553, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 79a2fe6560373444ebc03e62f5a3612b, type: 2}
-    - target: {fileID: 3980767422314996553, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5797505971910658081, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -419,10 +323,6 @@ PrefabInstance:
     - target: {fileID: 7462272676340082050, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
       propertyPath: m_Name
       value: SubMenuUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 7462272676340082050, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

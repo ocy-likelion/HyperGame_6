@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class InGameUIController : Singleton<InGameUIController>
 {
@@ -17,7 +18,9 @@ public class InGameUIController : Singleton<InGameUIController>
     public FeverUIController feverUIController;
     public BackgroundUIController backGroundUIController;
     public ClockUIController clockUIController;
-
+    public ClassificationUIController classificationUIController;
+    public WaitThreeSecondsUI waitThreeSecondsUI;
+    public DifficultyUpEffectUIController difficultyUpEffectUIController;
     //여기까지
 
     protected override void Initialize()
@@ -29,6 +32,7 @@ public class InGameUIController : Singleton<InGameUIController>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         UIManager.Instance.SetInGameUIController(this);
+        difficultyUpEffectUIController.Initialize();
     }
 
     public void ShowInGameUI()
@@ -112,4 +116,41 @@ public class InGameUIController : Singleton<InGameUIController>
     }
     #endregion
 
+    #region ClassificationUI
+    public void ShowClassificationUI()
+    {
+        classificationUIController.gameObject.SetActive(true);
+    }
+    public void HideClassificationUI()
+    {
+        classificationUIController.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region WaitThreeSecondsUI
+    public void ShowWaitThreeSecondsUI()
+    {
+        waitThreeSecondsUI.gameObject.SetActive(true);
+    }
+    public void HideWaitThreeSecondsUI()
+    {
+        waitThreeSecondsUI.gameObject.SetActive(false);
+    }
+    #endregion
+    
+    #region DifficultyUpEffectUI
+
+    public void CallDifficultyUpEffect()
+    {
+        StartCoroutine(difficultyUpEffectUIController.ShowEffectUI());
+    }
+    public void ShowDifficultyUpEffectUI()
+    {
+        difficultyUpEffectUIController.gameObject.SetActive(true);
+    }
+    public void HideDifficultyUpEffectUI()
+    {
+        difficultyUpEffectUIController.gameObject.SetActive(false);
+    }
+    #endregion
 }

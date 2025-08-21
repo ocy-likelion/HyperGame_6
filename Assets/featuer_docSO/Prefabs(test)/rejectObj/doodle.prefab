@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1346638317402422422}
   - component: {fileID: 8230362554959047532}
   m_Layer: 5
-  m_Name: Doodle
+  m_Name: doodle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 511, y: 483}
+  m_SizeDelta: {x: 458, y: 206}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5277376052730395703
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1154165739, guid: 8eb7f8f650798f544b095eed51381db4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d2dcc89975057c40b84ac2b54e0cb54, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
