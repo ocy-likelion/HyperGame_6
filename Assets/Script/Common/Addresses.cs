@@ -6,7 +6,7 @@ public static class Addresses
         {
             public static class Sounds
             {
-                public const string OnOff = "spr/obstacles/sounds/onoff";
+                public const string OnOff = "spr/buttons/sounds/onoff";
             }
         }
         

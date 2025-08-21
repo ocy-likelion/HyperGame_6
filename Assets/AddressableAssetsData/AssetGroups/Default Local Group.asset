@@ -23,7 +23,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 171e7445062a1b2449ac727fc98fea58
-    m_Address: spr/obstacles/sounds/onoff
+    m_Address: spr/buttons/sounds/onoff
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
