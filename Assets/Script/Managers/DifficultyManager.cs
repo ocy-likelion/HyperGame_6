@@ -11,7 +11,7 @@ public class DifficultyManager : Singleton<DifficultyManager>
     // 난이도 상승 주기 (예: n일마다 난이도 증가)
     private int _difficultyIncreaseInterval = 5;
     
-    // 난이도별 시간 감소 주기 (1초당 감소량)
+    // 난이도별 시간 감소 주기 (초당 1씩감소)
     private float[] _timeDecreaseRates = { 1f, 0.6f, 0.2f };
     
     // 서류 처리 보상 (난이도별 일과 시간 회복량)
