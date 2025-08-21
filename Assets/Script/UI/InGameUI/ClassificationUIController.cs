@@ -31,19 +31,19 @@ public class ClassificationUIController : MonoBehaviour
         if (box != null)
         {
             var c = box.color;
-            c.a = 0f; // ���� �� ����
+            c.a = 0f; 
             box.color = c;
-            box.raycastTarget = false; // UI Ŭ�� ����
+            box.raycastTarget = false; 
         }
     }
 
-    public void TriggerSuccessEffect()
+    public void TriggerSuccessEffect() // 성공 효과 트리거
     {
         TriggerEffect(greenBox);
         RisingEffect(true);
     }
 
-    public void TriggerFailEffect()
+    public void TriggerFailEffect() // 실패 효과 트리거
     {
         TriggerEffect(redBox);
         RisingEffect(false);
@@ -53,18 +53,19 @@ public class ClassificationUIController : MonoBehaviour
     {
         if (box == null) return;
 
-        // ���� Ʈ�� ����
-        effectTweener?.Kill();
+        // 기존 트윈 정리 (최종값 적용하지 않고 그냥 종료)
+        box.DOKill(false);
 
-        // ���ĸ� ���� ��(��: 0.3)���� ����
+        // 초기화
         var c = box.color;
         c.a = 0.5f;
         box.color = c;
 
-        // �����̰� ������������
-        effectTweener = box.DOFade(0f, 0.5f).OnComplete(() =>
+        // 새로운 트윈 시작
+        box.DOFade(0f, 0.5f).OnComplete(() =>
         {
-            effectTweener = null;
+            // 안전하게 종료
+            box.DOKill(false);
         });
     }
 
