@@ -49,18 +49,18 @@ public class ObstacleClearEffect
     private async void LoadSprites()
     {
         //벌레
-        _bugAnim.Add(await DataManager.Instance.LoadSpriteData(Addresses.Sprites.Bug.Dead));//0
-        var bugAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Bug.Anim);
+        _bugAnim.Add(await DataManager.Instance.LoadSpriteData(Addresses.Sprites.Obstacles.Bug.Dead));//0
+        var bugAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Bug.Anim);
         _bugAnim.Add(bugAnims[0]);//1
         _bugAnim.Add(bugAnims[1]);//2
         
         //손
-        var handAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Hand.Anim);
+        var handAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Hand.Anim);
         _handAnim.Add(handAnims[0]);//0
         _handAnim.Add(handAnims[1]);//1
         
         //서류봉투
-        var envelopeAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Envelope.Anim);
+        var envelopeAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Envelope.Anim);
         _envelopeAnim.Add(envelopeAnims[0]);//0
         _envelopeAnim.Add(envelopeAnims[1]);//1
         
