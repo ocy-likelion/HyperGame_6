@@ -7,7 +7,7 @@ public class DataManager : Singleton<DataManager>
 {
     protected override void Initialize()
     {
-        
+        base.Initialize();
     }
 
     public async Task<Sprite> LoadSpriteData(string address)
