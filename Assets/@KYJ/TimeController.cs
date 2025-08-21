@@ -85,8 +85,6 @@ public class TimeController : Singleton<TimeController>
     {
         day++;                  // 하루 일수 증가
         elapsedDayTime = 0f;    // 하루 남은 시간 초기화
-        remainedTimerTime = constTimerValue; // 타이머 초기화
-        // Debug.Log($"하루가 지났습니다. 현재 {day}일차");
         
         // day가 바뀌었으니 감소 간격 갱신
         currentDecreaseInterval = DifficultyManager.Instance.GetTimeDecreaseRate(day);
