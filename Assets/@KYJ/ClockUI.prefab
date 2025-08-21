@@ -53,6 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33694f7d4fc33344b925bfa404ff32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clockHandle: {fileID: 8792224945659195500}
+  clockFrame: {fileID: 1817144987413671205}
   stepAngle: 30
   tickInterval: 1
   setTime: 30
