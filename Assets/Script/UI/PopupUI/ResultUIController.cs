@@ -21,8 +21,6 @@ public class ResultUIController : PopupController
     void Awake()
     {
         _quitButton.onClick.AddListener(OnClickQuitButton);
-        if (newRecordImage != null)
-            newRecordImage.gameObject.SetActive(false);
     }
     
     public void ShowPopup()
@@ -43,13 +41,16 @@ public class ResultUIController : PopupController
         // 퇴근 버튼 비활성화
         _quitButton.gameObject.SetActive(false);
         
+        // New Record 이미지 비활성화
+        newRecordImage.gameObject.SetActive(false);
+        
         // 처음에는 0으로 초기화
         dayText.text = "0";
         maxComboText.text = "0";
         scoreText.text = "0";
         
         // TODO: 유저의 최고기록 불러오기 (임시: PlayerPrefs)
-        int bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        float bestScore = PlayerPrefs.GetFloat("BestScore", 0f);
         
         Sequence seq = DOTween.Sequence();
         
