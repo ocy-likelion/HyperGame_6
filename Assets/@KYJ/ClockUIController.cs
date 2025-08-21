@@ -47,10 +47,12 @@ public class ClockUIController : MonoBehaviour
     {
         float remainedTime = TimeController.Instance._remainedTimerTime;
 
+        Color customGreen = new Color(0.525f, 0.89f, 0.208f); // #86E335
+        
         if (remainedTime <= setTime) // 일과 시간이 30초 이하일 때
         {
             float t = Mathf.PingPong(Time.time * 2f, 1f); // 색상 변경 딜레이
-            clockFrame.color = Color.Lerp(Color.white, Color.red, t); // 흰색에서 빨간색으로 보간
+            clockFrame.color = Color.Lerp(customGreen, Color.red, t); // 흰색에서 빨간색으로 보간
 
             /* SFX, VFX 등 추가할거 있으면 여기에 추가 및 수정하시면 됩니다 */
         }
@@ -62,6 +64,6 @@ public class ClockUIController : MonoBehaviour
     
     public void InitClockFrameColor() // 시계 프레임 색상 초기화
     {
-        clockFrame.color = Color.white;
+        clockFrame.color = new Color(0.525f, 0.89f, 0.208f);
     }
 }
