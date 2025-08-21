@@ -2,20 +2,31 @@ public static class Addresses
 {
     public static class Sprites
     {
-        public static class Bug
+        public static class Buttons
         {
-            public const string Dead = "spr/bug/dead";
-            public const string Anim = "spr/bug/anim";
+            public static class Sounds
+            {
+                public const string OnOff = "spr/obstacles/sounds/onoff";
+            }
         }
-
-        public static class Hand
+        
+        public static class Obstacles
         {
-            public const string Anim = "spr/hand/anim";
-        }
+            public static class Bug
+            {
+                public const string Dead = "spr/obstacles/bug/dead";
+                public const string Anim = "spr/obstacles/bug/anim";
+            }
 
-        public static class Envelope
-        {
-            public const string Anim = "spr/envelope/anim";
+            public static class Hand
+            {
+                public const string Anim = "spr/obstacles/hand/anim";
+            }
+
+            public static class Envelope
+            {
+                public const string Anim = "spr/obstacles/envelope/anim";
+            }
         }
     }
 }

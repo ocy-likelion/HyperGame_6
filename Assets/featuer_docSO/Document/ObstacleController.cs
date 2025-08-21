@@ -23,6 +23,8 @@ public class ObstacleController : MonoBehaviour
         _obstacleObjIdx = obstacleObjIdx;
         
         gameObject.SetActive(true);
+
+        StartCoroutine(GameManager.Instance.obstacleClearEffect.IdleAnim(this, _obstacleObjIdx));
     }
     
     /// <summary>
@@ -36,6 +38,16 @@ public class ObstacleController : MonoBehaviour
         {
             StartCoroutine(TerminateSeq());
         }
+        else
+        {
+            //연속처리 필요대상만 실행됨
+            StartCoroutine(GameManager.Instance.obstacleClearEffect.HitAnim(this, _obstacleObjIdx));
+        }
+    }
+
+    public int GetProcessCount()
+    {
+        return _processCount;
     }
 
     public IEnumerator TerminateSeq()

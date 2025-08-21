@@ -11,7 +11,7 @@ public class PauseUIController : PopupController
     [SerializeField] private Button _retryButton;
     [SerializeField] private Button _quitButton;
     [SerializeField] private Button _audioToggleButton;
-    [SerializeField] private Button _vibrateToggleButton;
+    private Sprite[] _audioBtnSprites = new Sprite[2];
 
     void Awake()
     {
@@ -19,13 +19,19 @@ public class PauseUIController : PopupController
         _retryButton.onClick.AddListener(OnClickRetryButton);
         _quitButton.onClick.AddListener(OnClickQuitButton);
         _audioToggleButton.onClick.AddListener(OnClickAudioToggleButton);
-        _vibrateToggleButton.onClick.AddListener(OnClickVibrateToggleButton);
     }
-    
-    
+
+    public async void LoadSprites()
+    {
+        var audioBtnSprites = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Buttons.Sounds.OnOff);
+        _audioBtnSprites[0] = audioBtnSprites[0];
+        _audioBtnSprites[1] = audioBtnSprites[1];
+        _audioToggleButton.image.sprite = _audioBtnSprites[0];
+    }
     
     public void ShowPopup()
     {
+        _audioToggleButton.image.sprite = AudioManager.Instance.GetIsAudioOn() ? _audioBtnSprites[0] : _audioBtnSprites[1];
         base.ShowPopup(gameObject);
     }
     
@@ -62,10 +68,6 @@ public class PauseUIController : PopupController
     public void OnClickAudioToggleButton()
     {
         AudioManager.Instance.ToggleAudio();
-    }
-    
-    public void OnClickVibrateToggleButton()
-    {
-        
+        _audioToggleButton.image.sprite = AudioManager.Instance.GetIsAudioOn() ? _audioBtnSprites[0] : _audioBtnSprites[1];
     }
 }

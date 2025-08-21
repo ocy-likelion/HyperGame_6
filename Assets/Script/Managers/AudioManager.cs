@@ -37,4 +37,9 @@ public class AudioManager : Singleton<AudioManager>
         bgmController.SetBGMOn(_isAudioOn);
         sfxController.SetSFXOn(_isAudioOn);
     }
+
+    public bool GetIsAudioOn()
+    {
+        return _isAudioOn;
+    }
 }
