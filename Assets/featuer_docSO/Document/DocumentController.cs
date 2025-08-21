@@ -83,7 +83,7 @@ public class DocumentController : MonoBehaviour
     private void CreateObstacle()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        int difficulty = Mathf.Min(DifficultyManager.Instance.GetLevel(day) + 1, 3);
+        int processCount = DifficultyManager.Instance.GetObstacleProcessingCount(day);
         int obstacleType = Random.Range(0, _obstacleObjDatas.Count);
 
         // 장애물 인스턴스 생성
@@ -91,7 +91,7 @@ public class DocumentController : MonoBehaviour
 
         if (obstacleType == 0 || obstacleType == 1)
         {
-            for (int i = 0; i < difficulty; i++)
+            for (int i = 0; i < processCount; i++)
             {
                 var obstacle = new ObstacleInstance
                 {
@@ -112,7 +112,7 @@ public class DocumentController : MonoBehaviour
             {
                 obstacleObjIdx = obstacleType,
                 prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
-                processCount = difficulty,
+                processCount = processCount,
                 spawnPos = new Vector2(1f, -2f)
             };
             _currentObstacles.Add(obstacle);
@@ -123,7 +123,7 @@ public class DocumentController : MonoBehaviour
             {
                 obstacleObjIdx = obstacleType,
                 prefab = _obstacleObjDatas[obstacleType].obstaclePrefab,
-                processCount = difficulty,
+                processCount = processCount,
                 spawnPos = Vector2.zero
             };
             _currentObstacles.Add(obstacle);

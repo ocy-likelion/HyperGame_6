@@ -19,9 +19,12 @@ public class DifficultyManager : Singleton<DifficultyManager>
     
     // 서류 처리 실수 패널티 (난이도별 일과 시간 손실량)
     private int[] _penalty = { 3, 7, 12 };
+    
+    // 장애물 처리 횟수
+    private int[] _obstacleProcessingCount = { 1, 2, 3 };
 
     // 장애물 등장 확률 (단위: 퍼센트)
-    private int[] _ObstacleSpawnProbability = { 5, 20, 40 };
+    private int[] _obstacleSpawnProbability = { 5, 20, 40 };
 
     
     //현재 day에 맞춰 난이도를 산출하는 메서드
@@ -53,12 +56,20 @@ public class DifficultyManager : Singleton<DifficultyManager>
         level = Mathf.Min(level, _penalty.Length - 1);
         return _penalty[level];
     }
+    
+    //현재 day에 맞춰 장애물 처리 횟수를 반환하는 메서드
+    public int GetObstacleProcessingCount(int day)
+    {
+        int level = GetLevel(day);
+        level = Mathf.Min(level, _obstacleProcessingCount.Length - 1);
+        return _obstacleProcessingCount[level];
+    }
 
     //현재 day에 맞춰 장애물 등장 확률을 반환하는 메서드
     public int GetObstacleSpawnProbability(int day)
     {
         int level = GetLevel(day);
-        level = Mathf.Min(level, _ObstacleSpawnProbability.Length - 1);
-        return _ObstacleSpawnProbability[level];
+        level = Mathf.Min(level, _obstacleSpawnProbability.Length - 1);
+        return _obstacleSpawnProbability[level];
     }
 }
