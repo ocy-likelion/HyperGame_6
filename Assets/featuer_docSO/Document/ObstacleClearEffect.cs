@@ -33,7 +33,7 @@ public class ObstacleClearEffect
         postitThrowSpeed = 1000f;
         handMoveSpeed = 1000f;
         filerOutSpeed = 500f;
-        envelopeOutSpeed = 500f;
+        envelopeOutSpeed = 1000f;
     }
     
     public IEnumerator LoadData()
@@ -79,18 +79,23 @@ public class ObstacleClearEffect
         Action obstacleDefuseAction = null;
         var obsRect = obstacle.transform as RectTransform;
         var totalDuration = 0f;
+
+        if (id != 0) yield break; //벌레만 존재함.
         
-        
-        var elapsedTime = 0f;
-        if (obstacleDefuseAction != null)
+        var wingStack = 0;
+        while (obstacle.GetProcessCount() > 0)
         {
-            obstacleDefuseAction();
-            while (totalDuration > elapsedTime)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
+            obstacle.obstacleImage.sprite = _bugAnim[1];
+            if(wingStack != 0 && wingStack % 3 == 0) yield return new WaitForSeconds(3f);
+            //obstacleDefuseAction();
+            obstacle.obstacleImage.sprite = _bugAnim[2];
+            yield return new WaitForSeconds(0.1f);
+            obstacle.obstacleImage.sprite = _bugAnim[1];
+            yield return new WaitForSeconds(0.1f);
+
+            wingStack++;
         }
+        
         yield return null;
     }
     
@@ -100,18 +105,71 @@ public class ObstacleClearEffect
         Action obstacleDefuseAction = null;
         var obsRect = obstacle.transform as RectTransform;
         var totalDuration = 0f;
+        var envelopeStack = obstacle.GetProcessCount();
+
+        var shakeStrength = 100f;
+        var vibratoStrength = 60;
+        var randomness = 90;
+
+        if (id is 0 or 1) yield break; //벌레, 포스트잇은 갯수증가 이므로 제외.
+        if(envelopeStack == 0) yield break; //0이면 제거단계라서 중단
         
-        
-        var elapsedTime = 0f;
-        if (obstacleDefuseAction != null)
+        switch (id)
         {
-            obstacleDefuseAction();
-            while (totalDuration > elapsedTime)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
+            //손
+            case 2:
+                //TODO: 진동
+                totalDuration = 0.1f;
+                
+                //행동할 액션 등록
+                obstacleDefuseAction = () =>
+                {
+                    //--SFX 추가 삽입구간--//
+                     
+                    //---------------------//
+                    obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
+                };
+                break;
+            
+            //파일철
+            case 3:
+                //TODO: 진동여러번
+                totalDuration = 0.1f;//지속시간 설정
+                
+                //행동할 액션 등록
+                obstacleDefuseAction = () =>
+                {
+                    //--SFX 추가 삽입구간--//
+                     
+                    //---------------------//
+                    obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
+                };
+                break;
+            
+            //서류봉투
+            case 4:
+                //TODO: 1단 서류봉투 열림, 2단 서류 삐져나옴, 3단 진동 마지막 단에는 "서류봉투가 아래로빠진다."
+                //여기는 완전 제거연출이니까 봉투 빠지는걸로.
+                totalDuration = 0.1f;//지속시간 설정
+                
+                //개별 설정
+ 
+                
+                //행동할 액션 등록
+                obstacleDefuseAction = () =>
+                {
+                    //--SFX 추가 삽입구간--//
+                     
+                    //---------------------//
+                    if (envelopeStack == 1) obstacle.obstacleImage.sprite = _envelopeAnim[1];
+                    obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
+                };
+                break;
         }
+
+        //액션 실행
+        obstacleDefuseAction?.Invoke();
+
         yield return null;
     }
     
@@ -132,7 +190,6 @@ public class ObstacleClearEffect
         //회전 값 기본 설정
         var anglePerSecond = 360f * 5f;
         
-        Debug.Log(id);
         switch (id)
         {
             //벌레
@@ -205,7 +262,7 @@ public class ObstacleClearEffect
             //파일철
             case 3:
                 //TODO: 진동여러번 하다가 "파일철이 바깥으로 빠진다."
-                totalDuration = 0.25f;//지속시간 설정
+                totalDuration = 0.15f;//지속시간 설정
                 
                 //개별 설정
                 targetPos = obstacle.transform.position + Vector3.left * filerOutSpeed;
@@ -224,9 +281,9 @@ public class ObstacleClearEffect
             case 4:
                 //TODO: 1단 서류봉투 열림, 2단 서류 삐져나옴, 3~5단 진동 마지막 단에는 "서류봉투가 아래로빠진다."
                 //여기는 완전 제거연출이니까 봉투 빠지는걸로.
-                obstacle.obstacleImage.sprite = _envelopeAnim[1];//기절 스프라이트
+                obstacle.obstacleImage.sprite = _envelopeAnim[1];//오픈
                 endAction = ()=> obstacle.obstacleImage.sprite = _envelopeAnim[0];
-                totalDuration = 0.25f;//지속시간 설정
+                totalDuration = 0.15f;//지속시간 설정
                 
                 //개별 설정
                 targetPos = obstacle.transform.position + Vector3.down * envelopeOutSpeed;
