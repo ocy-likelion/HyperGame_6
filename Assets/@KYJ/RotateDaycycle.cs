@@ -18,7 +18,7 @@ public class RotateDaycycle : MonoBehaviour
 
         // 하루 시간 기준 회전
         float rotateSpeed = 180f / TimeController.Instance._dayTime;
-        transform.Rotate(0f, 0f, -rotateSpeed * Time.deltaTime);
+        transform.Rotate(0f, 0f, rotateSpeed * Time.deltaTime);
     }
 
     public void PauseCycle() => isPaused = true;
