@@ -107,7 +107,7 @@ public class TimeController : Singleton<TimeController>
         UpdateDayUI();
     }
 
-    void UpdateTimeUI()
+    public void UpdateTimeUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.timerText is var timeText && timeText != null)
             timeText.text = $"{remainedTimerTime:F0}";
