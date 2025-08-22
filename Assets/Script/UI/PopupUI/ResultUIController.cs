@@ -91,6 +91,11 @@ public class ResultUIController : PopupController
         // Fade In + Scale Up
         seq.Append(newRecordImage.DOFade(1f, 0.5f));
         seq.Join(newRecordImage.rectTransform.DOScale(1.2f, 0.3f).SetEase(Ease.OutBack));
+        // SFX 재생
+        seq.AppendCallback(() =>
+        {
+            AudioManager.Instance.SFX.PlayNewRecordResult();
+        });
         // 살짝 튕기면서 원래 크기로
         seq.Append(newRecordImage.rectTransform.DOScale(1f, 0.2f).SetEase(Ease.OutBack));
         // 착! 강조

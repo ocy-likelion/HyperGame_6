@@ -17,6 +17,7 @@ public class InGameState : IGameState
         // New Record시, 점수판에 New Record Image 연출 재생
         if (Input.GetKeyDown(KeyCode.K))
         {
+            AudioManager.Instance.SFX.PlayNewRecordScoreBar();
             InGameUIController.Instance.scoreUIController.ShowNewRecordImage();
         }
     }
