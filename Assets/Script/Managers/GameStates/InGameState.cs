@@ -9,9 +9,6 @@ public class InGameState : IGameState
     { 
        GameManager.Instance.StartCoroutine(StartGame());
        UIManager.Instance.inGameUIController.ShowInGameUI();
-       
-       // BGM 재생
-       AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
     }
     
     public void OnUpdate()

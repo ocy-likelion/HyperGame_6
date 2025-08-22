@@ -43,6 +43,8 @@ public class ClockUIController : MonoBehaviour
         clockHandle.transform.rotation = Quaternion.Lerp(clockHandle.transform.rotation, Quaternion.Euler(0, 0, targetZ), Time.deltaTime * 10f);
     }
 
+    private bool _isAlert;
+    
     public void ClockFrameColor() // 시계 프레임 색상 변경 기능
     {
         float remainedTime = TimeController.Instance._remainedTimerTime;
@@ -55,9 +57,17 @@ public class ClockUIController : MonoBehaviour
             clockFrame.color = Color.Lerp(customGreen, Color.red, t); // 흰색에서 빨간색으로 보간
 
             /* SFX, VFX 등 추가할거 있으면 여기에 추가 및 수정하시면 됩니다 */
+            if (!_isAlert)
+            {
+                _isAlert = true;
+                AudioManager.Instance.SFX.PlayTimeOutAlert();
+            }
         }
         else
         {
+            if (_isAlert)
+                AudioManager.Instance.SFX.StopTimeOutAlert();
+            _isAlert = false;
             InitClockFrameColor(); // 기본 색상으로 설정
         }
     }

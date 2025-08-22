@@ -27,23 +27,30 @@ public class SFXController : Singleton<SFXController>
     
     // 여기까지
 
-    private AudioSource _sfxSource;
+    private AudioSource _sfxSource;                             // 단발성 AudioSource
+    private Dictionary<AudioClip, AudioSource> _loopSources;    // 반복용 AudioSource
     private bool _isSFXOn = true;       // SFX가 켜져있는지 여부
-    public bool IsSFXOn() => _isSFXOn;
+    public bool GetIsSFXOn() => _isSFXOn;
     
     protected override void Initialize()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        
+        // AudioSource 초기화
         _sfxSource = gameObject.AddComponent<AudioSource>();
+        _sfxSource.playOnAwake = false;
+        _loopSources = new Dictionary<AudioClip, AudioSource>();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
         AudioManager.Instance.SetSFXController(this);
     }
 
     // SFX를 추가하신 뒤, 아래 함수 모음에 재생 함수를 작성해주세요. 그리고 작성하신 함수를 통해 사용하시면 됩니다.
+    // 1번 재생 : PlaySFX()
+    // 반복 재생 : PlayLoopSFX()
+    // 반복 재생 중지 : StopLoopSFX()
     #region PlaySFX 함수 모음
 
     public void PlayButtonClick() => PlaySFX(buttonClick);
@@ -59,7 +66,8 @@ public class SFXController : Singleton<SFXController>
     public void PlayObsFileEnvelopeOut() => PlaySFX(obsFileEnvelopeOut);
     public void PlaySpeedUp() => PlaySFX(speedUp);
     public void PlayFever() => PlaySFX(fever);
-    public void PlayTimeOutAlert() => PlaySFX(timeOutAlert);
+    public void PlayTimeOutAlert() => PlayLoopSFX(timeOutAlert);
+    public void StopTimeOutAlert() => StopLoopSFX(timeOutAlert);
     public void PlayNewRecordResult() => PlaySFX(newRecordResult);
     public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
     #endregion
@@ -70,10 +78,48 @@ public class SFXController : Singleton<SFXController>
         if (!_isSFXOn || clip == null) return;
         _sfxSource.PlayOneShot(clip);
     }
+    
+    // SFX 반복 재생
+    private void PlayLoopSFX(AudioClip clip)
+    {
+        if (!_isSFXOn || clip == null) return;
+        if (_loopSources.ContainsKey(clip)) return;     // 이미 재생 중이면 패스
+        
+        var src = gameObject.AddComponent<AudioSource>();
+        src.playOnAwake = false;
+        src.loop = true;
+        src.clip = clip;
+        src.Play();
+        _loopSources[clip] = src;
+    }
+    
+    // SFX 반복 재생 중지
+    private void StopLoopSFX(AudioClip clip)
+    {
+        if (clip == null || !_loopSources.ContainsKey(clip)) return;
+
+        var src = _loopSources[clip];
+        if (src != null && src.isPlaying)
+        {
+            src.Stop();
+            Destroy(src);
+        }
+        _loopSources.Remove(clip);
+    }
 
     // _isSFXOn 조정
     public void SetSFXOn(bool isSFXOn)
     {
         _isSFXOn = isSFXOn;
+
+        if (!_isSFXOn)  // 모든 SFX 정지
+        {
+            _sfxSource.Stop();
+            
+            foreach (var key in _loopSources)
+                if (key.Value != null) key.Value.Stop();
+            
+            _loopSources.Clear();
+        }
     }
 }
