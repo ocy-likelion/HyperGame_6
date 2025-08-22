@@ -10,20 +10,14 @@ using System;
 public class TutorialPage
 {
     public Sprite image;
-    public Sprite explain;
 }
 
 public class TutorialUIControllerRE : PopupController
 {
     [Header("UI")]
-    public Image mainImage;
-    public Image explainImage;
-    public Button nextButton;
-    public Image touchImage;
-
-    [Header("DOTween 이펙트")]
-    public float scale;
-    public float delay;
+    public Image tutoImage;
+    Button nextButton;
+    Image touchImage;
 
     [Header("텍스트 & 이미지")]
     public TutorialPage[] tutorialPages;
@@ -33,6 +27,9 @@ public class TutorialUIControllerRE : PopupController
 
     void Awake()
     {
+        nextButton = transform.parent.Find("TutorialButton").GetComponentInChildren<Button>();
+        touchImage = transform.parent.Find("TutorialTouchImage").GetComponentInChildren<Image>();
+
         nextButton.onClick.AddListener(NextSlide);
         UpdateSlide();
     }
@@ -41,6 +38,8 @@ public class TutorialUIControllerRE : PopupController
     {
         base.ShowPopup(gameObject);
         currentIndex = 0;
+        nextButton.gameObject.SetActive(true);
+        touchImage.gameObject.SetActive(true);
         UpdateSlide();
         StartTouchEffect();
     }
@@ -49,10 +48,12 @@ public class TutorialUIControllerRE : PopupController
     {
         base.ClosePopup(gameObject);
         currentIndex = 0;
+        nextButton.gameObject.SetActive(false);
+        touchImage.gameObject.SetActive(false);
         StopTouchEffect();
     }
 
-    private void NextSlide()
+    void NextSlide()
     {
         if (currentIndex < tutorialPages.Length - 1)
         {
@@ -65,12 +66,10 @@ public class TutorialUIControllerRE : PopupController
         }
     }
 
-    private void UpdateSlide()
+    void UpdateSlide()
     {
-        mainImage.sprite = tutorialPages[currentIndex].image;
-        explainImage.sprite = tutorialPages[currentIndex].explain;
-        mainImage.SetNativeSize();
-        explainImage.SetNativeSize();
+        tutoImage.sprite = tutorialPages[currentIndex].image;
+        tutoImage.SetNativeSize();
     }
 
 
@@ -80,7 +79,7 @@ public class TutorialUIControllerRE : PopupController
 
         touchTween?.Kill();
 
-        touchTween = touchImage.transform.DOScale(scale, delay).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        touchTween = touchImage.transform.DOScale(1.7f, 0.8f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void StopTouchEffect()
@@ -88,7 +87,7 @@ public class TutorialUIControllerRE : PopupController
         if(touchTween != null && touchTween.IsActive())
         {
             touchTween.Kill();
-            touchImage.transform.localScale = new Vector3(2,2,2);
+            touchImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
     }
 }
