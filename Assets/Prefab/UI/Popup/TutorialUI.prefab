@@ -95,8 +95,8 @@ MonoBehaviour:
   - image: {fileID: 21300000, guid: 4b20c113071e2924595fc4772cdd5cf0, type: 3}
   - image: {fileID: 21300000, guid: 4127b7e0aa358774bb1df58d36509a08, type: 3}
   - image: {fileID: 21300000, guid: 84a163a8197d15f42a848b28adc1c2e9, type: 3}
-  - image: {fileID: 21300000, guid: 6b5684ddca161cc43aed5a2f6b8e4c14, type: 3}
   - image: {fileID: 21300000, guid: 8e776ec9bb1fb2344af43089ce309cb6, type: 3}
+  - image: {fileID: 21300000, guid: 6b5684ddca161cc43aed5a2f6b8e4c14, type: 3}
 --- !u!1 &4802967877965474951
 GameObject:
   m_ObjectHideFlags: 0

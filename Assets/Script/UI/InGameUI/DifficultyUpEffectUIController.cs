@@ -16,8 +16,8 @@ public class DifficultyUpEffectUIController : MonoBehaviour
     public void Awake()
     {
         _originVector = effectText.transform.position;
-        _startVector = _originVector + new Vector3(-1000, 0,0);
-        _endVector = _originVector + new Vector3(1000, 0,0);
+        _startVector = _originVector + new Vector3(-2000, 0,0);
+        _endVector = _originVector + new Vector3(2000, 0,0);
         canvasGroup.alpha = 0;
         effectText.transform.position = _startVector;
     }

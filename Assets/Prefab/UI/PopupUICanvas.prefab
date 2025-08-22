@@ -742,14 +742,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5438125966529602226}
     m_Modifications:
-    - target: {fileID: 501071672466922773, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
-      propertyPath: nextButton
-      value: 
-      objectReference: {fileID: 3664355446135717019}
-    - target: {fileID: 501071672466922773, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
-      propertyPath: touchImage
-      value: 
-      objectReference: {fileID: 798225043510019710}
     - target: {fileID: 3402764363963986760, guid: f2a25a67015aa8943ae8f143cfade933, type: 3}
       propertyPath: m_Name
       value: TutorialUI
