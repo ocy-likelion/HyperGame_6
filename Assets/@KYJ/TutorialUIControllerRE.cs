@@ -3,26 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
+using System;
 
 [System.Serializable]
 public class TutorialPage
 {
-    [TextArea(3, 10)]
-    public string text;
     public Sprite image;
+    public Sprite explain;
 }
 
 public class TutorialUIControllerRE : PopupController
 {
     [Header("UI")]
-    public TMP_Text ruleText;
-    public Image ruleImage;
+    public Image mainImage;
+    public Image explainImage;
     public Button nextButton;
+    public Image touchImage;
+
+    [Header("DOTween 이펙트")]
+    public float scale;
+    public float delay;
 
     [Header("텍스트 & 이미지")]
     public TutorialPage[] tutorialPages;
-    
+
     int currentIndex = 0;
+    Tween touchTween;
 
     void Awake()
     {
@@ -35,12 +42,14 @@ public class TutorialUIControllerRE : PopupController
         base.ShowPopup(gameObject);
         currentIndex = 0;
         UpdateSlide();
+        StartTouchEffect();
     }
 
     public void ClosePopup()
     {
         base.ClosePopup(gameObject);
         currentIndex = 0;
+        StopTouchEffect();
     }
 
     private void NextSlide()
@@ -58,8 +67,28 @@ public class TutorialUIControllerRE : PopupController
 
     private void UpdateSlide()
     {
-        ruleText.text = tutorialPages[currentIndex].text;
-        ruleImage.sprite = tutorialPages[currentIndex].image;
-        ruleImage.SetNativeSize();
+        mainImage.sprite = tutorialPages[currentIndex].image;
+        explainImage.sprite = tutorialPages[currentIndex].explain;
+        mainImage.SetNativeSize();
+        explainImage.SetNativeSize();
+    }
+
+
+    public void StartTouchEffect()
+    {
+        if (touchImage == null) return;
+
+        touchTween?.Kill();
+
+        touchTween = touchImage.transform.DOScale(scale, delay).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void StopTouchEffect()
+    {
+        if(touchTween != null && touchTween.IsActive())
+        {
+            touchTween.Kill();
+            touchImage.transform.localScale = new Vector3(2,2,2);
+        }
     }
 }
