@@ -56,7 +56,7 @@ public class SFXController : Singleton<SFXController>
     public void PlayObsProcessTry() => PlaySFX(obsProcessTry);
     public void PlayObsHandHit() => PlaySFX(obsHandHit);
     public void PlayObsFileEnvelopeOut() => PlaySFX(obsFileEnvelopeOut);
-    public void PlayspeedUp() => PlaySFX(speedUp);
+    public void PlaySpeedUp() => PlaySFX(speedUp);
     public void PlayTimeOutAlert() => PlaySFX(timeOutAlert);
     public void PlayNewRecordResult() => PlaySFX(newRecordResult);
     public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
