@@ -86,6 +86,7 @@ public class Classification : MonoBehaviour
             UpdateComboUI();
             UpdateFeverUI(); //피버 게이지 UI 갱신
             classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
+            AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
             Debug.Log("분류 실패! 장애물 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
         }
         else // 장애물이 없을 때
@@ -107,6 +108,7 @@ public class Classification : MonoBehaviour
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
+                    AudioManager.Instance.SFX.PlayDocSuccess(); //성공 사운드 재생
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
@@ -131,6 +133,7 @@ public class Classification : MonoBehaviour
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
+                    AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
                     Debug.Log("분류 실패! 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
             }
@@ -148,6 +151,7 @@ public class Classification : MonoBehaviour
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
+                    AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
                     Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
@@ -165,6 +169,7 @@ public class Classification : MonoBehaviour
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
+                    AudioManager.Instance.SFX.PlayDocSuccess(); //성공 사운드 재생
                     if (combo > maxCombo)
                     {
                         maxCombo = combo; //최대 콤보 갱신
