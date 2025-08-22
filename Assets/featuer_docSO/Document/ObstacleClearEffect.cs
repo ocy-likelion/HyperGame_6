@@ -29,9 +29,9 @@ public class ObstacleClearEffect
 
     public void Initialize()
     {
-        bugThrowSpeed = 5000f;
-        postitThrowSpeed = 5000f;
-        handMoveSpeed = 5000f;
+        bugThrowSpeed = 1000f;
+        postitThrowSpeed = 1000f;
+        handMoveSpeed = 1000f;
         filerOutSpeed = 500f;
         envelopeOutSpeed = 1000f;
     }
@@ -197,7 +197,7 @@ public class ObstacleClearEffect
                  //TODO: 눈이 X로 바뀌며 빙글빙글 돌며 바깥으로 날아간다.
                  obstacle.obstacleImage.sprite = _bugAnim[0];//기절 스프라이트
                  endAction = ()=> obstacle.obstacleImage.sprite = _bugAnim[1];
-                 totalDuration = 0.2f;//지속시간 설정
+                 totalDuration = 0.15f;//지속시간 설정
                  
                  //개별 설정
                  targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * bugThrowSpeed;
@@ -219,7 +219,7 @@ public class ObstacleClearEffect
             //포스트잇
             case 1:
                 //TODO: 바깥쪽으로 날아간다.
-                totalDuration = 0.2f;//지속시간 설정
+                totalDuration = 0.15f;//지속시간 설정
                 
                 //개별 설정;
                 targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * postitThrowSpeed;
@@ -239,7 +239,7 @@ public class ObstacleClearEffect
                 //TODO: 아야하는 스프라이트로 바뀌며 진행하며 바깥으로 밀려나고 사라진다.
                 obstacle.obstacleImage.sprite = _handAnim[1];//맞은 스프라이트
                 endAction = () => obstacle.obstacleImage.sprite = _handAnim[0];
-                totalDuration = 0.5f;//지속시간 설정
+                totalDuration = 0.4f;//지속시간 설정
                 
                 //개별 설정
                 var subDuration = 0.25f;
