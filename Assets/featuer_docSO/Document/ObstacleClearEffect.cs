@@ -197,7 +197,7 @@ public class ObstacleClearEffect
                  //TODO: 눈이 X로 바뀌며 빙글빙글 돌며 바깥으로 날아간다.
                  obstacle.obstacleImage.sprite = _bugAnim[0];//기절 스프라이트
                  endAction = ()=> obstacle.obstacleImage.sprite = _bugAnim[1];
-                 totalDuration = 0.5f;//지속시간 설정
+                 totalDuration = 0.2f;//지속시간 설정
                  
                  //개별 설정
                  targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * bugThrowSpeed;
@@ -219,7 +219,7 @@ public class ObstacleClearEffect
             //포스트잇
             case 1:
                 //TODO: 바깥쪽으로 날아간다.
-                totalDuration = 0.5f;//지속시간 설정
+                totalDuration = 0.2f;//지속시간 설정
                 
                 //개별 설정;
                 targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * postitThrowSpeed;
