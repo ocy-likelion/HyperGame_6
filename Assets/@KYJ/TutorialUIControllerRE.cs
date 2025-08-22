@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ public class TutorialUIControllerRE : PopupController
     public Image ruleImage;
     public Button nextButton;
 
-    [Header("ÅØ½ºÆ® & ÀÌ¹ÌÁö")]
+    [Header("í…ìŠ¤íŠ¸ & ì´ë¯¸ì§€")]
     public TutorialPage[] tutorialPages;
     
     int currentIndex = 0;
