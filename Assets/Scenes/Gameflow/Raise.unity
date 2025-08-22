@@ -1340,8 +1340,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad49d2c63b9545e4c9b7626f87d0041e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClick: {fileID: 8300000, guid: 061d2884cb0fa0347b2fa97ff61e50f7, type: 3}
-  stamp: {fileID: 8300000, guid: 7d675fed6b6ee4c4099d3fc6d633c60a, type: 3}
+  buttonClick: {fileID: 8300000, guid: ddef3cef40faee04da1778416a7443e3, type: 3}
+  stamp: {fileID: 8300000, guid: f9813015962e74648a48de0ca6777f20, type: 3}
+  docSuccess: {fileID: 8300000, guid: 4a240a382efbc3d4fbf33cb0ea8f88d3, type: 3}
+  docFail: {fileID: 8300000, guid: aebab98453869f24a8ff53c411f4c9b7, type: 3}
+  docSwap: {fileID: 8300000, guid: 287f9aa05f3666e448a03fb46de9980f, type: 3}
+  obsBugPostHit: {fileID: 8300000, guid: d47cba75aea14984089868a73845d5d1, type: 3}
+  obsProcessTry: {fileID: 8300000, guid: 2584edb395837b847862261e0203ccb1, type: 3}
+  obsHandHit: {fileID: 8300000, guid: 0b255f4b3bb1b97428e68abf469e7ad3, type: 3}
+  obsFileEnvelopeOut: {fileID: 8300000, guid: bb24b3406204f7440bceef29219bfad6, type: 3}
+  speedUp: {fileID: 8300000, guid: 2576835e1310eba41bb416116d2914a1, type: 3}
+  timeOutAlert: {fileID: 8300000, guid: 8b182b7fcbd32d94184b1e60b2e2527c, type: 3}
 --- !u!4 &1573450097
 Transform:
   m_ObjectHideFlags: 0
