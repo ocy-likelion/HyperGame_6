@@ -18,6 +18,8 @@ public class SFXController : Singleton<SFXController>
     [SerializeField] private AudioClip obsProcessTry;
     [SerializeField] private AudioClip obsHandHit;
     [SerializeField] private AudioClip obsFileEnvelopeOut;
+    [SerializeField] private AudioClip newRecordResult;
+    [SerializeField] private AudioClip newRecordScoreBar;
     [SerializeField] private AudioClip speedUp;
     [SerializeField] private AudioClip timeOutAlert;
     
@@ -56,7 +58,8 @@ public class SFXController : Singleton<SFXController>
     public void PlayObsFileEnvelopeOut() => PlaySFX(obsFileEnvelopeOut);
     public void PlayspeedUp() => PlaySFX(speedUp);
     public void PlayTimeOutAlert() => PlaySFX(timeOutAlert);
-
+    public void PlayNewRecordResult() => PlaySFX(newRecordResult);
+    public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
     #endregion
 
     // SFX 1번 재생
