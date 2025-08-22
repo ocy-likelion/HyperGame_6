@@ -1456,6 +1456,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4908390820807405615, guid: 2107a06927f07d743a78a1f9f57a8617, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 27
+      objectReference: {fileID: 0}
     - target: {fileID: 5555419457573602589, guid: 2107a06927f07d743a78a1f9f57a8617, type: 3}
       propertyPath: m_Name
       value: InGameUICanvas
