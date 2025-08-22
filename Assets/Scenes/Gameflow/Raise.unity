@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleUIController: {fileID: 1714326525}
   inGameUIController: {fileID: 0}
-  popupUIController: {fileID: 1104112741}
+  popupUIController: {fileID: 0}
   panelController: {fileID: 0}
   popupController: {fileID: 0}
 --- !u!4 &108188329
@@ -859,8 +859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804528661b962284897653a26ea4a1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleBGM: {fileID: 8300000, guid: 6291b404eab049d4fa2b509f99bf8035, type: 3}
-  gameBGM: {fileID: 8300000, guid: 37be7485dc6d2994d9119d2cf704e5df, type: 3}
+  titleBGM: {fileID: 8300000, guid: 4498eaeff76ccca4db570cd74f6f7d34, type: 3}
+  gameBGM: {fileID: 8300000, guid: 2f4fe3c37ed144245b776aa79a728618, type: 3}
 --- !u!4 &1009418570
 Transform:
   m_ObjectHideFlags: 0
@@ -1064,17 +1064,6 @@ PrefabInstance:
       addedObject: {fileID: 783483703}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
---- !u!114 &1104112741 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4885675662937442339, guid: a788e6b8b33a0144f9b691bcd6673a40, type: 3}
-  m_PrefabInstance: {fileID: 834013603}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4282d9bdb4ed0b9499ee659994c7b171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1186379683
 GameObject:
   m_ObjectHideFlags: 0
