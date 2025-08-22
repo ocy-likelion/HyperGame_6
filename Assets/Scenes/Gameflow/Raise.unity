@@ -477,8 +477,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804528661b962284897653a26ea4a1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleBGM: {fileID: 8300000, guid: 6291b404eab049d4fa2b509f99bf8035, type: 3}
-  gameBGM: {fileID: 8300000, guid: 37be7485dc6d2994d9119d2cf704e5df, type: 3}
+  titleBGM: {fileID: 8300000, guid: 4498eaeff76ccca4db570cd74f6f7d34, type: 3}
+  gameBGM: {fileID: 8300000, guid: 2f4fe3c37ed144245b776aa79a728618, type: 3}
 --- !u!4 &1009418570
 Transform:
   m_ObjectHideFlags: 0
