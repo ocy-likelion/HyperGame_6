@@ -4,22 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
+public class TutorialPage
+{
+    [TextArea(3, 10)]
+    public string text;
+    public Sprite image;
+}
+
 public class TutorialUIControllerRE : PopupController
 {
+    [Header("UI")]
     public TMP_Text ruleText;
+    public Image ruleImage;
     public Button nextButton;
-    public Button prevButton;
 
-    [TextArea(3, 10)]
-    [SerializeField] string[] tutorialSlides;
+    [Header("텍스트 & 이미지")]
+    public TutorialPage[] tutorialPages;
     
     int currentIndex = 0;
 
     void Awake()
     {
         nextButton.onClick.AddListener(NextSlide);
-        prevButton.onClick.AddListener(PrevSlide);
-
         UpdateSlide();
     }
 
@@ -34,12 +41,11 @@ public class TutorialUIControllerRE : PopupController
     {
         base.ClosePopup(gameObject);
         currentIndex = 0;
-        UpdateSlide();
     }
 
     private void NextSlide()
     {
-        if (currentIndex < tutorialSlides.Length - 1)
+        if (currentIndex < tutorialPages.Length - 1)
         {
             currentIndex++;
             UpdateSlide();
@@ -50,21 +56,10 @@ public class TutorialUIControllerRE : PopupController
         }
     }
 
-    private void PrevSlide()
-    {
-        if (currentIndex > 0)
-        {
-            currentIndex--;
-            UpdateSlide();
-        }
-        else
-        {
-            ClosePopup();
-        }
-    }
-
     private void UpdateSlide()
     {
-        ruleText.text = tutorialSlides[currentIndex];
+        ruleText.text = tutorialPages[currentIndex].text;
+        ruleImage.sprite = tutorialPages[currentIndex].image;
+        ruleImage.SetNativeSize();
     }
 }
