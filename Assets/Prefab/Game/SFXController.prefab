@@ -56,4 +56,5 @@ MonoBehaviour:
   newRecordResult: {fileID: 8300000, guid: 7299709398e88164eb1274c0f9a2973d, type: 3}
   newRecordScoreBar: {fileID: 8300000, guid: 49c759242586a4546a96216cf595f8e0, type: 3}
   speedUp: {fileID: 8300000, guid: 2576835e1310eba41bb416116d2914a1, type: 3}
+  fever: {fileID: 8300000, guid: deed39546b61e864bb51d5808105eeb2, type: 3}
   timeOutAlert: {fileID: 8300000, guid: 8b182b7fcbd32d94184b1e60b2e2527c, type: 3}

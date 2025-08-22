@@ -21,6 +21,7 @@ public class SFXController : Singleton<SFXController>
     [SerializeField] private AudioClip newRecordResult;
     [SerializeField] private AudioClip newRecordScoreBar;
     [SerializeField] private AudioClip speedUp;
+    [SerializeField] private AudioClip fever;
     [SerializeField] private AudioClip timeOutAlert;
     
     
@@ -57,6 +58,7 @@ public class SFXController : Singleton<SFXController>
     public void PlayObsHandHit() => PlaySFX(obsHandHit);
     public void PlayObsFileEnvelopeOut() => PlaySFX(obsFileEnvelopeOut);
     public void PlaySpeedUp() => PlaySFX(speedUp);
+    public void PlayFever() => PlaySFX(fever);
     public void PlayTimeOutAlert() => PlaySFX(timeOutAlert);
     public void PlayNewRecordResult() => PlaySFX(newRecordResult);
     public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
