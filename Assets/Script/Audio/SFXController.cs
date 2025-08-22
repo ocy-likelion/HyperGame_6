@@ -6,8 +6,24 @@ using UnityEngine.SceneManagement;
 public class SFXController : Singleton<SFXController>
 {
     // SFX를 추가하실 때 여기에 추가해주세요.
+    [Header("Common")]
     [SerializeField] private AudioClip buttonClick;
+    
+    [Header("InGame")]
     [SerializeField] private AudioClip stamp;
+    [SerializeField] private AudioClip docSuccess;
+    [SerializeField] private AudioClip docFail;
+    [SerializeField] private AudioClip docSwap;
+    [SerializeField] private AudioClip obsBugPostHit;
+    [SerializeField] private AudioClip obsProcessTry;
+    [SerializeField] private AudioClip obsHandHit;
+    [SerializeField] private AudioClip obsFileEnvelopeOut;
+    [SerializeField] private AudioClip newRecordResult;
+    [SerializeField] private AudioClip newRecordScoreBar;
+    [SerializeField] private AudioClip speedUp;
+    [SerializeField] private AudioClip fever;
+    [SerializeField] private AudioClip timeOutAlert;
+    
     
     // 여기까지
 
@@ -33,7 +49,19 @@ public class SFXController : Singleton<SFXController>
     public void PlayButtonClick() => PlaySFX(buttonClick);
 
     public void PlayStamp() => PlaySFX(stamp);
-
+    
+    public void PlayDocSuccess() => PlaySFX(docSuccess);
+    public void PlayDocFail() => PlaySFX(docFail);
+    public void PlayDocSwap() => PlaySFX(docSwap);
+    public void PlayObsBugPostHit() => PlaySFX(obsBugPostHit);
+    public void PlayObsProcessTry() => PlaySFX(obsProcessTry);
+    public void PlayObsHandHit() => PlaySFX(obsHandHit);
+    public void PlayObsFileEnvelopeOut() => PlaySFX(obsFileEnvelopeOut);
+    public void PlaySpeedUp() => PlaySFX(speedUp);
+    public void PlayFever() => PlaySFX(fever);
+    public void PlayTimeOutAlert() => PlaySFX(timeOutAlert);
+    public void PlayNewRecordResult() => PlaySFX(newRecordResult);
+    public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
     #endregion
 
     // SFX 1번 재생

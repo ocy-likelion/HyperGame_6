@@ -42,6 +42,7 @@ public class FeverUIController : MonoBehaviour
         // 슬라이더 값이 1에 도달하면 감소 시작
         if (feverSlider.value >= 1f)
         {
+            AudioManager.Instance.SFX.PlayFever(); // 피버 사운드 재생
             feverEffectImage.enabled = true; // 피버 이펙트 이미지 활성화
             sliderFrameImage.sprite = feverFrame; // 피버 상태 프레임으로 변경
             feverTextImage.sprite = feverText; // 피버 상태 텍스트로 변경

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8273068768432676923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2884086609165395696}
+  - component: {fileID: 2036140186540254781}
+  m_Layer: 0
+  m_Name: SFXController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2884086609165395696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273068768432676923}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036140186540254781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273068768432676923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad49d2c63b9545e4c9b7626f87d0041e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClick: {fileID: 8300000, guid: ddef3cef40faee04da1778416a7443e3, type: 3}
+  stamp: {fileID: 8300000, guid: f9813015962e74648a48de0ca6777f20, type: 3}
+  docSuccess: {fileID: 8300000, guid: 4a240a382efbc3d4fbf33cb0ea8f88d3, type: 3}
+  docFail: {fileID: 8300000, guid: aebab98453869f24a8ff53c411f4c9b7, type: 3}
+  docSwap: {fileID: 8300000, guid: 287f9aa05f3666e448a03fb46de9980f, type: 3}
+  obsBugPostHit: {fileID: 8300000, guid: d47cba75aea14984089868a73845d5d1, type: 3}
+  obsProcessTry: {fileID: 8300000, guid: 2584edb395837b847862261e0203ccb1, type: 3}
+  obsHandHit: {fileID: 8300000, guid: 0b255f4b3bb1b97428e68abf469e7ad3, type: 3}
+  obsFileEnvelopeOut: {fileID: 8300000, guid: bb24b3406204f7440bceef29219bfad6, type: 3}
+  newRecordResult: {fileID: 8300000, guid: 7299709398e88164eb1274c0f9a2973d, type: 3}
+  newRecordScoreBar: {fileID: 8300000, guid: 49c759242586a4546a96216cf595f8e0, type: 3}
+  speedUp: {fileID: 8300000, guid: 2576835e1310eba41bb416116d2914a1, type: 3}
+  fever: {fileID: 8300000, guid: deed39546b61e864bb51d5808105eeb2, type: 3}
+  timeOutAlert: {fileID: 8300000, guid: 8b182b7fcbd32d94184b1e60b2e2527c, type: 3}
