@@ -104,6 +104,9 @@ public class InGameController
         UIManager.Instance.inGameUIController.ShowWaitThreeSecondsUI();
         UIManager.Instance.inGameUIController.ShowDifficultyUpEffectUI();
         
+        // 인게임 BGM 재생
+        AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
+        
         //321
         yield return UIManager.Instance.StartCoroutine(
             UIManager.Instance.inGameUIController.waitThreeSecondsUI.WaitThreeSeconds()
@@ -111,9 +114,6 @@ public class InGameController
 
         //난이도 상승시점 모니터링 시작
         DifficultyManager.Instance.InitLevelMonitor();
-        
-        // BGM 재생
-        AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
 
         //타이머, 문서 생성 시작.
         timeController.StartRunningTimer();
@@ -133,6 +133,8 @@ public class InGameController
         //시간 정지
         timeController.StopTime();
         
+        // 시간 부족 SFX 반복 재생 중지
+        AudioManager.Instance.SFX.StopTimeOutAlert();
         
         //ex.게임오버 연출, 결과창UI등
         

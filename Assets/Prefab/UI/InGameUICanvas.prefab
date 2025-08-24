@@ -766,10 +766,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DayUpEffectUI
       objectReference: {fileID: 0}
-    - target: {fileID: 1879627421982558121, guid: 4ba4802896cbf1a46a360b52f7962e90, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9180558620410388143, guid: 4ba4802896cbf1a46a360b52f7962e90, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

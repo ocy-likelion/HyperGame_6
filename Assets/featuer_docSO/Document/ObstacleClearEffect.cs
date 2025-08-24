@@ -125,7 +125,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsProcessTry();
                     //---------------------//
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
                 };
@@ -140,7 +140,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsProcessTry();
                     //---------------------//
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
                 };
@@ -159,7 +159,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsProcessTry();
                     //---------------------//
                     if (envelopeStack == 1) obstacle.obstacleImage.sprite = _envelopeAnim[1];
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
@@ -197,7 +197,7 @@ public class ObstacleClearEffect
                  //TODO: 눈이 X로 바뀌며 빙글빙글 돌며 바깥으로 날아간다.
                  obstacle.obstacleImage.sprite = _bugAnim[0];//기절 스프라이트
                  endAction = ()=> obstacle.obstacleImage.sprite = _bugAnim[1];
-                 totalDuration = 1f;//지속시간 설정
+                 totalDuration = 0.15f;//지속시간 설정
                  
                  //개별 설정
                  targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * bugThrowSpeed;
@@ -206,7 +206,7 @@ public class ObstacleClearEffect
                  obstacleDefuseAction = () =>
                  {
                      //--SFX 추가 삽입구간--//
-                     
+                     SFXController.Instance.PlayObsBugPostHit();
                      //---------------------//
                      obstacle.transform.DORotate(new Vector3(0,0,anglePerSecond), 1f, RotateMode.FastBeyond360)
                          .SetRelative(true)
@@ -219,7 +219,7 @@ public class ObstacleClearEffect
             //포스트잇
             case 1:
                 //TODO: 바깥쪽으로 날아간다.
-                totalDuration = 1f;//지속시간 설정
+                totalDuration = 0.15f;//지속시간 설정
                 
                 //개별 설정;
                 targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * postitThrowSpeed;
@@ -228,7 +228,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsBugPostHit();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };
@@ -239,7 +239,7 @@ public class ObstacleClearEffect
                 //TODO: 아야하는 스프라이트로 바뀌며 진행하며 바깥으로 밀려나고 사라진다.
                 obstacle.obstacleImage.sprite = _handAnim[1];//맞은 스프라이트
                 endAction = () => obstacle.obstacleImage.sprite = _handAnim[0];
-                totalDuration = 0.5f;//지속시간 설정
+                totalDuration = 0.4f;//지속시간 설정
                 
                 //개별 설정
                 var subDuration = 0.25f;
@@ -249,7 +249,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsHandHit();
                     //---------------------//
                     obsRect.DOShakePosition(subDuration, 200f, 50, 360).OnComplete(() =>
                     {
@@ -271,7 +271,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsFileEnvelopeOut();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };
@@ -292,7 +292,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                     
+                    SFXController.Instance.PlayObsFileEnvelopeOut();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };

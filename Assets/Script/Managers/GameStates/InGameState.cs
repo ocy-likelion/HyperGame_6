@@ -9,9 +9,6 @@ public class InGameState : IGameState
     { 
        GameManager.Instance.StartCoroutine(StartGame());
        UIManager.Instance.inGameUIController.ShowInGameUI();
-       
-       // BGM 재생
-       AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
     }
     
     public void OnUpdate()
@@ -20,6 +17,7 @@ public class InGameState : IGameState
         // New Record시, 점수판에 New Record Image 연출 재생
         if (Input.GetKeyDown(KeyCode.K))
         {
+            AudioManager.Instance.SFX.PlayNewRecordScoreBar();
             InGameUIController.Instance.scoreUIController.ShowNewRecordImage();
         }
     }

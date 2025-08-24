@@ -1,25 +1,36 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
+using System;
+
+[System.Serializable]
+public class TutorialPage
+{
+    public Sprite image;
+}
 
 public class TutorialUIControllerRE : PopupController
 {
-    public TMP_Text ruleText;
-    public Button nextButton;
-    public Button prevButton;
+    [Header("UI")]
+    public Image tutoImage;
+    Button nextButton;
+    Image touchImage;
 
-    [TextArea(3, 10)]
-    [SerializeField] string[] tutorialSlides;
-    
+    [Header("텍스트 & 이미지")]
+    public TutorialPage[] tutorialPages;
+
     int currentIndex = 0;
+    Tween touchTween;
 
     void Awake()
     {
-        nextButton.onClick.AddListener(NextSlide);
-        prevButton.onClick.AddListener(PrevSlide);
+        nextButton = transform.parent.Find("TutorialButton").GetComponentInChildren<Button>();
+        touchImage = transform.parent.Find("TutorialTouchImage").GetComponentInChildren<Image>();
 
+        nextButton.onClick.AddListener(NextSlide);
         UpdateSlide();
     }
 
@@ -27,19 +38,24 @@ public class TutorialUIControllerRE : PopupController
     {
         base.ShowPopup(gameObject);
         currentIndex = 0;
+        nextButton.gameObject.SetActive(true);
+        touchImage.gameObject.SetActive(true);
         UpdateSlide();
+        StartTouchEffect();
     }
 
     public void ClosePopup()
     {
         base.ClosePopup(gameObject);
         currentIndex = 0;
-        UpdateSlide();
+        nextButton.gameObject.SetActive(false);
+        touchImage.gameObject.SetActive(false);
+        StopTouchEffect();
     }
 
-    private void NextSlide()
+    void NextSlide()
     {
-        if (currentIndex < tutorialSlides.Length - 1)
+        if (currentIndex < tutorialPages.Length - 1)
         {
             currentIndex++;
             UpdateSlide();
@@ -50,21 +66,28 @@ public class TutorialUIControllerRE : PopupController
         }
     }
 
-    private void PrevSlide()
+    void UpdateSlide()
     {
-        if (currentIndex > 0)
-        {
-            currentIndex--;
-            UpdateSlide();
-        }
-        else
-        {
-            ClosePopup();
-        }
+        tutoImage.sprite = tutorialPages[currentIndex].image;
+        tutoImage.SetNativeSize();
     }
 
-    private void UpdateSlide()
+
+    public void StartTouchEffect()
     {
-        ruleText.text = tutorialSlides[currentIndex];
+        if (touchImage == null) return;
+
+        touchTween?.Kill();
+
+        touchTween = touchImage.transform.DOScale(1.7f, 0.8f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void StopTouchEffect()
+    {
+        if(touchTween != null && touchTween.IsActive())
+        {
+            touchTween.Kill();
+            touchImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        }
     }
 }
