@@ -17,10 +17,13 @@ public class ResultUIController : PopupController
     
     [SerializeField] private Image newRecordImage;
     [SerializeField] private CanvasGroup fadeOutCanvasGroup;
+    
+    public Image errorCheckImage;
 
     void Awake()
     {
         _quitButton.onClick.AddListener(OnClickQuitButton);
+        errorCheckImage.gameObject.SetActive(false);
     }
     
     public void ShowPopup()
@@ -31,6 +34,7 @@ public class ResultUIController : PopupController
     public void ClosePopup()
     {
         base.ClosePopup(gameObject);
+        errorCheckImage.gameObject.SetActive(false);
     }
     
     public void InitResultItem(GameResultData resultData)
