@@ -38,5 +38,8 @@ public class SubMenuUIController : MonoBehaviour
     {
         Debug.Log("OnClickLeaderBoardButton");
         AudioManager.Instance.SFX.PlayButtonClick();
+        
+        //토스 게임 리더보드 열어보기
+        NetworkManager.Instance.OnTossLeaderboard();
     }
 }
