@@ -35,6 +35,11 @@ public class ResultUIController : PopupController
     
     public void InitResultItem(GameResultData resultData)
     {
+        // 점수 보내기
+        //해당기능에서는 점수를 string 타입으로 받음. 임시로 정수 형변환을 시켰지만
+        //추후 반올림같은 로직을 넣는다면 그렇게 한 결과값을 인수로 넣도록 수정할 것.
+        NetworkManager.Instance.SendScore((int)resultData.Score);
+        
         // FadeOut Panel 초기화
         fadeOutCanvasGroup.alpha = 0;
         

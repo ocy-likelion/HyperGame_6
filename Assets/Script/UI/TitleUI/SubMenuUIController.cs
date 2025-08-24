@@ -39,8 +39,7 @@ public class SubMenuUIController : MonoBehaviour
         Debug.Log("OnClickLeaderBoardButton");
         AudioManager.Instance.SFX.PlayButtonClick();
         
-#if UNITY_WEBGL && !UNITY_EDITOR
-    NetworkManager.Instance.OnTossLeaderboard();
-#endif
+        //토스 게임 리더보드 열어보기
+        NetworkManager.Instance.OnTossLeaderboard();
     }
 }
