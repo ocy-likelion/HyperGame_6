@@ -50,29 +50,45 @@ public class TimeController : Singleton<TimeController>
         UIManager.Instance.inGameUIController.backGroundUIController.rotateDaycycle.ResumeCycle();
         
         float timerAccumulator = 0f; // 누적 시간
+        float prevDisplayedTime = -1f; // 이전 UI 표시값 저장
 
         while (isTimeRunning)
         {
             timerAccumulator += Time.deltaTime;
 
-            // 감소주기 변수 사용
+            // 정수 단위 감소
             while (timerAccumulator >= currentDecreaseInterval)
             {
                 remainedTimerTime -= 1f;
                 timerAccumulator -= currentDecreaseInterval;
-
-                if (remainedTimerTime <= 0f)
-                {
-                    remainedTimerTime = 0f;
-                    UpdateTimeUI();
-                    GameManager.Instance.inGameController.Dispose();
-                    StopTime();
-                    yield break;
-                }
-
-                UpdateTimeUI();
             }
 
+            // 남은 시간이 1초 이하일 때 소수점 단위 감소
+            if (remainedTimerTime <= 1f && remainedTimerTime > 0f)
+            {
+                remainedTimerTime -= Time.deltaTime;
+                remainedTimerTime = Mathf.Max(0f, remainedTimerTime);
+            }
+
+            // UI 갱신 최소화: 표시값이 바뀔 때만
+            float displayTime = remainedTimerTime > 1f ? Mathf.Floor(remainedTimerTime) : Mathf.Round(remainedTimerTime * 10f) / 10f;
+            if (!Mathf.Approximately(prevDisplayedTime, displayTime))
+            {
+                UpdateTimeUI();
+                prevDisplayedTime = displayTime;
+            }
+
+            // 타이머 종료 처리
+            if (remainedTimerTime <= 0f)
+            {
+                remainedTimerTime = 0f;
+                UpdateTimeUI();
+                GameManager.Instance.inGameController.Dispose();
+                StopTime();
+                yield break;
+            }
+
+            // 하루 시간 갱신
             elapsedDayTime += Time.deltaTime;
             if (elapsedDayTime >= dayTime) HandleDayEnd();
             UpdateDayUI();
@@ -110,7 +126,23 @@ public class TimeController : Singleton<TimeController>
     public void UpdateTimeUI()
     {
         if (UIManager.Instance.inGameUIController.timeUIController.timerText is var timeText && timeText != null)
-            timeText.text = $"{remainedTimerTime:F0}";
+        {
+            if (remainedTimerTime > 1f)
+            {
+                // 1초 이상: 정수 표시
+                timeText.text = $"{remainedTimerTime:F0}";
+            }
+            else if (remainedTimerTime > 0f)
+            {
+                // 0~1초: 소수점 1자리 표시
+                timeText.text = $"{remainedTimerTime:F1}";
+            }
+            else
+            {
+                // 0초 이하: 0 표시
+                timeText.text = "0";
+            }
+        }
     }
 
     void UpdateDayUI()
