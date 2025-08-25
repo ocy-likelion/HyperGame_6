@@ -25,7 +25,6 @@ public class TitleUIController : Singleton<TitleUIController>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         UIManager.Instance.SetTitleUIController(this);
-        GameManager.Instance.ChangeGameState(Constants.GameState.Title);
     }
     
     public void ShowTitleUI()
@@ -53,6 +52,7 @@ public class TitleUIController : Singleton<TitleUIController>
     #region SubMenuUI
     public void ShowSubMenuUI()
     {
+        subMenuUIController.InitUI();
         subMenuUIController.gameObject.SetActive(true);
     }
 
