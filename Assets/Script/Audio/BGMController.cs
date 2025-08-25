@@ -59,8 +59,9 @@ public class BGMController : MonoBehaviour
     // BGM 재생 (반복 O)
     private void PlayBGM(AudioClip clip)
     {
-        if (!_isBGMOn || clip == null) return;
-
+        if (clip == null) return;
+            
+        //Mute 형식으로 바뀌었으므로 isBGM체크없이 Play해도 문제가 없음.
         _bgmSource.clip = clip;
         _bgmSource.loop = true;
         _bgmSource.volume = 0.6f;
