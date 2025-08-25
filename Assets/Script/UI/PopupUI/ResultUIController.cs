@@ -53,6 +53,9 @@ public class ResultUIController : PopupController
         // New Record 이미지 비활성화
         newRecordImage.gameObject.SetActive(false);
         
+        // BGM 볼륨을 절반으로 설정
+        AudioManager.Instance.BGM.SetBGMVolumeHalf();
+        
         // 처음에는 0으로 초기화
         dayText.text = "0";
         maxComboText.text = "0";
