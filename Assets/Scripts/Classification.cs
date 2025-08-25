@@ -97,7 +97,6 @@ public class Classification : MonoBehaviour
                 {
                     //success = true;
                     time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
-                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo += 1; //콤보 증가
                     if (!fever)
                         feverValue += 3;
@@ -125,7 +124,6 @@ public class Classification : MonoBehaviour
                 {
                     //success = false;
                     time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
-                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo = 0; //콤보 초기화
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
@@ -143,7 +141,6 @@ public class Classification : MonoBehaviour
                 {
                     //success = false;
                     time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
-                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo = 0; //콤보 초기화
                     feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
@@ -158,7 +155,6 @@ public class Classification : MonoBehaviour
                 {
                     //success = true;
                     time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
-                    GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
                     combo += 1; //콤보 증가
                     if (!fever)
                         feverValue += 3;
@@ -187,6 +183,7 @@ public class Classification : MonoBehaviour
 
         GameManager.Instance.GetTimeController().SetRemainedTimer(time); // 남은 일과시간 갱신
         GameManager.Instance.GetTimeController().SetDay(day); // 남은 진행일수 갱신
+        GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
         docController.RemoveDocument(); // 서류 재생성
     }
 
