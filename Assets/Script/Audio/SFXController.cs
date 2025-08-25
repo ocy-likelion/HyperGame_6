@@ -1,9 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SFXController : Singleton<SFXController>
+public class SFXController : MonoBehaviour
 {
     // SFX를 추가하실 때 여기에 추가해주세요.
     [Header("Common")]
@@ -31,9 +31,12 @@ public class SFXController : Singleton<SFXController>
     private Dictionary<AudioClip, AudioSource> _loopSources;    // 반복용 AudioSource
     private bool _isSFXOn = true;       // SFX가 켜져있는지 여부
     public bool GetIsSFXOn() => _isSFXOn;
-    
-    protected override void Initialize()
+
+    private void Awake()
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.SetSFXController(this);
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
         
         // AudioSource 초기화
@@ -44,7 +47,7 @@ public class SFXController : Singleton<SFXController>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        AudioManager.Instance.SetSFXController(this);
+        
     }
 
     // SFX를 추가하신 뒤, 아래 함수 모음에 재생 함수를 작성해주세요. 그리고 작성하신 함수를 통해 사용하시면 됩니다.
@@ -82,13 +85,14 @@ public class SFXController : Singleton<SFXController>
     // SFX 반복 재생
     private void PlayLoopSFX(AudioClip clip)
     {
-        if (!_isSFXOn || clip == null) return;
+        if (clip == null) return;
         if (_loopSources.ContainsKey(clip)) return;     // 이미 재생 중이면 패스
         
         var src = gameObject.AddComponent<AudioSource>();
         src.playOnAwake = false;
         src.loop = true;
         src.clip = clip;
+        if (!_isSFXOn) src.mute = true;
         src.Play();
         _loopSources[clip] = src;
     }
@@ -104,6 +108,7 @@ public class SFXController : Singleton<SFXController>
             src.Stop();
             Destroy(src);
         }
+        
         _loopSources.Remove(clip);
     }
 
@@ -111,15 +116,16 @@ public class SFXController : Singleton<SFXController>
     public void SetSFXOn(bool isSFXOn)
     {
         _isSFXOn = isSFXOn;
-
-        if (!_isSFXOn)  // 모든 SFX 정지
+        
+        // 단발성 AudioSource
+        if (_sfxSource != null)
+            _sfxSource.mute = !_isSFXOn;
+        
+        // 루프성 AudioSources
+        foreach (var key in _loopSources)
         {
-            _sfxSource.Stop();
-            
-            foreach (var key in _loopSources)
-                if (key.Value != null) key.Value.Stop();
-            
-            _loopSources.Clear();
+            if (key.Value != null)
+                key.Value.mute = !_isSFXOn;
         }
     }
 }

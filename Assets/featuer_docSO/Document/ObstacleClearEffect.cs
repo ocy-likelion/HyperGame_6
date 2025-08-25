@@ -125,7 +125,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsProcessTry();
+                    AudioManager.Instance.SFX.PlayObsProcessTry();
                     //---------------------//
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
                 };
@@ -140,7 +140,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsProcessTry();
+                    AudioManager.Instance.SFX.PlayObsProcessTry();
                     //---------------------//
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
                 };
@@ -159,7 +159,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsProcessTry();
+                    AudioManager.Instance.SFX.PlayObsProcessTry();
                     //---------------------//
                     if (envelopeStack == 1) obstacle.obstacleImage.sprite = _envelopeAnim[1];
                     obsRect.DOShakePosition(totalDuration, shakeStrength, vibratoStrength, randomness);
@@ -206,7 +206,7 @@ public class ObstacleClearEffect
                  obstacleDefuseAction = () =>
                  {
                      //--SFX 추가 삽입구간--//
-                     SFXController.Instance.PlayObsBugPostHit();
+                     AudioManager.Instance.SFX.PlayObsBugPostHit();
                      //---------------------//
                      obstacle.transform.DORotate(new Vector3(0,0,anglePerSecond), 1f, RotateMode.FastBeyond360)
                          .SetRelative(true)
@@ -228,7 +228,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsBugPostHit();
+                    AudioManager.Instance.SFX.PlayObsBugPostHit();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };
@@ -249,7 +249,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsHandHit();
+                    AudioManager.Instance.SFX.PlayObsHandHit();
                     //---------------------//
                     obsRect.DOShakePosition(subDuration, 200f, 50, 360).OnComplete(() =>
                     {
@@ -271,7 +271,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsFileEnvelopeOut();
+                    AudioManager.Instance.SFX.PlayObsFileEnvelopeOut();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };
@@ -292,7 +292,7 @@ public class ObstacleClearEffect
                 obstacleDefuseAction = () =>
                 {
                     //--SFX 추가 삽입구간--//
-                    SFXController.Instance.PlayObsFileEnvelopeOut();
+                    AudioManager.Instance.SFX.PlayObsFileEnvelopeOut();
                     //---------------------//
                     obsRect.DOMove(targetPos, totalDuration).SetEase(Ease.Linear);
                 };

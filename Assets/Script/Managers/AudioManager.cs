@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
@@ -7,6 +5,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private BGMController bgmController;
     [SerializeField] private SFXController sfxController;
     
+    // 각 Controller가 필요하시면 아래와 같이 호출해주세요.
     public BGMController BGM => bgmController;
     public SFXController SFX => sfxController;
 
