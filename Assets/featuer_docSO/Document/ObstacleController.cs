@@ -12,6 +12,7 @@ public class ObstacleController : MonoBehaviour, IPoolable
     private DocumentController _documentController;
     private int _processCount;
     private int _obstacleObjIdx;
+    private bool _processOver;
 
     /// <summary>
     /// 초기화: DocumentController 참조와 장애물 처리 카운트 지정
@@ -21,6 +22,7 @@ public class ObstacleController : MonoBehaviour, IPoolable
         _documentController = documentController;
         _processCount = processCount;
         _obstacleObjIdx = obstacleObjIdx;
+        _processOver = false;
         
         gameObject.SetActive(true);
 
@@ -36,11 +38,16 @@ public class ObstacleController : MonoBehaviour, IPoolable
         Debug.Log("Obstacle hit, remaining: " + _processCount);
         if (_processCount <= 0)
         {
+            //마지막 처리모션 한번만 허용되도록 수정
+            if (_processOver) return;
+            _processOver = true;
             StartCoroutine(TerminateSeq());
+
         }
         else
         {
             //연속처리 필요대상만 실행됨
+            StopCoroutine(GameManager.Instance.obstacleClearEffect.HitAnim(this, _obstacleObjIdx));
             StartCoroutine(GameManager.Instance.obstacleClearEffect.HitAnim(this, _obstacleObjIdx));
         }
     }
