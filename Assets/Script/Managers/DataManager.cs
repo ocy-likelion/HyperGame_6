@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -50,11 +52,13 @@ public class DataManager : Singleton<DataManager>
             {
                 return _arraycached;
             }
+
+            var asset = await Addressables.LoadAssetAsync<Sprite[]>(address).Task;
+            var newAsset = asset.OrderBy(s => s.name).ToArray();
+            
+            _arraycaches[address] = newAsset;
         
-            var asset =  await Addressables.LoadAssetAsync<Sprite[]>(address).Task;
-            _arraycaches[address] = asset;
-        
-            return asset;
+            return newAsset;
         }
         
         public static void ClearCache()
