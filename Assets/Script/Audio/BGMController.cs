@@ -63,6 +63,7 @@ public class BGMController : Singleton<BGMController>
 
         _bgmSource.clip = clip;
         _bgmSource.loop = true;
+        _bgmSource.volume = 0.6f;
         _bgmSource.Play();
     }
 
@@ -98,16 +99,16 @@ public class BGMController : Singleton<BGMController>
     {
         if (_bgmSource != null)
         {
-            _bgmSource.volume = 0.5f;
+            _bgmSource.volume = 0.3f;
         }
     }
 
-    // BGM 볼륨을 최대로 설정
+    // BGM 볼륨을 기본으로 설정
     public void SetBGMVolumeMax()
     {
         if (_bgmSource != null)
         {
-            _bgmSource.volume = 1f;
+            _bgmSource.volume = 0.6f;
         }
     }
 

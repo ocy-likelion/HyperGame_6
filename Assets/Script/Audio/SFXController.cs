@@ -57,8 +57,8 @@ public class SFXController : Singleton<SFXController>
 
     public void PlayStamp() => PlaySFX(stamp);
     
-    public void PlayDocSuccess() => PlaySFX(docSuccess);
-    public void PlayDocFail() => PlaySFX(docFail);
+    public void PlayDocSuccess() => PlaySFX(docSuccess, 0.6f);
+    public void PlayDocFail() => PlaySFX(docFail, 0.6f);
     public void PlayDocSwap() => PlaySFX(docSwap);
     public void PlayObsBugPostHit() => PlaySFX(obsBugPostHit);
     public void PlayObsProcessTry() => PlaySFX(obsProcessTry);
@@ -73,10 +73,10 @@ public class SFXController : Singleton<SFXController>
     #endregion
 
     // SFX 1번 재생
-    private void PlaySFX(AudioClip clip)
+    private void PlaySFX(AudioClip clip, float volume = 1f)
     {
         if (!_isSFXOn || clip == null) return;
-        _sfxSource.PlayOneShot(clip);
+        _sfxSource.PlayOneShot(clip, volume);
     }
     
     // SFX 반복 재생
