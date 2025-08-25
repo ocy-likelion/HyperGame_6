@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Constants;
@@ -43,16 +44,19 @@ public class GameManager : Singleton<GameManager>
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        StartCoroutine(LoadGameSystem());
+        _= LoadGameSystem();
     }
 
     //최초 실행시 초기화 진행
-    private IEnumerator LoadGameSystem()
+    private async Task LoadGameSystem()
     {
-        yield return StartCoroutine(obstacleClearEffect.LoadData());
-        yield return StartCoroutine(inGameController.Initialize());
+        //Addressable 데이터 로드
+        await obstacleClearEffect.LoadSprites();
+        await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
+        await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
+        StartCoroutine(inGameController.Initialize());
+        ChangeGameState(GameState.Title);
     }
-    
     private void Update()
     {
         if (_currentState != GameState.None)

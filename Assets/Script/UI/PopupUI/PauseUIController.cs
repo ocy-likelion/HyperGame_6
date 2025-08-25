@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ public class PauseUIController : PopupController
         _audioToggleButton.onClick.AddListener(OnClickAudioToggleButton);
     }
 
-    public async void LoadSprites()
+    public async Task LoadSprites()
     {
         var audioBtnSprites = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Buttons.Sounds.OnOff);
         _audioBtnSprites[0] = audioBtnSprites[0];
