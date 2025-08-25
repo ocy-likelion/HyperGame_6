@@ -13,19 +13,19 @@ public class DifficultyManager : Singleton<DifficultyManager>
     private int _difficultyIncreaseInterval = 5;
     
     // 난이도별 시간 감소 주기 (초당 1씩감소)
-    private float[] _timeDecreaseRates = { 1f, 0.6f, 0.2f };
+    private float[] _timeDecreaseRates = { 1f, 0.8f, 0.6f, 0.4f, 0.2f };
     
     // 서류 처리 보상 (난이도별 일과 시간 회복량)
-    private int[] _reward = { 1, 3, 5 };
+    private int[] _reward = { 1, 1, 2, 2, 3 };
     
     // 서류 처리 실수 패널티 (난이도별 일과 시간 손실량)
-    private int[] _penalty = { 3, 7, 12 };
+    private int[] _penalty = { 3, 5, 7, 9, 12 };
     
     // 장애물 처리 횟수
-    private int[] _obstacleProcessingCount = { 1, 2, 3 };
+    private int[] _obstacleProcessingCount = { 1, 1, 2, 2, 3 };
 
     // 장애물 등장 확률 (단위: 퍼센트)
-    private int[] _obstacleSpawnProbability = { 5, 20, 40 };
+    private int[] _obstacleSpawnProbability = { 4, 10, 12, 20, 30 };
 
     //현재 난이도와 상승 타이밍을 체크하기 위한 List
     private List<bool> levelMonitor = new List<bool>();
