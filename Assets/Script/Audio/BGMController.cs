@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Constants;
 
-public class BGMController : Singleton<BGMController>
+public class BGMController : MonoBehaviour
 {
     // BGM을 추가하실 때, 여기에 추가해주세요.
     [SerializeField] private AudioClip titleBGM;
@@ -16,17 +14,19 @@ public class BGMController : Singleton<BGMController>
     private bool _isBGMOn = true;       // BGM이 켜져있는지 여부
     public bool IsBGMOn() => _isBGMOn;
 
-    protected override void Initialize()
+    private void Awake()
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.SetBGMController(this);
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
-        _bgmSource = gameObject.AddComponent<AudioSource>();
         DifficultyManager.OnLevelChanged += SetBGMSpeedFast;     // 난이도가 상승하면 자동 실행되도록 구독
+        
+        _bgmSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        AudioManager.Instance.SetBGMController(this);
-        
         // TODO: 유저 정보에 소리 설정이 OFF라면 재생되지 않도록
     }
 

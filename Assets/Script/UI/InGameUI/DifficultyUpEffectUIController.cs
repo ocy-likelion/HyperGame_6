@@ -37,7 +37,7 @@ public class DifficultyUpEffectUIController : MonoBehaviour
         var tr = effectText.transform;
         canvasGroup.DOFade(1, 0.1f).OnComplete(() =>
         {
-            SFXController.Instance.PlaySpeedUp();
+            AudioManager.Instance.SFX.PlaySpeedUp();
             tr.DOMove(_startVector, 0);
             tr.DOMove(_originVector, 0.35f).SetEase(Ease.OutBounce);
             DOVirtual.DelayedCall(2f, () =>
