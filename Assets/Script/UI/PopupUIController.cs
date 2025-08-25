@@ -27,7 +27,6 @@ public class PopupUIController : Singleton<PopupUIController>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         UIManager.Instance.SetPopupUIController(this);
-        pauseUIController.LoadSprites();
     }
 
     #region PauseUI

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,37 +36,26 @@ public class ObstacleClearEffect
         filerOutSpeed = 500f;
         envelopeOutSpeed = 1000f;
     }
-    
-    public IEnumerator LoadData()
-    {
-        LoadSprites();
-        while (_loadComplete == false)
-        {
-            yield return null;
-        }
-    }
 
-    //이미지 모두 로드.
-    private async void LoadSprites()
-    {
-        //벌레
-        _bugAnim.Add(await DataManager.Instance.LoadSpriteData(Addresses.Sprites.Obstacles.Bug.Dead));//0
-        var bugAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Bug.Anim);
-        _bugAnim.Add(bugAnims[0]);//1
-        _bugAnim.Add(bugAnims[1]);//2
-        
-        //손
-        var handAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Hand.Anim);
-        _handAnim.Add(handAnims[0]);//0
-        _handAnim.Add(handAnims[1]);//1
-        
-        //서류봉투
-        var envelopeAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Envelope.Anim);
-        _envelopeAnim.Add(envelopeAnims[0]);//0
-        _envelopeAnim.Add(envelopeAnims[1]);//1
-        
-        _loadComplete = true;
-    }
+     //이미지 모두 로드.
+     public async Task LoadSprites()
+     {
+         //벌레
+         _bugAnim.Add(await DataManager.Instance.LoadSpriteData(Addresses.Sprites.Obstacles.Bug.Dead));//0
+         var bugAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Bug.Anim);
+         _bugAnim.Add(bugAnims[0]);//1
+         _bugAnim.Add(bugAnims[1]);//2
+         
+         //손
+         var handAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Hand.Anim);
+         _handAnim.Add(handAnims[0]);//0
+         _handAnim.Add(handAnims[1]);//1
+         
+         //서류봉투
+         var envelopeAnims = await DataManager.Instance.LoadSpritesData(Addresses.Sprites.Obstacles.Envelope.Anim);
+         _envelopeAnim.Add(envelopeAnims[0]);//0
+         _envelopeAnim.Add(envelopeAnims[1]);//1
+     }
 
     public void ClearSprites()
     {
