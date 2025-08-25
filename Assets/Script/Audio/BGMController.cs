@@ -13,7 +13,6 @@ public class BGMController : Singleton<BGMController>
     // 여기까지
     
     private AudioSource _bgmSource;
-    private AudioClip _currentBGM;     // 현재 재생해야 할 BGM 저장
     private bool _isBGMOn = true;       // BGM이 켜져있는지 여부
     public bool IsBGMOn() => _isBGMOn;
 
@@ -21,6 +20,7 @@ public class BGMController : Singleton<BGMController>
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         _bgmSource = gameObject.AddComponent<AudioSource>();
+        DifficultyManager.OnLevelChanged += SetBGMSpeedFast;     // 난이도가 상승하면 자동 실행되도록 구독
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -59,7 +59,6 @@ public class BGMController : Singleton<BGMController>
     // BGM 재생 (반복 O)
     private void PlayBGM(AudioClip clip)
     {
-        _currentBGM = clip;     // 현재 BGM 저장
         if (!_isBGMOn || clip == null) return;
 
         _bgmSource.clip = clip;
@@ -68,7 +67,7 @@ public class BGMController : Singleton<BGMController>
     }
 
     // BGM 중지
-    public void StopBGM()
+    private void StopBGM()
     {
         if (_bgmSource != null)
         {
@@ -76,17 +75,72 @@ public class BGMController : Singleton<BGMController>
         }
     }
 
-    // _isBGMOn값을 조정하고 그에 따라 BGM 재생 및 중지
+    // BGM 음소거
+    private void MuteBGM()
+    {
+        if (_bgmSource != null)
+        {
+            _bgmSource.mute = true;
+        }
+    }
+
+    // BGM 음소거 해제
+    private void UnmuteBGM()
+    {
+        if (_bgmSource != null)
+        {
+            _bgmSource.mute = false;
+        }
+    }
+
+    // BGM 볼륨을 절반으로 설정
+    public void SetBGMVolumeHalf()
+    {
+        if (_bgmSource != null)
+        {
+            _bgmSource.volume = 0.5f;
+        }
+    }
+
+    // BGM 볼륨을 최대로 설정
+    public void SetBGMVolumeMax()
+    {
+        if (_bgmSource != null)
+        {
+            _bgmSource.volume = 1f;
+        }
+    }
+
+    // BGM 배속 조절
+    private void SetBGMSpeedFast()
+    {
+        int level = DifficultyManager.Instance.GetLevel(GameManager.Instance.GetTimeController()._day);
+        float[] bgmSpeeds = { 1f, 1.1f, 1.2f, 1.3f, 1.5f };
+        int temp = Mathf.Clamp(level, 0, bgmSpeeds.Length - 1);     // level이 5 이상 넘어가는 것을 방지하기 위한 임시값
+        
+        _bgmSource.pitch = bgmSpeeds[temp];
+    }
+
+    // BGM 속도 정상화
+    public void SetBGMSpeedNormal()
+    {
+        if (_bgmSource != null)
+        {
+            _bgmSource.pitch = 1f;
+        }
+    }
+
+    // _isBGMOn값을 조정하고 그에 따라 BGM을 음소거 설정 및 해제
     public void SetBGMOn(bool isBGMOn)
     {
         _isBGMOn = isBGMOn;
-        if (_isBGMOn && _currentBGM != null)   // 재생
+        if (_isBGMOn)   // 음소거 해제
         {
-            PlayBGM(_currentBGM);
+            UnmuteBGM();
         }
-        else   // 중지
+        else   // 음소거
         {
-            StopBGM();
+            MuteBGM();
         }
     }
 }

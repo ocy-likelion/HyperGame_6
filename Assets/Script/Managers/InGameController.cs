@@ -169,6 +169,10 @@ public class InGameController
         _initComplete = false;
         _skipResultUI = false;
         
+        // BGM 초기화
+        AudioManager.Instance.BGM.SetBGMVolumeMax();    // 볼륨을 최대로
+        AudioManager.Instance.BGM.SetBGMSpeedNormal();  // 배속을 기본으로
+        
         //재시작 필요 시.
         if (_useRetry)
         {
