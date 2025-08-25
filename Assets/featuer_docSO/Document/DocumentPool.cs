@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 풀링 가능한 오브젝트는 이 인터페이스를 구현해야 함
+/// </summary>
+public interface IPoolable
+{
+    GameObject OriginalPrefab { get; set; }
+}
+
 public class DocumentPool : Singleton<DocumentPool>
 {
     // 프리팹 별로 큐 관리
@@ -11,10 +19,8 @@ public class DocumentPool : Singleton<DocumentPool>
     [NonSerialized] public Canvas canvas; // UI 풀이 붙을 Canvas
 
     /// <summary>
-    /// UI 오브젝트 요청
+    /// 오브젝트 요청
     /// </summary>
-    /// <param name="prefab">생성/재사용할 UI 프리팹</param>
-    /// <param name="anchoredPosition">Canvas 기준 위치</param>
     public GameObject GetObject(GameObject prefab, Vector2 anchoredPosition)
     {
         if (!poolDictionary.ContainsKey(prefab))
@@ -22,17 +28,12 @@ public class DocumentPool : Singleton<DocumentPool>
 
         GameObject obj = poolDictionary[prefab].Count > 0 ? poolDictionary[prefab].Dequeue() : Instantiate(prefab);
 
-        // OriginalPrefab 저장
-        var obstacle = obj.GetComponent<ObstacleController>();
-        if (obstacle != null) obstacle.OriginalPrefab = prefab;
+        // IPoolable이면 OriginalPrefab 기록
+        var poolable = obj.GetComponent<IPoolable>();
+        if (poolable != null)
+            poolable.OriginalPrefab = prefab;
 
-        var reject = obj.GetComponent<RejectController>();
-        if (reject != null) reject.OriginalPrefab = prefab;
-
-        var document = obj.GetComponent<Document>();
-        if (document != null) document.OriginalPrefab = prefab;
-
-        // RectTransform 기준 배치
+        // RectTransform 기반 위치 설정
         var rect = obj.GetComponent<RectTransform>();
         if (rect != null)
         {
@@ -51,25 +52,23 @@ public class DocumentPool : Singleton<DocumentPool>
     }
 
     /// <summary>
-    /// UI 오브젝트 반환
+    /// 오브젝트 반환
     /// </summary>
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
 
-        var obstacle = obj.GetComponent<ObstacleController>();
-        var reject = obj.GetComponent<RejectController>();
-        var document = obj.GetComponent<Document>();
-
-        GameObject prefabKey = obstacle?.OriginalPrefab ?? reject?.OriginalPrefab ?? document?.OriginalPrefab;
-
-        if (prefabKey == null)
+        var poolable = obj.GetComponent<IPoolable>();
+        if (poolable == null || poolable.OriginalPrefab == null)
         {
             Debug.LogWarning("ReturnObject: OriginalPrefab not found, destroying object.");
             Destroy(obj);
             return;
         }
 
+        GameObject prefabKey = poolable.OriginalPrefab;
+
+        // RectTransform 초기화
         var rect = obj.GetComponent<RectTransform>();
         if (rect != null)
         {

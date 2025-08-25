@@ -186,9 +186,19 @@ public class DocumentController : MonoBehaviour
     {
         if (_docObj == null) return;
 
+        // 기존 Instantiate 대신 풀에서 가져오기
         GameObject prefab = isApproved ? approvalStampPrefab : deniedStampPrefab;
-        GameObject stamp = Instantiate(prefab, _docObj.transform, false);
-        stamp.GetComponent<RectTransform>().anchoredPosition = new Vector2(1f, -2f);
+        Vector2 anchoredPos = new Vector2(1f, -2f);
+
+        // DocumentPool 사용
+        GameObject stamp = DocumentPool.Instance.GetObject(prefab, anchoredPos);
+
+        // _docObj 자식으로 붙이기
+        var rect = stamp.GetComponent<RectTransform>();
+        if (rect != null)
+            rect.SetParent(_docObj.transform, false);
+        else
+            stamp.transform.SetParent(_docObj.transform, false);
     }
 
     public void ObstacleCleared(GameObject obstacleObj)
@@ -225,14 +235,14 @@ public class DocumentController : MonoBehaviour
     {
         if (_docObj != null)
         {
+            // 모든 자식 오브젝트 반환
             for (int i = _docObj.transform.childCount - 1; i >= 0; i--)
             {
                 var child = _docObj.transform.GetChild(i).gameObject;
-                if (child.CompareTag("Stamp"))
-                    Destroy(child);
-                else
-                    DocumentPool.Instance.ReturnObject(child);
+                DocumentPool.Instance.ReturnObject(child);
             }
+
+            // 문서 자체 반환
             DocumentPool.Instance.ReturnObject(_docObj);
         }
 
@@ -292,7 +302,7 @@ public class DocumentController : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
+            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Ended)
             {
                 inputPos = touch.position;
                 return true;

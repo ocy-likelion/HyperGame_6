@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObstacleController : MonoBehaviour
+public class ObstacleController : MonoBehaviour, IPoolable
 {
     // UI 풀에서 반환할 원본 프리팹 참조
     public GameObject OriginalPrefab { get; set; }
