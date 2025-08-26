@@ -258,24 +258,24 @@ public class DocumentController : MonoBehaviour
     private void Update()
     {
         if (!_isClickable) return;
-
+    
         if (TryGetInputPosition(out Vector2 inputPos))
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.position = inputPos;
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
-
+    
             if (results.Count > 0)
             {
                 var firstHit = results[0];
                 var obstacle = firstHit.gameObject.GetComponent<ObstacleController>();
-
+    
                 if (obstacle != null)
                 {
                     Vector2 canvasPos = ScreenToCanvasPosition(inputPos);
                     VfxManager.Instance.GetVFX(VFXType.OBSTOUCH, canvasPos, Quaternion.identity, Vector2.one);
-
+    
                     obstacle.ProcessHit();
                 }
             }
@@ -294,26 +294,118 @@ public class DocumentController : MonoBehaviour
     
         return canvasPos;
     }
-
+    
     private bool TryGetInputPosition(out Vector2 inputPos)
     {
         inputPos = Vector2.zero;
-
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Ended)
             {
-                inputPos = touch.position;
-                return true;
+                inputPos = touch.position; return true;
             }
-        }
-        else if (Input.GetMouseButtonDown(0))
+            
+        } 
+        else if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
-            inputPos = Input.mousePosition;
-            return true;
-        }
-
+            inputPos = Input.mousePosition; return true;
+        } 
         return false;
     }
+    
+    
+    // #region 터치 로직 수정본
+    //
+    // private float _tapStartTime = 0f;
+    // private Vector2 _tapStartPos = Vector2.zero;
+    // public float MaxTapDuration = 10f;
+    // public float MaxTapMove = 20f;
+    // private void Update()
+    // {
+    //     if (!_isClickable) return;
+    //
+    //     if (TryGetTapPosition(out Vector2 inputPos))
+    //     {
+    //         PointerEventData pointerData = new PointerEventData(EventSystem.current);
+    //         pointerData.position = inputPos;
+    //         List<RaycastResult> results = new List<RaycastResult>();
+    //         EventSystem.current.RaycastAll(pointerData, results);
+    //
+    //         if (results.Count > 0)
+    //         {
+    //             var firstHit = results[0];
+    //             var obstacle = firstHit.gameObject.GetComponent<ObstacleController>();
+    //
+    //             if (obstacle != null)
+    //             {
+    //                 Vector2 canvasPos = ScreenToCanvasPosition(inputPos);
+    //                 VfxManager.Instance.GetVFX(VFXType.OBSTOUCH, canvasPos, Quaternion.identity, Vector2.one);
+    //
+    //                 obstacle.ProcessHit();
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // private Vector2 ScreenToCanvasPosition(Vector2 screenPos)
+    // {
+    //     Vector2 canvasPos;
+    //     RectTransformUtility.ScreenPointToLocalPointInRectangle(
+    //         _canvas.transform as RectTransform,
+    //         screenPos,
+    //         _canvas.worldCamera,
+    //         out canvasPos
+    //     );
+    //
+    //     return canvasPos;
+    // }
+    //
+    // private bool TryGetTapPosition(out Vector2 tapPos)
+    // {
+    //     tapPos = Vector2.zero;
+    //
+    //     // 터치 입력
+    //     if (Input.touchCount > 0)
+    //     {
+    //         Touch touch = Input.GetTouch(0);
+    //         if (touch.phase == TouchPhase.Began)
+    //         {
+    //             _tapStartTime = Time.time;
+    //             _tapStartPos = touch.position;
+    //         }
+    //         else if (touch.phase == TouchPhase.Ended)
+    //         {
+    //             float duration = Time.time - _tapStartTime;
+    //             float distance = Vector2.Distance(touch.position, _tapStartPos);
+    //
+    //             if (duration <= MaxTapDuration && distance <= MaxTapMove)
+    //             {
+    //                 tapPos = touch.position;
+    //                 return true; // 짧은 탭 인정
+    //             }
+    //         }
+    //     }
+    //     
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         _tapStartTime = Time.time;
+    //         _tapStartPos = Input.mousePosition;
+    //     }
+    //     else if (Input.GetMouseButtonUp(0))
+    //     {
+    //         float duration = Time.time - _tapStartTime;
+    //         float distance = Vector2.Distance((Vector2)Input.mousePosition, _tapStartPos);
+    //
+    //         if (duration <= MaxTapDuration && distance <= MaxTapMove)
+    //         {
+    //             tapPos = Input.mousePosition;
+    //             return true; // 짧은 탭 인정
+    //         }
+    //     }
+    //
+    //     return false;
+    // }
+    //
+    // #endregion
 }

@@ -23,11 +23,17 @@ public class SFXController : MonoBehaviour
     [SerializeField] private AudioClip speedUp;
     [SerializeField] private AudioClip fever;
     [SerializeField] private AudioClip timeOutAlert;
+    [SerializeField] private AudioClip gameStart;
+    [SerializeField] private AudioClip scoreCalculating;
+    [SerializeField] private AudioClip scoreCalculated;
     
     
     // 여기까지
 
-    private AudioSource _sfxSource;                             // 단발성 AudioSource
+    private List<AudioSource> _sfxSources;                       // 단발성 AudioSource (풀링)
+    private int _poolSize = 6;                                  // 단발성 AudioSource 풀의 개수
+    private Dictionary<AudioClip, List<AudioSource>> _activeSFX;   // 개별 단발 SFX 추적
+    
     private Dictionary<AudioClip, AudioSource> _loopSources;    // 반복용 AudioSource
     private bool _isSFXOn = true;       // SFX가 켜져있는지 여부
     public bool GetIsSFXOn() => _isSFXOn;
@@ -36,13 +42,21 @@ public class SFXController : MonoBehaviour
     {
         if (AudioManager.Instance != null)
             AudioManager.Instance.SetSFXController(this);
-        
+
         SceneManager.sceneLoaded += OnSceneLoaded;
-        
+
         // AudioSource 초기화
-        _sfxSource = gameObject.AddComponent<AudioSource>();
-        _sfxSource.playOnAwake = false;
+        _sfxSources = new List<AudioSource>();
         _loopSources = new Dictionary<AudioClip, AudioSource>();
+        _activeSFX = new Dictionary<AudioClip, List<AudioSource>>();
+
+        // 풀 초기화
+        for (int i = 0; i < _poolSize; i++)
+        {
+            var src = gameObject.AddComponent<AudioSource>();
+            src.playOnAwake = false;
+            _sfxSources.Add(src);
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -73,13 +87,80 @@ public class SFXController : MonoBehaviour
     public void StopTimeOutAlert() => StopLoopSFX(timeOutAlert);
     public void PlayNewRecordResult() => PlaySFX(newRecordResult);
     public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
+    public void PlayGameStart() => PlaySFX(gameStart);
+    public void PlayScoreCalculating() => PlaySFX(scoreCalculating);
+    public void StopScoreCalculating() => StopSFX(scoreCalculating);
+    public void PlayScoreCalculated() => PlaySFX(scoreCalculated);
     #endregion
 
-    // SFX 1번 재생
+    // 단발 SFX 재생 (풀링 + 추적)
     private void PlaySFX(AudioClip clip, float volume = 1f)
     {
         if (!_isSFXOn || clip == null) return;
-        _sfxSource.PlayOneShot(clip, volume);
+
+        AudioSource src = GetAvailableSource();
+        src.clip = clip;
+        src.volume = volume;
+        src.mute = !_isSFXOn;
+        src.Play();
+
+        // 개별 SFX 추적
+        if (!_activeSFX.ContainsKey(clip))
+            _activeSFX[clip] = new List<AudioSource>();
+        _activeSFX[clip].Add(src);
+
+        // 재생 완료 후 제거
+        StartCoroutine(RemoveAfterPlay(src, clip));
+    }
+
+    private System.Collections.IEnumerator RemoveAfterPlay(AudioSource src, AudioClip clip)
+    {
+        yield return new WaitWhile(() => src.isPlaying);
+        if (_activeSFX.ContainsKey(clip))
+            _activeSFX[clip].Remove(src);
+    }
+
+    // 사용 가능한 AudioSource 가져오기 (풀링)
+    private AudioSource GetAvailableSource()
+    {
+        foreach (var src in _sfxSources)
+        {
+            if (!src.isPlaying)
+                return src;
+        }
+
+        // 모두 사용 중이면 새로 생성
+        var newSrc = gameObject.AddComponent<AudioSource>();
+        newSrc.playOnAwake = false;
+        _sfxSources.Add(newSrc);
+        return newSrc;
+    }
+
+    // 특정 단발 SFX 강제 정지
+    public void StopSFX(AudioClip clip)
+    {
+        if (!_activeSFX.ContainsKey(clip)) return;
+
+        foreach (var src in _activeSFX[clip])
+        {
+            if (src != null && src.isPlaying)
+                src.Stop();
+        }
+        _activeSFX[clip].Clear();
+    }
+
+    // 모든 단발 SFX 강제 정지
+    public void StopAllSFX()
+    {
+        foreach (var kv in _activeSFX)
+        {
+            foreach (var src in kv.Value)
+            {
+                if (src != null && src.isPlaying)
+                    src.Stop();
+            }
+            kv.Value.Clear();
+        }
     }
     
     // SFX 반복 재생
@@ -116,16 +197,19 @@ public class SFXController : MonoBehaviour
     public void SetSFXOn(bool isSFXOn)
     {
         _isSFXOn = isSFXOn;
-        
-        // 단발성 AudioSource
-        if (_sfxSource != null)
-            _sfxSource.mute = !_isSFXOn;
-        
-        // 루프성 AudioSources
+
+        _isSFXOn = isSFXOn;
+
+        // 단발
+        foreach (var src in _sfxSources)
+        {
+            if (src != null) src.mute = !_isSFXOn;
+        }
+
+        // 루프
         foreach (var key in _loopSources)
         {
-            if (key.Value != null)
-                key.Value.mute = !_isSFXOn;
+            if (key.Value != null) key.Value.mute = !_isSFXOn;
         }
     }
 }

@@ -11,6 +11,7 @@ public class SubMenuUIController : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Button _gameSettingButton;
     [SerializeField] private Button _leaderBoardButton;
+    [SerializeField] private Button _infoButton;
     [SerializeField] private Sprite[] _swapImage = new Sprite[2];
     private Sprite[] _audioBtnSprites = new Sprite[2];
     private bool _isClicked = false;
@@ -20,6 +21,7 @@ public class SubMenuUIController : MonoBehaviour
         //버튼 클릭이벤트 등록
         _gameSettingButton.onClick.AddListener(OnClickGameSettingButton);
         _leaderBoardButton.onClick.AddListener(OnClickLeaderBoardButton);
+        _infoButton.onClick.AddListener(OnClickInfoButton);
     }
     
     public async Task LoadSprites()
@@ -58,5 +60,11 @@ public class SubMenuUIController : MonoBehaviour
         
         //토스 게임 리더보드 열어보기
         NetworkManager.Instance.OnTossLeaderboard();
+    }
+
+    public void OnClickInfoButton()
+    {
+        PopupUIController.Instance.ShowInfoUI();
+        AudioManager.Instance.SFX.PlayButtonClick();
     }
 }

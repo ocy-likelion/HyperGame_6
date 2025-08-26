@@ -50,14 +50,24 @@ public class GameManager : Singleton<GameManager>
     //최초 실행시 초기화 진행
     private async Task LoadGameSystem()
     {
+        UIManager.Instance.popupUIController.introUIController.gameObject.SetActive(true);
+        //NetworkManager.Instance.LoadAd();
         //Addressable 데이터 로드
         await obstacleClearEffect.LoadSprites();
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
-        StartCoroutine(inGameController.Initialize());
-        //NetworkManager.Instance.LoadAd();
-        ChangeGameState(GameState.Title);
+        StartCoroutine(LoadEndInitGame());
     }
+
+    private IEnumerator LoadEndInitGame()
+    {
+        yield return StartCoroutine(
+            UIManager.Instance.popupUIController.introUIController.InitIntroUI());
+        yield return StartCoroutine(inGameController.Initialize());
+        ChangeGameState(GameState.Title);
+        yield return null;
+    }
+    
     private void Update()
     {
         if (_currentState != GameState.None)

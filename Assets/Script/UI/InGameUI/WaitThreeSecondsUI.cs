@@ -15,6 +15,7 @@ public class WaitThreeSecondsUI : MonoBehaviour
         TouchBlockPanel.gameObject.SetActive(true); //터치 막는 패널 활성화
         Time.timeScale = 0f; // 게임 시간 정지
         SecondsText.text = "3"; // 3초 표시
+        AudioManager.Instance.SFX.PlayGameStart(); // 게임 시작 사운드 재생
         yield return new WaitForSecondsRealtime(1f);
         SecondsText.text = "2"; // 2초 표시
         yield return new WaitForSecondsRealtime(1f);

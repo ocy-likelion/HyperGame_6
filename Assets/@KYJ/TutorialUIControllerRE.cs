@@ -19,7 +19,7 @@ public class TutorialUIControllerRE : PopupController
     Button nextButton;
     Image touchImage;
 
-    [Header("텍스트 & 이미지")]
+    [Header("튜토리얼 이미지")]
     public TutorialPage[] tutorialPages;
 
     int currentIndex = 0;
@@ -58,10 +58,12 @@ public class TutorialUIControllerRE : PopupController
         if (currentIndex < tutorialPages.Length - 1)
         {
             currentIndex++;
+            AudioManager.Instance.SFX.PlayButtonClick();
             UpdateSlide();
         }
         else
         {
+            AudioManager.Instance.SFX.PlayButtonClick();
             ClosePopup();
         }
     }
