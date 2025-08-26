@@ -56,7 +56,7 @@ public class DataManager : Singleton<DataManager>
             var asset = await Addressables.LoadAssetAsync<Sprite[]>(address).Task;
             var newAsset = asset.OrderBy(s => s.name).ToArray();
             
-            _arraycaches[address] = newAsset;
+            _arraycaches[address] = asset;
         
             return newAsset;
         }
@@ -65,15 +65,15 @@ public class DataManager : Singleton<DataManager>
         {
             foreach (var asset in _caches.Values)
             {
-                Addressables.Release(asset);
+                if(asset != null) Addressables.Release(asset);
             }
-            _caches.Clear();
-            
+            _caches?.Clear();
+
             foreach (var asset in _arraycaches.Values)
             {
-                Addressables.Release(asset);
+                if(asset != null) Addressables.Release(asset);
             }
-            _arraycaches.Clear();
+            _arraycaches?.Clear();
         }
     }
 
