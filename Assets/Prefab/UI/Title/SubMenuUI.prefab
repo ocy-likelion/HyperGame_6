@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 178, y: 169}
+  m_SizeDelta: {x: 175, y: 175}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1739804706663239021
 CanvasRenderer:
@@ -156,7 +156,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 177.5, y: 168}
+  m_SizeDelta: {x: 171.5, y: 172}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3171436633437170451
 CanvasRenderer:
@@ -509,7 +509,7 @@ MonoBehaviour:
   _canvasGroup: {fileID: 7175593271016925596}
   _gameSettingButton: {fileID: 1128324230055789223}
   _leaderBoardButton: {fileID: 8708340384739171171}
-  _infoButton: {fileID: 0}
+  _infoButton: {fileID: 1867126742641265596}
   _swapImage:
   - {fileID: -1478015579, guid: 171e7445062a1b2449ac727fc98fea58, type: 3}
   - {fileID: 1424661563, guid: 171e7445062a1b2449ac727fc98fea58, type: 3}
