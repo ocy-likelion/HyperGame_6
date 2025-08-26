@@ -195,7 +195,10 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideClassificationUI();
         UIManager.Instance.inGameUIController.HideWaitThreeSecondsUI();
         UIManager.Instance.inGameUIController.HideDifficultyUpEffectUI();
-
+        
+        //광고호출
+        //NetworkManager.Instance.ShowAd();
+        
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
     }

@@ -8,16 +8,26 @@ public class NetworkManager : Singleton<NetworkManager>
         [DllImport("__Internal")]
         private static extern void OpenTossLeaderboard();
         private static extern void SubmitTossScore(int score);
-
+        
+        private static extern void LoadInterstitialAd();
+        private static extern void ShowInterstitialAd();
+        
+        /// <summary>
+        /// 토스 리더보드 호출
+        /// </summary>
         public void OnTossLeaderboard()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR//WebGL 환경에서만 동작
-        OpenTossLeaderboard();
+                OpenTossLeaderboard();
 #else
                 Debug.Log("Toss Leaderboard can only open in WebGL build");
 #endif
         }
         
+        /// <summary>
+        /// 토스 리더보드에 점수 전송
+        /// </summary>
+        /// <param name="score"></param>
         public void SendScore(int score)
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -65,4 +75,23 @@ public class NetworkManager : Singleton<NetworkManager>
                 Debug.Log(msg);
         }
         
+        
+        // 게임 종료 시 호출
+        public void ShowAd()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        ShowInterstitialAd();
+#else
+                Debug.Log("[Editor] Show interstitial ad (mock).");
+#endif
+        }
+        
+        public void LoadAd()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+          LoadInterstitialAd();  // 게임 시작 시 미리 로드
+#else
+                Debug.Log("[Editor] Load interstitial ad (mock).");
+#endif
+        }
 }

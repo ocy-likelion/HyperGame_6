@@ -55,6 +55,7 @@ public class GameManager : Singleton<GameManager>
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
         StartCoroutine(inGameController.Initialize());
+        //NetworkManager.Instance.LoadAd();
         ChangeGameState(GameState.Title);
     }
     private void Update()
