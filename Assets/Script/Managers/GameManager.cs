@@ -54,9 +54,18 @@ public class GameManager : Singleton<GameManager>
         await obstacleClearEffect.LoadSprites();
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
-        StartCoroutine(inGameController.Initialize());
-        ChangeGameState(GameState.Title);
+        StartCoroutine(LoadEndInitGame());
     }
+
+    private IEnumerator LoadEndInitGame()
+    {
+        yield return StartCoroutine(
+            UIManager.Instance.popupUIController.introUIController.InitIntroUI());
+        yield return StartCoroutine(inGameController.Initialize());
+        ChangeGameState(GameState.Title);
+        yield return null;
+    }
+    
     private void Update()
     {
         if (_currentState != GameState.None)
