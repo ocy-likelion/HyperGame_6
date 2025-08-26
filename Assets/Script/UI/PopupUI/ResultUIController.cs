@@ -64,20 +64,31 @@ public class ResultUIController : PopupController
         // TODO: 유저의 최고기록 불러오기 (임시: PlayerPrefs)
         float bestScore = PlayerPrefs.GetFloat("BestScore", 0f);
         
+        AudioManager.Instance.SFX.PlayScoreCalculating();
         Sequence seq = DOTween.Sequence();
         
         // Day Count Up
-        seq.Append(DOTween.To(() => 0, x => dayText.text = x.ToString() + "일", resultData.Day, 1f));
+        seq.Append(DOTween.To(() => 0, x => dayText.text = x.ToString() + "일", resultData.Day, 1f)
+            .OnComplete(() =>
+            {
+                AudioManager.Instance.SFX.PlayScoreCalculated();
+            }));
         seq.AppendInterval(0.2f);
         
         // MaxCombo Count Up
-        seq.Append(DOTween.To(() => 0, x => maxComboText.text = x.ToString(), resultData.MaxCombo, 1f));
+        seq.Append(DOTween.To(() => 0, x => maxComboText.text = x.ToString(), resultData.MaxCombo, 1f)
+            .OnComplete(() =>
+            {
+                AudioManager.Instance.SFX.PlayScoreCalculated();
+            }));
         seq.AppendInterval(0.2f);
 
         // Score Count Up
         seq.Append(DOTween.To(() => 0, x => scoreText.text = x.ToString("N0"), resultData.Score, 1.5f)
             .OnComplete(() =>
             {
+                AudioManager.Instance.SFX.StopScoreCalculating();
+                AudioManager.Instance.SFX.PlayScoreCalculated();
                 // 퇴근 버튼 활성화
                 _quitButton.gameObject.SetActive(true);
                 
