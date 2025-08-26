@@ -23,6 +23,7 @@ public class SFXController : MonoBehaviour
     [SerializeField] private AudioClip speedUp;
     [SerializeField] private AudioClip fever;
     [SerializeField] private AudioClip timeOutAlert;
+    [SerializeField] private AudioClip gameStart;
     
     
     // 여기까지
@@ -73,6 +74,7 @@ public class SFXController : MonoBehaviour
     public void StopTimeOutAlert() => StopLoopSFX(timeOutAlert);
     public void PlayNewRecordResult() => PlaySFX(newRecordResult);
     public void PlayNewRecordScoreBar() => PlaySFX(newRecordScoreBar);
+    public void PlayGameStart() => PlaySFX(gameStart);
     #endregion
 
     // SFX 1번 재생
