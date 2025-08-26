@@ -50,7 +50,11 @@ public class GameManager : Singleton<GameManager>
     //최초 실행시 초기화 진행
     private async Task LoadGameSystem()
     {
-        UIManager.Instance.popupUIController.introUIController.gameObject.SetActive(true);
+        while (UIManager.Instance.popupUIController.introUIController == null)
+        {
+            await Task.Yield();
+        }
+        UIManager.Instance.popupUIController.introUIController.InitUI();
         //Addressable 데이터 로드
         await obstacleClearEffect.LoadSprites();
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();

@@ -8,14 +8,15 @@ public class IntroUIController : PopupController
 {
     [SerializeField] private Image IntroUI;
 
-    void Awake()
+    public void InitUI()
     {
-        IntroUI.DOColor(Color.black, 0);
+        IntroUI.color = Color.black;
+        gameObject.SetActive(true);
     }
     
     protected override void OnEnable()
     {
-        //
+            //
     }
 
     protected override void OnDisable()
