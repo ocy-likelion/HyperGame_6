@@ -7,10 +7,18 @@ public class NetworkManager : Singleton<NetworkManager>
 {
         [DllImport("__Internal")]
         private static extern void OpenTossLeaderboard();
+        [DllImport("__Internal")]
         private static extern void SubmitTossScore(int score);
         
+        [DllImport("__Internal")]
         private static extern void LoadInterstitialAd();
+        [DllImport("__Internal")]
         private static extern void ShowInterstitialAd();
+
+        protected override void Initialize()
+        {
+                LoadAd();
+        }
         
         /// <summary>
         /// 토스 리더보드 호출
