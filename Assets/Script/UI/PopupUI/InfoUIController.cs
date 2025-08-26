@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InfoUIController : MonoBehaviour
+public class InfoUIController : PopupController
 {
     Button touchButton;
     Image touchImage;
