@@ -35,6 +35,7 @@ public class IntroUIController : PopupController
 
     public IEnumerator InitIntroUI()
     {
+        gameObject.SetActive(true);
         var introEnd = false;
         IntroUI.DOColor(Color.white, 1f);
         yield return new WaitForSeconds(5f);
