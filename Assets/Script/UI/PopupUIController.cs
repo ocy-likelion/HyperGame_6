@@ -15,9 +15,9 @@ public class PopupUIController : Singleton<PopupUIController>
     public ResultUIController resultUIController;
     public GameOverUIController gameOverUIController;
     public TutorialUIControllerRE tutorialUIController;
-    
+    public InfoUIController InfoUIController;
     //여기까지
-    
+
     protected override void Initialize()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -72,6 +72,18 @@ public class PopupUIController : Singleton<PopupUIController>
     public void HideTutorialUI()
     {
         tutorialUIController.ClosePopup();
+    }
+    #endregion
+
+    #region InfoUI
+    public void ShowInfoUI()
+    {
+        InfoUIController.ShowPopup();
+    }
+
+    public void HideInfoUI()
+    {
+        InfoUIController.ClosePopup();
     }
     #endregion
 }
