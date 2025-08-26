@@ -8,12 +8,12 @@ public class PopupController : MonoBehaviour
     // [SerializeField] private List<GameObject> popups;
 
     //활성화 시 뒷배경 켜기
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         UIManager.Instance.ShowBackgroundImage(true);
     }
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
         UIManager.Instance.ShowBackgroundImage(false);
     }
