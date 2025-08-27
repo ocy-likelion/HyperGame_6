@@ -149,7 +149,7 @@ public class Classification : MonoBehaviour
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
-                    Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
+                    //Debug.Log("분류 실패! 반려요소 있음. 일과시간 감소: " + time + ", 현재 콤보: " + combo + ", 최대 콤보: " + maxCombo + "점수 배율: " + scoreMag + "피버게이지: " + feverValue);
                 }
                 else // 반려 버튼 클릭 시
                 {
