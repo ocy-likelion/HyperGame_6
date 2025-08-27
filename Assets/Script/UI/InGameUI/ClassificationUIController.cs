@@ -23,7 +23,7 @@ public class ClassificationUIController : MonoBehaviour
         
         _timerEffectRect = _timerEffectText.GetComponent<RectTransform>();
         _timerEffectStartAnchoredPos = _timerEffectRect.anchoredPosition; // 시작 위치 
-        Debug.Log(_timerEffectStartAnchoredPos);
+        //Debug.Log(_timerEffectStartAnchoredPos);
     }
 
     private void InitBox(Image box)
