@@ -23,7 +23,7 @@ public class DocumentController : MonoBehaviour
     [SerializeField] private Vector2 _docSpawnPos;
     [SerializeField] private Vector2 _docStopPos;
     [SerializeField] private Vector2 _docDespawnPos;
-    [SerializeField] private float _duration;
+    private float _duration;
 
     private DocumentData _currentDocument;
     private List<ObstacleInstance> _currentObstacles = new List<ObstacleInstance>();
@@ -135,6 +135,7 @@ public class DocumentController : MonoBehaviour
     private void SpawnDocument()
     {
         int day = GameManager.Instance.GetTimeController()._day;
+        _duration = DifficultyManager.Instance.GetDocumentDelay(day);
         
         _obstacleObjs.Clear();
 
@@ -212,6 +213,9 @@ public class DocumentController : MonoBehaviour
 
     public void RemoveDocument()
     {
+        int day = GameManager.Instance.GetTimeController()._day;
+        _duration = DifficultyManager.Instance.GetDocumentDelay(day);
+        
         _isClickable = false;
         var docRect = _docObj.GetComponent<RectTransform>();
 
