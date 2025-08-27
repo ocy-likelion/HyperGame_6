@@ -58,7 +58,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb09371f9cc0ba6479155d1695911949
-    m_Address: Assets/Resource/Sprite/Stamp/AP_down.png
+    m_Address: spr/buttons/interactions/approvedn
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
