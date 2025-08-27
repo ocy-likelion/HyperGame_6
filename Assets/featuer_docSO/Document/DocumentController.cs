@@ -259,6 +259,22 @@ public class DocumentController : MonoBehaviour
         if (!noLoop) CreateDocument();
     }
 
+    public void RejectOutline()
+    {
+        var rejectController = _rejectObj.GetComponent<RejectController>();
+        //todo: 반려 요소 아웃라인 적용 (RejectContoller에 outline스프라이트로 바꾸는 메서드 만들고 여기에 호출 할것)
+        RemoveDocument();
+    }
+
+    public void ObstacleOutline()
+    {
+        foreach (var _obstacle in _obstacleObjs)
+        {
+            var obstacleController = _obstacle.GetComponent<ObstacleController>();
+            //todo: 장애물 요소 아웃라인 적용 (ObstacleController에 outline스프라이트로 바꾸는 메서드 만들고 여기에 호출 할것)
+        }
+        RemoveDocument();
+    }
     private void Update()
     {
         if (!_isClickable) return;
