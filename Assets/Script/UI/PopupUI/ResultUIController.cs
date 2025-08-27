@@ -96,6 +96,7 @@ public class ResultUIController : PopupController
                 if (resultData.Score > bestScore)
                 {
                     PlayerPrefs.SetFloat("BestScore", resultData.Score);
+                    PlayerPrefs.Save();
                     ShowNewRecordEffect();
                 }
             }));

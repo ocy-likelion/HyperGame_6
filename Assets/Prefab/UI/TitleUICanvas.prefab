@@ -186,6 +186,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainBackGroundUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2316550215422001482, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316550215422001482, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316550215422001482, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316550215422001482, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 365
+      objectReference: {fileID: 0}
     - target: {fileID: 5906912479924186229, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
