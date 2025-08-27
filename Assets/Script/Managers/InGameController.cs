@@ -18,6 +18,7 @@ public class InGameController
     private bool _skipResultUI;
     private bool _useRetry;
     private bool _newRecordOn;
+    private bool _endAdmob;
     
     
     public IEnumerator Initialize()
@@ -72,6 +73,11 @@ public class InGameController
         _skipResultUI = false;
         _useRetry = false;
         _newRecordOn = false;
+        _endAdmob = false;
+        
+        // BGM 초기화
+        AudioManager.Instance.BGM.SetBGMVolumeMax();    // 볼륨을 최대로
+        AudioManager.Instance.BGM.SetBGMSpeedNormal();  // 배속을 기본으로
 
         //타이머 초기화
         timeController.InitTimeController();
@@ -171,10 +177,6 @@ public class InGameController
         _initComplete = false;
         _skipResultUI = false;
         
-        // BGM 초기화
-        AudioManager.Instance.BGM.SetBGMVolumeMax();    // 볼륨을 최대로
-        AudioManager.Instance.BGM.SetBGMSpeedNormal();  // 배속을 기본으로
-        
         //재시작 필요 시.
         if (_useRetry)
         {
@@ -185,6 +187,27 @@ public class InGameController
             //재시작을 위해 타이틀로 복귀하지 않고 기존 코루틴을 중단한다.
             yield break;
         }
+
+        
+        //광고호출
+        NetworkManager.Instance.ShowAd();
+
+        //광고 끝나기 전까지 대기
+        while (!_endAdmob)
+        {
+            yield return null;
+        }
+        
+        //광고 제어 변수 초기화
+        _endAdmob = false;
+        
+        //다음 광고 로드
+        NetworkManager.Instance.LoadAd();
+        
+        
+        // BGM 초기화
+        AudioManager.Instance.BGM.SetBGMVolumeMax();    // 볼륨을 최대로
+        AudioManager.Instance.BGM.SetBGMSpeedNormal();  // 배속을 기본으로
         
         //인게임 UI 닫기
         UIManager.Instance.inGameUIController.HideInGameUI();
@@ -197,9 +220,6 @@ public class InGameController
         UIManager.Instance.inGameUIController.HideClassificationUI();
         UIManager.Instance.inGameUIController.HideWaitThreeSecondsUI();
         UIManager.Instance.inGameUIController.HideDifficultyUpEffectUI();
-        
-        //광고호출
-        NetworkManager.Instance.ShowAd();
         
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
@@ -249,5 +269,10 @@ public class InGameController
     public bool GetGameStarted()
     {
         return _gameStarted;
+    }
+
+    public void EndAdMob()
+    {
+        _endAdmob = true;
     }
 }
