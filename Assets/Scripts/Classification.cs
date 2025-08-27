@@ -103,6 +103,7 @@ public class Classification : MonoBehaviour
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
+                    GameManager.Instance.inGameController.CheckNewRecord(score); //NewRecord 체크
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     //classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
@@ -157,6 +158,7 @@ public class Classification : MonoBehaviour
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
+                    GameManager.Instance.inGameController.CheckNewRecord(score); //NewRecord 체크
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     //classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행

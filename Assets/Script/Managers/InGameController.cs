@@ -17,6 +17,7 @@ public class InGameController
     private bool _quitGame;
     private bool _skipResultUI;
     private bool _useRetry;
+    private bool _newRecordOn;
     
     
     public IEnumerator Initialize()
@@ -70,6 +71,7 @@ public class InGameController
         _quitGame = false;
         _skipResultUI = false;
         _useRetry = false;
+        _newRecordOn = false;
 
         //타이머 초기화
         timeController.InitTimeController();
@@ -198,6 +200,22 @@ public class InGameController
 
         //타이틀 씬으로 복귀
         GameManager.Instance.ReturnToTitle();
+    }
+    
+    // New Record 체크 및 연출 재생
+    public void CheckNewRecord(float currentScore)
+    {
+        if (_newRecordOn) return;   // 이미 NewRecord 연출이 재생됐으면 넘기도록
+
+        float bestScore = PlayerPrefs.GetFloat("BestScore", 0f);
+        if (currentScore > bestScore)
+        {
+            // New Record 연출
+            InGameUIController.Instance.scoreUIController.ShowNewRecordImage();
+            AudioManager.Instance.SFX.PlayNewRecordScoreBar();
+
+            _newRecordOn = true;
+        }
     }
 
     ///게임 끝내기, 호출 시 진행중인 게임이 끝납니다.
