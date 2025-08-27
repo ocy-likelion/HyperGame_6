@@ -8,6 +8,14 @@ public static class Addresses
             {
                 public const string OnOff = "spr/buttons/sounds/onoff";
             }
+
+            public static class Interactions
+            {
+                public const string ApproveUp = "spr/buttons/interactions/approveup";
+                public const string ApproveDown = "spr/buttons/interactions/approvedown";
+                public const string NotApproveUp = "spr/buttons/interactions/notapproveup";
+                public const string NotApproveDown = "spr/buttons/interactions/notapprovedown";
+            }
         }
         
         public static class Obstacles
