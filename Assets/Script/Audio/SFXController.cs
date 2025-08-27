@@ -31,7 +31,7 @@ public class SFXController : MonoBehaviour
     // 여기까지
 
     private List<AudioSource> _sfxSources;                       // 단발성 AudioSource (풀링)
-    private int _poolSize = 6;                                  // 단발성 AudioSource 풀의 개수
+    private int _poolSize = 20;                                  // 단발성 AudioSource 풀의 개수
     private Dictionary<AudioClip, List<AudioSource>> _activeSFX;   // 개별 단발 SFX 추적
     
     private Dictionary<AudioClip, AudioSource> _loopSources;    // 반복용 AudioSource
