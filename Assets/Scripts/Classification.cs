@@ -113,8 +113,13 @@ public class Classification : MonoBehaviour
                     }
                     if (feverValue >= 100) // 피버 게이지가 100 이상일 때
                     {
-                        fever = true; // 피버 상태로 변경
-                        feverValue = 0; // 피버 게이지 초기화
+                        if (!fever)
+                        {
+                            fever = true; // 피버 상태로 변경
+                            feverValue = 0; // 피버 게이지 초기화
+                            //피버동안 버튼 둘다 V로 변경
+                            StartCoroutine(UIManager.Instance.inGameUIController.interactionUIController.FeverMode());
+                        }
                     }
                 }
                 else // 반려 버튼 클릭 시
@@ -167,8 +172,13 @@ public class Classification : MonoBehaviour
                     }
                     if (feverValue >= 100) // 피버 게이지가 100 이상일 때
                     {
-                        fever = true; // 피버 상태로 변경
-                        feverValue = 0; // 피버 게이지 초기화
+                        if (!fever)
+                        {
+                            fever = true; // 피버 상태로 변경
+                            feverValue = 0; // 피버 게이지 초기화
+                            //피버동안 버튼 둘다 V로 변경
+                            StartCoroutine(UIManager.Instance.inGameUIController.interactionUIController.FeverMode());
+                        }
                     }
                 }
             }

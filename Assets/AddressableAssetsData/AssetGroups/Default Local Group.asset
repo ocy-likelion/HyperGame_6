@@ -37,8 +37,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 865c934ff6bbb4c4ba9816a72ce01e05
+    m_Address: spr/buttons/interactions/notapproveup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b6a6472c17c048348b7d8014fe694943
     m_Address: spr/obstacles/envelope/anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9cb2f38e8712fa4084c484fd46027d4
+    m_Address: spr/buttons/interactions/notapprovedown
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0d00692e6110bb468eda255a3bd1cfc
+    m_Address: spr/buttons/interactions/approveup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb09371f9cc0ba6479155d1695911949
+    m_Address: Assets/Resource/Sprite/Stamp/AP_down.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

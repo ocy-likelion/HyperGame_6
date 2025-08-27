@@ -59,6 +59,7 @@ public class GameManager : Singleton<GameManager>
         await obstacleClearEffect.LoadSprites();
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
+        await UIManager.Instance.inGameUIController.interactionUIController.LoadSprites();
         StartCoroutine(LoadEndInitGame());
     }
 
