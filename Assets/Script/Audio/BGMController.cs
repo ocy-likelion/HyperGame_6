@@ -67,6 +67,17 @@ public class BGMController : MonoBehaviour
         _bgmSource.volume = 0.6f;
         _bgmSource.Play();
     }
+    
+    //BGM 일시정지
+    /// <summary>
+    ///  BGM을 일시정지 시키는 메소드입니다.
+    /// </summary>
+    /// <param name="pause">True: 일시정지, False: 일시정지 해제</param>
+    public void PauseBGM(bool pause)
+    {
+        if (pause) _bgmSource.Pause();
+        else _bgmSource.UnPause();
+    }
 
     // BGM 중지
     private void StopBGM()
