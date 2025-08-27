@@ -17,14 +17,21 @@ public class DocumentPool : Singleton<DocumentPool>
     private Dictionary<GameObject, Queue<GameObject>> poolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
     [NonSerialized] public Canvas canvas; // UI 풀이 붙을 Canvas
-
+    
+    public int defaultInitialSize = 7; // 프리팹 처음 등록될 때 기본으로 만들 개수
+    
+    
     /// <summary>
     /// 오브젝트 요청
     /// </summary>
     public GameObject GetObject(GameObject prefab, Vector2 anchoredPosition)
     {
+        // 프리팹에 대한 풀 없으면 초기화
         if (!poolDictionary.ContainsKey(prefab))
+        {
             poolDictionary[prefab] = new Queue<GameObject>();
+            PrewarmPool(prefab, defaultInitialSize);
+        }
 
         GameObject obj = poolDictionary[prefab].Count > 0 ? poolDictionary[prefab].Dequeue() : Instantiate(prefab);
 
@@ -49,6 +56,29 @@ public class DocumentPool : Singleton<DocumentPool>
 
         obj.SetActive(true);
         return obj;
+    }
+    
+    private void PrewarmPool(GameObject prefab, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject obj = Instantiate(prefab);
+            obj.SetActive(false);
+
+            var poolable = obj.GetComponent<IPoolable>();
+            if (poolable != null)
+                poolable.OriginalPrefab = prefab;
+
+            var rect = obj.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                rect.SetParent(canvas.transform, false);
+                rect.anchoredPosition = Vector2.zero;
+                rect.localRotation = Quaternion.identity;
+            }
+
+            poolDictionary[prefab].Enqueue(obj);
+        }
     }
 
     /// <summary>

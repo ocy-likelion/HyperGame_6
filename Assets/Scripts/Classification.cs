@@ -87,6 +87,7 @@ public class Classification : MonoBehaviour
             UpdateFeverUI(); //피버 게이지 UI 갱신
             classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
             AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
+            docController.ObstacleOutline(); // 장애물 아웃라인 강조 메서드 호출
         }
         else // 장애물이 없을 때
         {
@@ -122,6 +123,7 @@ public class Classification : MonoBehaviour
                             StartCoroutine(UIManager.Instance.inGameUIController.interactionUIController.FeverMode());
                         }
                     }
+                    docController.RemoveDocument(); // 서류 재생성
                 }
                 else // 반려 버튼 클릭 시
                 {
@@ -135,6 +137,7 @@ public class Classification : MonoBehaviour
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
+                    docController.RemoveDocument(); // 반려요소 아웃라인 강조 메서드 호출
                 }
             }
             else // 반려요소가 있을 때
@@ -151,6 +154,7 @@ public class Classification : MonoBehaviour
                     UpdateFeverUI(); //피버 게이지 UI 갱신
                     classificationUIController.TriggerFailEffect(); //분류 실패 이펙트 실행
                     AudioManager.Instance.SFX.PlayDocFail(); //실패 사운드 재생
+                    docController.RejectOutline(); //반려요소 아웃라인 강조 메서드 호출
                 }
                 else // 반려 버튼 클릭 시
                 {
@@ -182,6 +186,7 @@ public class Classification : MonoBehaviour
                             StartCoroutine(UIManager.Instance.inGameUIController.interactionUIController.FeverMode());
                         }
                     }
+                    docController.RemoveDocument(); // 서류 재생성
                 }
             }
         }
@@ -189,7 +194,6 @@ public class Classification : MonoBehaviour
         GameManager.Instance.GetTimeController().SetRemainedTimer(time); // 남은 일과시간 갱신
         GameManager.Instance.GetTimeController().SetDay(day); // 남은 진행일수 갱신
         GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
-        docController.RemoveDocument(); // 서류 재생성
     }
 
     public void UpdateScoreUI() // 점수 UI 갱신 메소드
