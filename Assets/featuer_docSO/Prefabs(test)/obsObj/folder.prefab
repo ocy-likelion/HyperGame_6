@@ -91,4 +91,5 @@ MonoBehaviour:
   obstacleImage: {fileID: 3200495210216772474}
   _idleSprite: {fileID: 1133621159, guid: b6a6472c17c048348b7d8014fe694943, type: 3}
   _strokeSprites:
-  - {fileID: 21300000, guid: 77a10226942911a43abe8929c3954bb3, type: 3}
+  - {fileID: -1280485613, guid: 77a10226942911a43abe8929c3954bb3, type: 3}
+  - {fileID: -624599920, guid: 77a10226942911a43abe8929c3954bb3, type: 3}
