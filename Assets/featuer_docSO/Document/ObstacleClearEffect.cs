@@ -27,6 +27,16 @@ public class ObstacleClearEffect
     
     //로드 확인용
     private bool _loadComplete = false;
+    
+    //장애물 스피드 비율 //기본 limit값 0.6 기준
+    float[] animSpeedAnchor = new[]
+    {   
+        0.25f,//장애물 배출 스피드비율/기존속도 0.15
+        0.65f,//손 전체스피드비율 /0.4
+        0.625f,//손 아파서 떠는 속도비율 /0.25
+        0.15f,//손 빼는 속도 비율 /0.1 -> 이건 손 전체 스피드비율 기준이라 그냥 0.1이아님
+        0.165f// 기존속도 /0.1
+    };
 
     public void Initialize()
     {
@@ -97,6 +107,12 @@ public class ObstacleClearEffect
         var totalDuration = 0f;
         var envelopeStack = obstacle.GetProcessCount();
 
+        //Anim시간이 서류 처리완료 애님시간을 넘지않도록.
+        var day = GameManager.Instance.GetTimeController()._day;
+        //2는 보정값.(난이도 관리자 전용 연산값이 나와서 이렇게 보정해줘야함
+        var limitDuration = DifficultyManager.Instance.GetDocumentDelay(day) * 4f;
+        
+        //진동 강도
         var shakeStrength = 100f;
         var vibratoStrength = 60;
         var randomness = 90;
@@ -109,7 +125,8 @@ public class ObstacleClearEffect
             //손
             case 2:
                 //TODO: 진동
-                totalDuration = 0.1f;
+                //totalDuration = 0.1f;
+                totalDuration = limitDuration * animSpeedAnchor[4];
                 
                 //행동할 액션 등록
                 obstacleDefuseAction = () =>
@@ -124,7 +141,8 @@ public class ObstacleClearEffect
             //파일철
             case 3:
                 //TODO: 진동여러번
-                totalDuration = 0.1f;//지속시간 설정
+                //totalDuration = 0.1f;//지속시간 설정
+                totalDuration = limitDuration * animSpeedAnchor[4];
                 
                 //행동할 액션 등록
                 obstacleDefuseAction = () =>
@@ -138,9 +156,8 @@ public class ObstacleClearEffect
             
             //서류봉투
             case 4:
-                //TODO: 1단 서류봉투 열림, 2단 서류 삐져나옴, 3단 진동 마지막 단에는 "서류봉투가 아래로빠진다."
-                //여기는 완전 제거연출이니까 봉투 빠지는걸로.
-                totalDuration = 0.1f;//지속시간 설정
+                //totalDuration = 0.1f;//지속시간 설정
+                totalDuration = limitDuration * animSpeedAnchor[4];
                 
                 //개별 설정
  
@@ -173,6 +190,13 @@ public class ObstacleClearEffect
         var totalDuration = 0f;
         var targetPos = Vector3.zero;
         
+        //Anim시간이 서류 처리완료 애님시간을 넘지않도록.
+        var day = GameManager.Instance.GetTimeController()._day;
+                //2는 보정값.(난이도 관리자 전용 연산값이 나와서 이렇게 보정해줘야함
+        var limitDuration = DifficultyManager.Instance.GetDocumentDelay(day) * 4f;
+       
+        Debug.Log(limitDuration);
+        
         //방향 기본 설정
         var rad = Random.Range(0, 360) * Mathf.Deg2Rad;
         var dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
@@ -187,7 +211,8 @@ public class ObstacleClearEffect
                  //TODO: 눈이 X로 바뀌며 빙글빙글 돌며 바깥으로 날아간다.
                  obstacle.obstacleImage.sprite = _bugAnim[0];//기절 스프라이트
                  endAction = ()=> obstacle.obstacleImage.sprite = _bugAnim[1];
-                 totalDuration = 0.15f;//지속시간 설정
+                 //totalDuration = 0.15f;//지속시간 설정
+                 totalDuration = limitDuration * animSpeedAnchor[0];
                  
                  //개별 설정
                  targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * bugThrowSpeed;
@@ -198,7 +223,7 @@ public class ObstacleClearEffect
                      //--SFX 추가 삽입구간--//
                      AudioManager.Instance.SFX.PlayObsBugPostHit();
                      //---------------------//
-                     obstacle.transform.DORotate(new Vector3(0,0,anglePerSecond), 1f, RotateMode.FastBeyond360)
+                     obstacle.transform.DORotate(new Vector3(0,0,anglePerSecond), totalDuration, RotateMode.FastBeyond360)
                          .SetRelative(true)
                          .SetEase(Ease.Linear)
                          .SetLoops((int)totalDuration, LoopType.Restart);;
@@ -209,7 +234,8 @@ public class ObstacleClearEffect
             //포스트잇
             case 1:
                 //TODO: 바깥쪽으로 날아간다.
-                totalDuration = 0.15f;//지속시간 설정
+                //totalDuration = 0.15f;//지속시간 설정
+                totalDuration = limitDuration * animSpeedAnchor[0];
                 
                 //개별 설정;
                 targetPos = obstacle.transform.position + new Vector3(dir.x,dir.y,0) * postitThrowSpeed;
@@ -229,10 +255,11 @@ public class ObstacleClearEffect
                 //TODO: 아야하는 스프라이트로 바뀌며 진행하며 바깥으로 밀려나고 사라진다.
                 obstacle.obstacleImage.sprite = _handAnim[1];//맞은 스프라이트
                 endAction = () => obstacle.obstacleImage.sprite = _handAnim[0];
-                totalDuration = 0.4f;//지속시간 설정
+                totalDuration = limitDuration * animSpeedAnchor[1];//지속시간 설정
                 
                 //개별 설정
-                var subDuration = 0.25f;
+                //var subDuration = 0.25f;
+                var subDuration = totalDuration * animSpeedAnchor[2];
                 targetPos = obstacle.transform.position + Vector3.right * handMoveSpeed;
                 
                 //행동할 액션 등록
@@ -243,7 +270,7 @@ public class ObstacleClearEffect
                     //---------------------//
                     obsRect.DOShakePosition(subDuration, 200f, 50, 360).OnComplete(() =>
                     {
-                        obsRect.DOMove(targetPos, 0.1f).SetEase(Ease.Linear);
+                        obsRect.DOMove(targetPos, limitDuration * animSpeedAnchor[3]).SetEase(Ease.Linear);
                     });
 
                 };
@@ -252,7 +279,8 @@ public class ObstacleClearEffect
             //파일철
             case 3:
                 //TODO: 진동여러번 하다가 "파일철이 바깥으로 빠진다."
-                totalDuration = 0.15f;//지속시간 설정
+                //totalDuration = 0.15f;//지속시간 설정
+                totalDuration = limitDuration *animSpeedAnchor[0];//지속시간 설정
                 
                 //개별 설정
                 targetPos = obstacle.transform.position + Vector3.left * filerOutSpeed;
@@ -273,7 +301,8 @@ public class ObstacleClearEffect
                 //여기는 완전 제거연출이니까 봉투 빠지는걸로.
                 obstacle.obstacleImage.sprite = _envelopeAnim[1];//오픈
                 endAction = ()=> obstacle.obstacleImage.sprite = _envelopeAnim[0];
-                totalDuration = 0.15f;//지속시간 설정
+                //totalDuration = 0.15f;//지속시간 설정
+                totalDuration = limitDuration *animSpeedAnchor[0];//지속시간 설정
                 
                 //개별 설정
                 targetPos = obstacle.transform.position + Vector3.down * envelopeOutSpeed;
