@@ -113,7 +113,7 @@ public class ObstacleController : MonoBehaviour, IPoolable
             _idleRoutine = null;
         }
     }
-    
+
     public void SetStroke()
     {
         // 리스트가 없거나 비어있으면 아무것도 하지 않음
@@ -131,7 +131,8 @@ public class ObstacleController : MonoBehaviour, IPoolable
         }
 
         // 강조 스프라이트가 2개 이상일 경우 (서류 장애물)
-        if (_processCount == 1 && DifficultyManager.Instance.GetObstacleProcessingCount(GameManager.Instance.GetTimeController()._day) > 1)
+        if (_processCount == 1 &&
+            DifficultyManager.Instance.GetObstacleProcessingCount(GameManager.Instance.GetTimeController()._day) > 1)
         {
             // 열린서류
             obstacleImage.sprite = _strokeSprites[1];
@@ -141,6 +142,5 @@ public class ObstacleController : MonoBehaviour, IPoolable
             // 닫힌서류
             obstacleImage.sprite = _strokeSprites[0];
         }
-    }
     }
 }
