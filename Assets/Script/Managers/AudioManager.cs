@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
@@ -40,5 +41,20 @@ public class AudioManager : Singleton<AudioManager>
     public bool GetIsAudioOn()
     {
         return _isAudioOn;
+    }
+    
+    // 앱이 백그라운드로 갔을 때 Audio Mute
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)    // 백그라운드 --> 강제 음소거
+        {
+            bgmController.SetBGMOn(false);
+            sfxController.SetSFXOn(false);
+        }
+        else                // 포그라운드 --> 유저 설정에 맞춰서 복원
+        {
+            bgmController.SetBGMOn(_isAudioOn);
+            sfxController.SetSFXOn(_isAudioOn);
+        }
     }
 }

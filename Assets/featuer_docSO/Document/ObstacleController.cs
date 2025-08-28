@@ -7,13 +7,23 @@ public class ObstacleController : MonoBehaviour, IPoolable
 {
     // UI 풀에서 반환할 원본 프리팹 참조
     public GameObject OriginalPrefab { get; set; }
+    
     public Image obstacleImage;
+    public Sprite _idleSprite;
+    public List<Sprite> _strokeSprites;
     
     private DocumentController _documentController;
     private int _processCount;
     private int _obstacleObjIdx;
     private bool _processOver;
+    
+    private Coroutine _idleRoutine;
 
+    private void Awake()
+    {
+        obstacleImage = GetComponent<Image>();
+    }
+    
     /// <summary>
     /// 초기화: DocumentController 참조와 장애물 처리 카운트 지정
     /// </summary>
@@ -26,7 +36,10 @@ public class ObstacleController : MonoBehaviour, IPoolable
         
         gameObject.SetActive(true);
 
-        StartCoroutine(GameManager.Instance.obstacleClearEffect.IdleAnim(this, _obstacleObjIdx));
+        if (_idleSprite != null)
+            obstacleImage.sprite = _idleSprite;
+        
+        StartIdleAnim();
     }
     
     /// <summary>
@@ -68,5 +81,51 @@ public class ObstacleController : MonoBehaviour, IPoolable
 
         // 풀에 반환 (UI 풀에도 동일하게 적용)
         DocumentPool.Instance.ReturnObject(gameObject);
+    }
+    
+    public void StartIdleAnim()
+    {
+        if (_idleRoutine != null)
+            StopCoroutine(_idleRoutine);
+
+        _idleRoutine = StartCoroutine(GameManager.Instance.obstacleClearEffect.IdleAnim(this, _obstacleObjIdx));
+    }
+
+    public void StopIdleAnim()
+    {
+        if (_idleRoutine != null)
+        {
+            StopCoroutine(_idleRoutine);
+            _idleRoutine = null;
+        }
+    }
+    
+    public void SetStroke()
+    {
+        // 리스트가 없거나 비어있으면 아무것도 하지 않음
+        if (_strokeSprites == null || _strokeSprites.Count == 0)
+            return;
+
+        // IdleAnim만 멈춤
+        StopIdleAnim();
+
+        // 강조 스프라이트가 1개만 있는 경우
+        if (_strokeSprites.Count == 1)
+        {
+            obstacleImage.sprite = _strokeSprites[0];
+            return;
+        }
+
+        // 강조 스프라이트가 2개 이상일 경우 (서류 장애물)
+        if (_processCount == 1 && DifficultyManager.Instance.GetObstacleProcessingCount(GameManager.Instance.GetTimeController()._day) > 1)
+        {
+            // 열린서류
+            obstacleImage.sprite = _strokeSprites[1];
+        }
+        else
+        {
+            // 닫힌서류
+            obstacleImage.sprite = _strokeSprites[0];
+        }
     }
 }
