@@ -18,8 +18,17 @@ public class DifficultyManager : Singleton<DifficultyManager>
     // 서류 처리 보상 (난이도별 일과 시간 회복량)
     private int[] _reward = { 1, 1, 2, 2, 3 };
     
+    // 피버시 서류 처리 보상
+    private float[] _feverReward = { 1f, 1f, 1f, 1.5f, 2f };
+    
+    // 서류 처리로 차오르는 피버 값
+    private int[] _feverValueReward = { 3, 3, 3, 3, 3 };
+    
     // 서류 처리 실수 패널티 (난이도별 일과 시간 손실량)
     private int[] _penalty = { 3, 5, 7, 9, 12 };
+    
+    // 서류 처리 실수로 잃는 피버 값 (현재 피버값에 해당값만큼을 곱한 값이 차감됨)
+    private float[] _feverValuePenalty = { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
     
     // 장애물 처리 횟수
     private int[] _obstacleProcessingCount = { 1, 1, 2, 2, 3 };
@@ -54,6 +63,30 @@ public class DifficultyManager : Singleton<DifficultyManager>
         int level = GetLevel(day);
         level = Mathf.Min(level, _reward.Length - 1);
         return _reward[level];
+    }
+    
+    //현재 day에 맞춰 피버시 서류 처리 보상을 반환하는 메서드
+    public float GetFeverReward(int day)
+    {
+        int level = GetLevel(day);
+        level = Mathf.Min(level, _feverReward.Length - 1);
+        return _feverReward[level];
+    }
+    
+    //현재 day에 맞춰 피버 게이지 증가량을 반환하는 메서드
+    public int GetFeverValueReward(int day)
+    {
+        int level = GetLevel(day);
+        level = Mathf.Min(level, _feverValueReward.Length - 1);
+        return _feverValueReward[level];
+    }
+    
+    //현재 day에 맞춰 피버 게이지 감소량을 반환하는 메서드
+    public float GetFeverValuePenalty(int day)
+    {
+        int level = GetLevel(day);
+        level = Mathf.Min(level, _feverValuePenalty.Length - 1);
+        return _feverValuePenalty[level];
     }
     
     //현재 day에 맞춰 서류 처리 실수 패널티를 반환하는 메서드
