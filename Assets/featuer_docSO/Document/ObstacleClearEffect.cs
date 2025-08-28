@@ -303,4 +303,24 @@ public class ObstacleClearEffect
         endAction?.Invoke();
         yield return null;
     }
+
+    //애님이 있는 경우 기본 스프라이트로 초기화.
+    public void InitAnim(ObstacleController obstacle, int id)
+    {
+        switch (id)
+        {
+            //벌레
+            case 0:
+                 obstacle.obstacleImage.sprite = _bugAnim[1];
+                break;
+            //손
+            case 2:
+                obstacle.obstacleImage.sprite = _handAnim[0];//맞은 스프라이트
+                break;
+            //서류봉투
+            case 4:
+                obstacle.obstacleImage.sprite = _envelopeAnim[0];//오픈
+                break;
+        }
+    }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +15,7 @@ public class ObstacleController : MonoBehaviour, IPoolable
     private int _processCount;
     private int _obstacleObjIdx;
     private bool _processOver;
+    private Quaternion _originalRotation;
 
     /// <summary>
     /// 초기화: DocumentController 참조와 장애물 처리 카운트 지정
@@ -23,6 +26,7 @@ public class ObstacleController : MonoBehaviour, IPoolable
         _processCount = processCount;
         _obstacleObjIdx = obstacleObjIdx;
         _processOver = false;
+        _originalRotation = transform.rotation;
         
         gameObject.SetActive(true);
 
@@ -68,5 +72,16 @@ public class ObstacleController : MonoBehaviour, IPoolable
 
         // 풀에 반환 (UI 풀에도 동일하게 적용)
         DocumentPool.Instance.ReturnObject(gameObject);
+    }
+
+    public void OnDisable()
+    {
+        if (DOTween.IsTweening(transform, true)) // true → 현재 재생 중인 트윈만 체크
+        {
+            transform.DOKill(); // 해당 타겟의 모든 트윈 종료
+            transform.rotation = _originalRotation; // 회전중이라면 회전각 초기화.
+            //애님의 변화가 있었다면 스프라이트 초기화
+            GameManager.Instance.obstacleClearEffect.InitAnim(this, _obstacleObjIdx);
+        }
     }
 }
