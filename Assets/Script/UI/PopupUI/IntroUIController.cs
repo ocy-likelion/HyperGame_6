@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 public class IntroUIController : PopupController
 {
     [SerializeField] private Image IntroUI;
+
+    public static event Action OnIntroUIEnd;
 
     public void InitUI()
     {
@@ -42,6 +45,7 @@ public class IntroUIController : PopupController
         yield return new WaitForSeconds(5f);
         IntroUI.DOColor(Color.black, 1f).OnComplete(()=>introEnd = true);
         yield return new WaitUntil(() => introEnd);
+        OnIntroUIEnd?.Invoke();
         gameObject.SetActive(false);
     }
 }
