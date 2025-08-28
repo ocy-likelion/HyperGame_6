@@ -89,3 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleImage: {fileID: 8241585646769187268}
+  _idleSprite: {fileID: 21300000, guid: eb6ab0e1a517a7445a03601aac640ac2, type: 3}
+  _strokeSprites:
+  - {fileID: 21300000, guid: 68a2de6ca08ae9644803a206246406cd, type: 3}
