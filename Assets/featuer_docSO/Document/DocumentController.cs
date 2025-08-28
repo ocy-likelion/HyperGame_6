@@ -151,6 +151,8 @@ public class DocumentController : MonoBehaviour
                 new Vector2(_currentDocument.spawnPosX, _currentDocument.spawnPosY)
             );
             _rejectObj.GetComponent<RectTransform>().SetParent(_docObj.GetComponent<RectTransform>(), false);
+            
+            _rejectObj.GetComponent<RejectController>().Initialize();
         }
 
         // 장애물 생성
@@ -261,16 +263,15 @@ public class DocumentController : MonoBehaviour
 
     public void RejectOutline()
     {
-        var rejectController = _rejectObj.GetComponent<RejectController>();
-        //todo: 반려 요소 아웃라인 적용 (RejectContoller에 outline스프라이트로 바꾸는 메서드 만들고 여기에 호출 할것)
+        _rejectObj.GetComponent<RejectController>().SetStroke();
         RemoveDocument();
     }
 
     public void ObstacleOutline()
     {
-        foreach (var _obstacle in _obstacleObjs)
+        foreach (var obstacle in _obstacleObjs)
         {
-            var obstacleController = _obstacle.GetComponent<ObstacleController>();
+            var obstacleController = obstacle.GetComponent<ObstacleController>();
             //todo: 장애물 요소 아웃라인 적용 (ObstacleController에 outline스프라이트로 바꾸는 메서드 만들고 여기에 호출 할것)
         }
         RemoveDocument();
