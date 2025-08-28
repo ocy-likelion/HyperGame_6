@@ -173,6 +173,25 @@ public class InGameController
             yield return null;
         }
         
+        //결과창이 떠야 게임 한판을 완료했다는 것이므로
+        if (_skipResultUI)
+        {
+            //광고호출
+            NetworkManager.Instance.ShowAd();
+
+            //광고 끝나기 전까지 대기
+            while (!_endAdmob)
+            {
+                yield return null;
+            }
+        
+            //광고 제어 변수 초기화
+            _endAdmob = false;
+        
+            //다음 광고 로드
+            NetworkManager.Instance.LoadAd();
+        }  
+        
         //초기화.
         _initComplete = false;
         _skipResultUI = false;
@@ -187,23 +206,6 @@ public class InGameController
             //재시작을 위해 타이틀로 복귀하지 않고 기존 코루틴을 중단한다.
             yield break;
         }
-
-        
-        //광고호출
-        NetworkManager.Instance.ShowAd();
-
-        //광고 끝나기 전까지 대기
-        while (!_endAdmob)
-        {
-            yield return null;
-        }
-        
-        //광고 제어 변수 초기화
-        _endAdmob = false;
-        
-        //다음 광고 로드
-        NetworkManager.Instance.LoadAd();
-        
         
         // BGM 초기화
         AudioManager.Instance.BGM.SetBGMVolumeMax();    // 볼륨을 최대로
