@@ -271,8 +271,7 @@ public class DocumentController : MonoBehaviour
     {
         foreach (var obstacle in _obstacleObjs)
         {
-            var obstacleController = obstacle.GetComponent<ObstacleController>();
-            //todo: 장애물 요소 아웃라인 적용 (ObstacleController에 outline스프라이트로 바꾸는 메서드 만들고 여기에 호출 할것)
+            obstacle.GetComponent<ObstacleController>().SetStroke();
         }
         RemoveDocument();
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RejectController : MonoBehaviour, IPoolable
 {
@@ -9,21 +10,21 @@ public class RejectController : MonoBehaviour, IPoolable
     public Sprite _idleSprite;
     public Sprite _strokeSprite;
     
-    private SpriteRenderer _sr;
+    private Image _img;
     
     private void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
+        _img = GetComponent<Image>();
     }
     public void Initialize()
     {
-        if (_idleSprite != null || _strokeSprite != null) //TODO:강조 스프라이트 생기면 각 프리팹 인스펙터에 할당하고 해당 검사코드 지울것.
-            _sr.sprite = _idleSprite;
+        if (_idleSprite != null)
+            _img.sprite = _idleSprite;
     }
 
     public void SetStroke()
     {
-        if (_idleSprite != null || _strokeSprite != null) //TODO:강조 스프라이트 생기면 각 프리팹 인스펙터에 할당하고 해당 검사코드 지울것.
-            _sr.sprite = _strokeSprite;
+        if (_strokeSprite != null)
+            _img.sprite = _strokeSprite;
     }
 }
