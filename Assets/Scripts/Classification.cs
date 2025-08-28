@@ -80,7 +80,7 @@ public class Classification : MonoBehaviour
             time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
             GameManager.Instance.GetTimeController().UpdateTimeUI(); //타임 ui 업데이트
             combo = 0; //콤보 초기화
-            feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
+            feverValue -= feverValue * DifficultyManager.Instance.GetFeverValuePenalty(day); //피버 게이지 감소
             scoreMagnification(); //점수 배율 적용
             UpdateScoreMagUI(); //점수 배율 UI 갱신
             UpdateComboUI();
@@ -96,10 +96,18 @@ public class Classification : MonoBehaviour
                 if (confirm) // 승인 버튼 클릭 시
                 {
                     //success = true;
-                    time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
+                    
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3;
+                    {
+                        time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
+                        feverValue += DifficultyManager.Instance.GetFeverValueReward(day);
+                    }
+                    else
+                    {
+                        time += DifficultyManager.Instance.GetFeverReward(day);
+                    }    
+                    
                     score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
@@ -130,7 +138,7 @@ public class Classification : MonoBehaviour
                     //success = false;
                     time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
                     combo = 0; //콤보 초기화
-                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
+                    feverValue -= feverValue * DifficultyManager.Instance.GetFeverValuePenalty(day); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
@@ -147,7 +155,7 @@ public class Classification : MonoBehaviour
                     //success = false;
                     time -= DifficultyManager.Instance.GetPenalty(day); //일과시간 감소
                     combo = 0; //콤보 초기화
-                    feverValue -= (float)(feverValue * 0.1); //피버 게이지 감소
+                    feverValue -= feverValue * DifficultyManager.Instance.GetFeverValuePenalty(day); //피버 게이지 감소
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreMagUI(); //점수 배율 UI 갱신
                     UpdateComboUI();
@@ -159,10 +167,16 @@ public class Classification : MonoBehaviour
                 else // 반려 버튼 클릭 시
                 {
                     //success = true;
-                    time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
                     combo += 1; //콤보 증가
                     if (!fever)
-                        feverValue += 3;
+                    {
+                        time += DifficultyManager.Instance.GetReward(day); //일과시간 증가
+                        feverValue += DifficultyManager.Instance.GetFeverValueReward(day);
+                    }
+                    else
+                    {
+                        time += DifficultyManager.Instance.GetFeverReward(day);
+                    }    
                     score += ((1 * day) * scoreMag); //점수 증가
                     scoreMagnification(); //점수 배율 적용
                     UpdateScoreUI(); //점수 UI 갱신
