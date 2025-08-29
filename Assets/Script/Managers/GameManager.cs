@@ -115,6 +115,8 @@ public class GameManager : Singleton<GameManager>
     ///게임을 일시정지 합니다.
     public void PauseGame()
     {
+        GetDocumentController()._isClickable = false;
+        
         if (_isPaused)
         {
             Debug.LogWarning("Game is already paused");

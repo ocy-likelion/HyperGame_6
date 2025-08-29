@@ -53,6 +53,7 @@ public class DocumentController : MonoBehaviour
         var image = _documentPrefab.GetComponent<Image>();
         _documentSize = image != null ? image.rectTransform.rect.size : Vector2.one;
 
+        _isClickable = true;
         CreateDocument();
     }
 
