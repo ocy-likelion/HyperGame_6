@@ -43,6 +43,9 @@ public class AudioManager : Singleton<AudioManager>
         return _isAudioOn;
     }
     
+    //=> WebGL앱이 백그라운드로 가면 Runtime이 멈춰서 JS단계에서 멈추어 주어야함.
+    //iOS는 음악까지 다 멈추지만 Android는 JS내에서 직접 음원중단 코드를 넣어야함.
+    //그래도 iOS단계에서 안멈출까봐 일단 남겨둡니다.
     // 앱이 백그라운드로 갔을 때 Audio Mute
     private void OnApplicationPause(bool pauseStatus)
     {
