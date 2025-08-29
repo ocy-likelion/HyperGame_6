@@ -174,7 +174,7 @@ public class InGameController
         }
         
         //결과창이 떠야 게임 한판을 완료했다는 것이므로
-        if (_skipResultUI)
+        if (!_skipResultUI)
         {
             //광고호출
             NetworkManager.Instance.ShowAd();
