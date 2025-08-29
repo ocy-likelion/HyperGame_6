@@ -171,4 +171,13 @@ public class NetworkManager : Singleton<NetworkManager>
             GameManager.Instance.ResumeGame();//게임재개
             GameManager.Instance.inGameController.EndAdMob();//광고 재생으로 멈춘 루틴 재개
         }
+
+        public void DebugText<T>(T msg)
+        {
+                //디버깅용
+                if (UIManager.Instance.popupUIController.AdmobDebugText.gameObject.activeSelf)
+                {
+                        UIManager.Instance.popupUIController.SetAdmobDebugText(msg.ToString());
+                }
+        }
 }
