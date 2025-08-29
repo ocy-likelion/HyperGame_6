@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7361229a379810842bf73a111f20208e
+guid: 44ad645625d976144aa3f986e9ca7671
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Button_Leave_0
+      name: Button_Retry01_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 579.5
-        height: 276
+        width: 320.5
+        height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63b841b9eeaa71a4692eb4feaf1a88d9
-      internalID: -2012840908
+      spriteID: d8112de6bb96d1c49b43334cc7886ad6
+      internalID: -1441113653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_Leave_1
+      name: Button_Retry01_1
       rect:
         serializedVersion: 2
-        x: 579
+        x: 320
         y: 0
-        width: 579.5
-        height: 276
+        width: 320.5
+        height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df5415bda80b4f0418d35e303993c1e2
-      internalID: 1339084461
+      spriteID: 42b5669df706ae94489999ac8bfc7fa3
+      internalID: 137166999
       vertices: []
       indices: 
       edges: []
@@ -149,8 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Button_Leave_0: -2012840908
-      Button_Leave_1: 1339084461
+      Button_Retry01_0: -1441113653
+      Button_Retry01_1: 137166999
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

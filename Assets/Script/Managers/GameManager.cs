@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public Action<GameState> GameStateChanged;
 
     //일시정지 관리.
-    private bool _isPaused;
+    public bool _isPaused;
     
     protected override void Initialize()
     {
