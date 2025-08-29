@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static Constants;
 
 public class PauseUIController : PopupController
 {
@@ -45,9 +46,13 @@ public class PauseUIController : PopupController
     {
         GameManager.Instance.GetDocumentController()._isClickable = true;
         ClosePopup();
-        GameManager.Instance.ResumeGame();
+        GameManager.Instance.ChangeGameState(GameState.Pause, true);
+        GameManager.Instance._isPaused = false;
+        UIManager.Instance.StartCoroutine(
+            UIManager.Instance.inGameUIController.waitThreeSecondsUI.WaitThreeSeconds()
+        );
     }
-    
+
     public void OnClickRetryButton()
     {
         GameManager.Instance.ResumeGame();
