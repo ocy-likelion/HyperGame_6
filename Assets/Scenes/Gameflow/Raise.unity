@@ -316,7 +316,23 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
@@ -435,12 +451,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: TitleUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6199474922303939511, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
@@ -842,6 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24befd2236d3c604a924f6552c0f6349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPaused: 0
 --- !u!114 &1714326525 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -4841754504227830220, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
