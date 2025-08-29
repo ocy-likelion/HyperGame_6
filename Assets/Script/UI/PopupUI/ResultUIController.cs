@@ -10,6 +10,7 @@ public class ResultUIController : PopupController
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Button _quitButton;
+    [SerializeField] private Button _retryButton;
 
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text maxComboText;
@@ -23,6 +24,7 @@ public class ResultUIController : PopupController
     void Awake()
     {
         _quitButton.onClick.AddListener(OnClickQuitButton);
+        _retryButton.onClick.AddListener(OnClickRetryButton);
         errorCheckImage.gameObject.SetActive(false);
     }
     
@@ -47,8 +49,9 @@ public class ResultUIController : PopupController
         // FadeOut Panel 초기화
         fadeOutCanvasGroup.alpha = 0;
         
-        // 퇴근 버튼 비활성화
+        // 퇴근 및 재시작 버튼 비활성화
         _quitButton.gameObject.SetActive(false);
+        _retryButton.gameObject.SetActive(false);
         
         // New Record 이미지 비활성화
         newRecordImage.gameObject.SetActive(false);
@@ -89,8 +92,9 @@ public class ResultUIController : PopupController
             {
                 AudioManager.Instance.SFX.StopScoreCalculating();
                 AudioManager.Instance.SFX.PlayScoreCalculated();
-                // 퇴근 버튼 활성화
+                // 퇴근 및 재시작 버튼 활성화
                 _quitButton.gameObject.SetActive(true);
+                _retryButton.gameObject.SetActive(true);
                 
                 // New Record 체크
                 if (resultData.Score > bestScore)
@@ -137,5 +141,15 @@ public class ResultUIController : PopupController
                 GameManager.Instance.ResumeGame();
                 GameManager.Instance.inGameController.QuitGame();
             });
+    }
+
+    public void OnClickRetryButton()
+    {
+        GameManager.Instance.ResumeGame();
+        GameManager.Instance.inGameController.Dispose();
+        GameManager.Instance.inGameController.UseRetry();
+        GameManager.Instance.inGameController.SkipResultUI();
+        GameManager.Instance.inGameController.QuitGame();
+        ClosePopup();
     }
 }
