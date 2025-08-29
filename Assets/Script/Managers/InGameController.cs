@@ -141,6 +141,8 @@ public class InGameController
         //시간 정지
         timeController.StopTime();
         
+        docController._isClickable = false;
+        
         // 시간 부족 SFX 반복 재생 중지
         AudioManager.Instance.SFX.StopTimeOutAlert();
         

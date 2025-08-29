@@ -43,6 +43,7 @@ public class PauseUIController : PopupController
     
     public void OnClickResumeButton()
     {
+        GameManager.Instance.GetDocumentController()._isClickable = true;
         ClosePopup();
         GameManager.Instance.ResumeGame();
     }
