@@ -133,6 +133,9 @@ public class ResultUIController : PopupController
 
     public void OnClickQuitButton()
     {
+        // 더 이상 클릭되지 않게 막기
+        _quitButton.interactable = false;
+
         // Title로 가기 전, FadeOut
         fadeOutCanvasGroup.DOFade(1f, 1f)
             .OnComplete(() =>
@@ -140,6 +143,7 @@ public class ResultUIController : PopupController
                 ClosePopup();
                 GameManager.Instance.ResumeGame();
                 GameManager.Instance.inGameController.QuitGame();
+                _quitButton.interactable = true;
             });
     }
 
