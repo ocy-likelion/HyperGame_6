@@ -26,6 +26,7 @@ public class SFXController : MonoBehaviour
     [SerializeField] private AudioClip gameStart;
     [SerializeField] private AudioClip scoreCalculating;
     [SerializeField] private AudioClip scoreCalculated;
+    [SerializeField] private AudioClip gameOver;
     
     
     // 여기까지
@@ -91,6 +92,7 @@ public class SFXController : MonoBehaviour
     public void PlayScoreCalculating() => PlaySFX(scoreCalculating);
     public void StopScoreCalculating() => StopSFX(scoreCalculating);
     public void PlayScoreCalculated() => PlaySFX(scoreCalculated);
+    public void PlayGameOver() => PlaySFX(gameOver);
     #endregion
 
     // 단발 SFX 재생 (풀링 + 추적)

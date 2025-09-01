@@ -154,6 +154,7 @@ public class InGameController
         {
             //게임오버
             var gameOverUI = popupController.gameOverUIController;
+            AudioManager.Instance.SFX.PlayGameOver();
             yield return gameOverUI.ShowSequence(); //게임오버 연출동안 딜레이
         }
         

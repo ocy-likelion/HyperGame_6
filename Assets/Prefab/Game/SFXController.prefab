@@ -58,3 +58,7 @@ MonoBehaviour:
   speedUp: {fileID: 8300000, guid: 2576835e1310eba41bb416116d2914a1, type: 3}
   fever: {fileID: 8300000, guid: deed39546b61e864bb51d5808105eeb2, type: 3}
   timeOutAlert: {fileID: 8300000, guid: 8b182b7fcbd32d94184b1e60b2e2527c, type: 3}
+  gameStart: {fileID: 8300000, guid: bf7c560f7f7e31343bff8a88dac22aa0, type: 3}
+  scoreCalculating: {fileID: 8300000, guid: ab7f02cccd0c81442ac81d06d54a1db9, type: 3}
+  scoreCalculated: {fileID: 8300000, guid: 38105a4690ecced47be217526ef6ada0, type: 3}
+  gameOver: {fileID: 8300000, guid: 14fa5242b2bfa6a4481228719287ab70, type: 3}
