@@ -136,7 +136,7 @@ public class DocumentController : MonoBehaviour
     private void SpawnDocument()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        _duration = DifficultyManager.Instance.GetDocumentDelay(day);
+        _duration = (GameManager.Instance.GetClassification().fever) ? DifficultyManager.Instance.GetFeverDocumentDelay(day) : DifficultyManager.Instance.GetDocumentDelay(day);
         
         _obstacleObjs.Clear();
 
@@ -217,7 +217,7 @@ public class DocumentController : MonoBehaviour
     public void RemoveDocument()
     {
         int day = GameManager.Instance.GetTimeController()._day;
-        _duration = DifficultyManager.Instance.GetDocumentDelay(day);
+        _duration = (GameManager.Instance.GetClassification().fever) ? DifficultyManager.Instance.GetFeverDocumentDelay(day) : DifficultyManager.Instance.GetDocumentDelay(day);
         
         _isClickable = false;
         var docRect = _docObj.GetComponent<RectTransform>();

@@ -38,6 +38,9 @@ public class DifficultyManager : Singleton<DifficultyManager>
     
     // 서류 연출 딜레이 시간 (버튼을 누른 뒤 다시 버튼을 누를 수 있게 되기까지의 시간)
     private float[] _documentDelay = { 0.6f, 0.5f, 0.4f, 0.3f, 0.2f };
+    
+    // 피버시 서류 연출 딜레이 시간 (버튼을 누른 뒤 다시 버튼을 누를 수 있게 되기까지의 시간)
+    private float[] _feverDocumentDelay = { 0.4f, 0.35f, 0.3f, 0.25f, 0.2f };
 
     //현재 난이도와 상승 타이밍을 체크하기 위한 List
     private List<bool> levelMonitor = new List<bool>();
@@ -119,6 +122,14 @@ public class DifficultyManager : Singleton<DifficultyManager>
         int level = GetLevel(day);
         level = Mathf.Min(level, _documentDelay.Length - 1);
         return _documentDelay[level] / 4;
+    }
+    
+    // 현재 day에 맞춰 피버시 서류 연출 딜레이 시간을 반환하는 메서드
+    public float GetFeverDocumentDelay(int day)
+    {
+        int level = GetLevel(day);
+        level = Mathf.Min(level, _feverDocumentDelay.Length - 1);
+        return _feverDocumentDelay[level] / 4;
     }
     
     //레벨 상승을 감지하는 Monitor 초기화
