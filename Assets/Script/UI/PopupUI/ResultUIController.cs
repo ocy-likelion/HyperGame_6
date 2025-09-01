@@ -152,7 +152,7 @@ public class ResultUIController : PopupController
         GameManager.Instance.ResumeGame();
         GameManager.Instance.inGameController.Dispose();
         GameManager.Instance.inGameController.UseRetry();
-        GameManager.Instance.inGameController.SkipResultUI();
+        //GameManager.Instance.inGameController.SkipResultUI();
         GameManager.Instance.inGameController.QuitGame();
         ClosePopup();
     }
