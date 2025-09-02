@@ -347,7 +347,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdda0b21101ed3c4c8b2bf8426fc8364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle: 0
+  clean: 0
   confirm: 0
+  fever: 0
+  scoreUIController: {fileID: 0}
+  docController: {fileID: 0}
 --- !u!212 &591203826
 SpriteRenderer:
   m_ObjectHideFlags: 0
