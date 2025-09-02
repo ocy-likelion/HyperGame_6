@@ -493,6 +493,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6597434450980680812, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597434450980680812, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7462272676340082050, guid: 744015edf9ca333438a6ed33a1d0b562, type: 3}
       propertyPath: m_Name
       value: SubMenuUI

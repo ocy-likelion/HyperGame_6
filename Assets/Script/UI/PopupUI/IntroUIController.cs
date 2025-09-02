@@ -43,9 +43,9 @@ public class IntroUIController : PopupController
     {
         gameObject.SetActive(true);
         var introEnd = false;
-        IntroUI.DOColor(Color.white, 1f);
-        yield return new WaitForSeconds(5f);
-        IntroUI.DOColor(Color.black, 1f).OnComplete(()=>introEnd = true);
+        IntroUI.DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(3f);
+        IntroUI.DOColor(Color.black, 0.5f).OnComplete(()=>introEnd = true);
         yield return new WaitUntil(() => introEnd);
         gameObject.SetActive(false);
         if (backGroundObject != null)
