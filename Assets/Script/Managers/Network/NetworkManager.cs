@@ -92,6 +92,7 @@ public class NetworkManager : Singleton<NetworkManager>
 #if UNITY_WEBGL && !UNITY_EDITOR
         try {
                 ShowInterstitialAd();
+                UIManager.Instance.popupUIController.ShowAdBg();
         } catch (Exception e) {
                 Debug.LogException(e);
                 //Toss가 아닌 WebGL환경에선 로직이 멈춰버리므로 추가함.
@@ -170,6 +171,7 @@ public class NetworkManager : Singleton<NetworkManager>
             AudioManager.Instance.BGM.PauseBGM(false);//BGM 다시 재생
             GameManager.Instance.ResumeGame();//게임재개
             GameManager.Instance.inGameController.EndAdMob();//광고 재생으로 멈춘 루틴 재개
+            UIManager.Instance.popupUIController.HideAdBg();
         }
 
         public void DebugText<T>(T msg)
