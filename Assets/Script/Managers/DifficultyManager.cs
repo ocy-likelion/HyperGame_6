@@ -19,7 +19,7 @@ public class DifficultyManager : Singleton<DifficultyManager>
     private float[] _reward = { 1f, 1f, 1.5f, 2f, 3f };
     
     // 피버시 서류 처리 보상
-    private float[] _feverReward = { 0.5f, 0.75f, 1f, 1f, 2f };
+    private float[] _feverReward = { 0.75f, 0.75f, 1f, 1f, 2f };
     
     // 서류 처리로 차오르는 피버 값
     private int[] _feverValueReward = { 3, 3, 3, 3, 3 };
