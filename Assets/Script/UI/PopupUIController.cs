@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class PopupUIController : Singleton<PopupUIController>
 {
     [SerializeField] public Image backgroundImage;
+    [SerializeField] public Image adBackgroundImage;
     [SerializeField] public TMP_Text AdmobDebugText;
     
     //새로 추가한 InGameUI는 이곳 아래에 추가해주시고, 프리팹의 자식개체로 넣은 뒤 인스펙터에서 할당해주세요.
@@ -36,6 +37,16 @@ public class PopupUIController : Singleton<PopupUIController>
     public void SetAdmobDebugText(string text)
     {
         AdmobDebugText.text = text;
+    }
+
+    public void ShowAdBg()
+    {
+        adBackgroundImage.gameObject.SetActive(true);
+    }
+
+    public void HideAdBg()
+    {
+        adBackgroundImage.gameObject.SetActive(false);
     }
 
     #region PauseUI

@@ -1,11 +1,14 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InfoUIController : PopupController
 {
+    [SerializeField] private TMP_Text versionText;
+    
     Button touchButton;
     Image touchImage;
 
@@ -15,6 +18,7 @@ public class InfoUIController : PopupController
         touchButton = transform.Find("InfoTouchButton").GetComponentInChildren<Button>();
         touchImage = transform.Find("InfoTouchImage").GetComponentInChildren<Image>();
         touchButton.onClick.AddListener(ClosePopup);
+        versionText.text = "빌드버전 v" + Application.version;
     }
 
     public void ShowPopup()
