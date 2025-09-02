@@ -13,13 +13,13 @@ public class DifficultyManager : Singleton<DifficultyManager>
     private int _difficultyIncreaseInterval = 5;
     
     // 난이도별 시간 감소 주기 (초당 1씩감소)
-    private float[] _timeDecreaseRates = { 1f, 0.8f, 0.6f, 0.4f, 0.2f };
+    private float[] _timeDecreaseRates = { 1.8f, 1.2f, 0.6f, 0.4f, 0.2f };
     
     // 서류 처리 보상 (난이도별 일과 시간 회복량)
     private int[] _reward = { 1, 1, 2, 2, 3 };
     
     // 피버시 서류 처리 보상
-    private float[] _feverReward = { 1f, 1f, 1f, 1.5f, 2f };
+    private float[] _feverReward = { 0.5f, 0.75f, 1f, 1.5f, 2f };
     
     // 서류 처리로 차오르는 피버 값
     private int[] _feverValueReward = { 3, 3, 3, 3, 3 };
