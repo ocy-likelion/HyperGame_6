@@ -1329,6 +1329,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResultUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1176736996813212133, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176736996813212133, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176736996813212133, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1377727017950926420, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1377727017950926420, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1377727017950926420, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1668041274526697810, guid: 39af7e5420ed59845b72ca5ea7919853, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
