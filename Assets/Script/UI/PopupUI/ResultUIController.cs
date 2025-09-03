@@ -92,6 +92,9 @@ public class ResultUIController : PopupController
             {
                 AudioManager.Instance.SFX.StopScoreCalculating();
                 AudioManager.Instance.SFX.PlayScoreCalculated();
+                
+                VfxManager.Instance.GetVFX(VFXType.MONEY, new Vector2(-4f, -5f), Quaternion.Euler(-60f, 90f, -90f), Vector2.one);
+                VfxManager.Instance.GetVFX(VFXType.MONEY, new Vector2(4f, -5f), Quaternion.Euler(-60f, -90f, 90f), Vector2.one);
                 // 퇴근 및 재시작 버튼 활성화
                 _quitButton.gameObject.SetActive(true);
                 _retryButton.gameObject.SetActive(true);
