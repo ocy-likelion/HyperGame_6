@@ -31,7 +31,6 @@ public static class VFXType
     //public const string FireWork = "Firreeee";
     public const string TEST = "TestVfx";
     public const string OBSTOUCH = "ObsTouchVfx";
-    public const string MONEY = "MoneyVfx";
 }
 
 /// <summary>
@@ -101,29 +100,20 @@ public class VfxManager : Singleton<VfxManager>
     public GameObject GetVFX(string vfxType, Vector2 position, Quaternion rotation, Vector2 size = default, bool returnAutomatically = true)
     {
         GameObject vfxObject = DequeueVFX(vfxType);
+        RectTransform vfxRectTransform = vfxObject.transform as RectTransform;
 
-        // UI용 RectTransform이면 위치만 적용
-        if (vfxObject.TryGetComponent<RectTransform>(out RectTransform rect))
+        if (vfxRectTransform != null)
         {
-            rect.anchoredPosition = position;
-            // rect.localScale = size;  <-- 여기서 크기는 건드리지 않음
+            vfxRectTransform.anchoredPosition = position;
+            vfxRectTransform.rotation = rotation;
+            vfxRectTransform.localScale = size;
         }
-        else
-        {
-            vfxObject.transform.position = position;
-            // vfxObject.transform.localScale = size; <-- 건드리지 않음
-        }
-
-        // 회전은 항상 Transform 기준으로 적용
-        vfxObject.transform.rotation = rotation;
-
         vfxObject.SetActive(true);
 
         if (returnAutomatically)
         {
             StartCoroutine(AutoMatic(ReturnVFX(vfxType, vfxObject, vfxDataSOs[vfxType].duration)));
         }
-
         return vfxObject;
     }
     
