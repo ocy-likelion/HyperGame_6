@@ -40,6 +40,8 @@ public class UIManager : Singleton<UIManager>
     
     public void ShowBackgroundImage(bool isShow)
     {
+        if (popupUIController == null) return;
+        if (popupUIController.backgroundImage == null) return;
         popupUIController.backgroundImage.gameObject.SetActive(isShow);
     }
 
