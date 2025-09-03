@@ -904,7 +904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6582377126447602992, guid: 3d4b90809cd548444a584c53f9fc4e60, type: 3}
       propertyPath: constTimerValue
-      value: 3
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8887894430996731586, guid: 3d4b90809cd548444a584c53f9fc4e60, type: 3}
       propertyPath: m_Name
