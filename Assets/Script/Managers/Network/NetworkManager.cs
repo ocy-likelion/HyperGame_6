@@ -103,6 +103,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 
                 //에디터에선 광고가 나오지 않으므로 패스시키기.
                 GameManager.Instance.inGameController.EndAdMob();
+                UIManager.Instance.popupUIController.HideAdBg();
 #endif
         }
         
