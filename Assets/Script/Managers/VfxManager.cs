@@ -31,6 +31,7 @@ public static class VFXType
     //public const string FireWork = "Firreeee";
     public const string TEST = "TestVfx";
     public const string OBSTOUCH = "ObsTouchVfx";
+    public const string MONEY = "MoneyVfx";
 }
 
 /// <summary>
