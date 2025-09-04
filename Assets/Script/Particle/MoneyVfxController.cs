@@ -9,9 +9,11 @@ public class MoneyVfxController : MonoBehaviour
     [SerializeField] private Transform parent;
     [SerializeField] private ParticleSystem particle;
     private ParticleSystemRenderer _psRenderer;
+    private Vector3 originPos;
     
     private void Awake()
     {
+        originPos = parent.position;
         _psRenderer = particle.GetComponent<ParticleSystemRenderer>();
         _psRenderer.enabled = false;
         GameManager.warmUpParticleLoad = WarmupParticle();
@@ -21,11 +23,19 @@ public class MoneyVfxController : MonoBehaviour
 
     private IEnumerator WarmupParticle()
     {
+        var initPos = originPos + new Vector3(4000, 0, 0);
+        parent.position = initPos;
         parent.gameObject.SetActive(true);
         particle.Play();
-        yield return new WaitForSeconds(2f);
+        //5프레임
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
+        yield return null;
         particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _psRenderer.enabled = true;
+        parent.position = originPos;
         parent.gameObject.SetActive(false);
         GameManager.Instance.particleLoadOn = true;
     }
