@@ -115,7 +115,7 @@ public class Classification : MonoBehaviour
                     GameManager.Instance.inGameController.CheckNewRecord(score); //NewRecord 체크
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
-                    //classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     AudioManager.Instance.SFX.PlayDocSuccess(); //성공 사운드 재생
                     if (combo > maxCombo)
                     {
@@ -184,7 +184,7 @@ public class Classification : MonoBehaviour
                     GameManager.Instance.inGameController.CheckNewRecord(score); //NewRecord 체크
                     UpdateComboUI();
                     UpdateFeverUI(); //피버 게이지 UI 갱신
-                    //classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
+                    classificationUIController.TriggerSuccessEffect(); //분류 성공 이펙트 실행
                     AudioManager.Instance.SFX.PlayDocSuccess(); //성공 사운드 재생
                     if (combo > maxCombo)
                     {

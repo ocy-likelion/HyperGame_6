@@ -39,7 +39,7 @@ public class ClassificationUIController : MonoBehaviour
 
     public void TriggerSuccessEffect() // 성공 효과 트리거
     {
-        TriggerEffect(greenBox);
+        // TriggerEffect(greenBox);
         RisingEffect(true);
     }
 
