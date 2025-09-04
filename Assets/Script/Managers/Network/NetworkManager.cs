@@ -1,7 +1,10 @@
+//#define ITCH
+
 using System;
 using System.Collections;
 using UnityEngine;
 using System.Runtime.InteropServices;
+
 
 public class NetworkManager : Singleton<NetworkManager>
 {
@@ -26,7 +29,7 @@ public class NetworkManager : Singleton<NetworkManager>
         /// </summary>
         public void OnTossLeaderboard()
         {
-#if UNITY_WEBGL && !UNITY_EDITOR//WebGL 환경에서만 동작
+#if UNITY_WEBGL && !UNITY_EDITOR  && !ITCH//WebGL 환경에서만 동작
                 OpenTossLeaderboard();
                 
 #else
@@ -55,7 +58,7 @@ public class NetworkManager : Singleton<NetworkManager>
 #endif
         }
         
-#if !UNITY_WEBGL || UNITY_EDITOR
+#if !UNITY_WEBGL || UNITY_EDITOR  
         void MockCallback() => OnSubmitScoreResult("MOCK_OK");
 #endif
         // JS에서 호출되는 콜백
@@ -89,7 +92,7 @@ public class NetworkManager : Singleton<NetworkManager>
         // 게임 종료 시 호출
         public void ShowAd()
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR  && !ITCH
         try {
                 ShowInterstitialAd();
                 UIManager.Instance.popupUIController.ShowAdBg();
@@ -109,7 +112,7 @@ public class NetworkManager : Singleton<NetworkManager>
         
         public void LoadAd()
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR  && !ITCH
        try {
                 LoadInterstitialAd();  // 게임 시작 시 미리 로드
         } catch (Exception e) {
