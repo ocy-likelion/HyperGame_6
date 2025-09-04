@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: TestVfx
   m_EditorClassIdentifier: 
   vfxPrefab: {fileID: 8767070383464300709, guid: a077536871fd122419fd72ff0c314c00, type: 3}
-  vfxType: 0
   duration: 0.5
-  poolSize: 5
+  poolSize: 0

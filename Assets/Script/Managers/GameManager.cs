@@ -25,6 +25,10 @@ public class GameManager : Singleton<GameManager>
     //일시정지 관리.
     public bool _isPaused;
     
+    //파티클 로드 여부
+    public bool particleLoadOn;
+    public static IEnumerator warmUpParticleLoad;
+    
     protected override void Initialize()
     {
         //Initialize
@@ -50,11 +54,21 @@ public class GameManager : Singleton<GameManager>
     //최초 실행시 초기화 진행
     private async Task LoadGameSystem()
     {
+        //셰이더 선로드
+        Shader.WarmupAllShaders();
+        while (warmUpParticleLoad == null)
+        {
+            await Task.Yield();
+        }
+        StartCoroutine(warmUpParticleLoad);
+        
+        //인트로 초기화
         while (UIManager.Instance.popupUIController.introUIController == null)
         {
             await Task.Yield();
         }
         UIManager.Instance.popupUIController.introUIController.InitUI();
+        
         //Addressable 데이터 로드
         await obstacleClearEffect.LoadSprites();
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
@@ -65,6 +79,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator LoadEndInitGame()
     {
+        yield return new WaitUntil(() => particleLoadOn);
         yield return StartCoroutine(
             UIManager.Instance.popupUIController.introUIController.InitIntroUI());
         yield return StartCoroutine(inGameController.Initialize());

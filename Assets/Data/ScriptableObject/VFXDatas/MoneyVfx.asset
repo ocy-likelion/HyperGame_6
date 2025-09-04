@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MoneyVfx
   m_EditorClassIdentifier: 
   vfxPrefab: {fileID: 3582159290348549904, guid: fe2939e9bfdec07439db5f6d41c0fdaf, type: 3}
-  duration: 4
-  poolSize: 3
+  duration: 3
+  poolSize: 1
