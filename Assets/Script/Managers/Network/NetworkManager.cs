@@ -18,9 +18,14 @@ public class NetworkManager : Singleton<NetworkManager>
         private static extern void LoadInterstitialAd();
         [DllImport("__Internal")]
         private static extern void ShowInterstitialAd();
+        
+        private bool _adLoaded = false;
+        private int _adRetryCount;
 
         protected override void Initialize()
         {
+                _adLoaded = false;
+                _adRetryCount = 0;
                 LoadAd();
         }
         
@@ -94,8 +99,7 @@ public class NetworkManager : Singleton<NetworkManager>
         {
 #if UNITY_WEBGL && !UNITY_EDITOR  && !ITCH
         try {
-                ShowInterstitialAd();
-                UIManager.Instance.popupUIController.ShowAdBg();
+                RaiseAd();   
         } catch (Exception e) {
                 Debug.LogException(e);
                 //Toss가 아닌 WebGL환경에선 로직이 멈춰버리므로 추가함.
@@ -139,26 +143,34 @@ public class NetworkManager : Singleton<NetworkManager>
                 {
                         //LoadAd쪽
                         case "loaded":
+                                _adLoaded = true; //로드 확인
                                 Debug.Log("광고 로드 성공");
                                 break;
+                        
+                        //ShowAd쪽
                         case "clicked":
                                 Debug.Log("광고 클릭");
                                 break;
+                        
                         case "dismissed":
                                 Debug.Log("광고 닫힘");
-                                EndAd();//광고재생 종료
+                                EndAd();//광고재생 종료 루틴
                                 break;
+                        
                         case "failedToShow":
                                 Debug.Log("광고 보여주기 실패");
-                                EndAd();//광고재생 종료
+                                if(_adRetryCount < 3) StartCoroutine(AdReload());//광고 재로드 및 재생.
+                                else EndAd();//광고재생 종료 루틴 -> 나중에 불러오기 실패 팝업으로 바꾸기
                                 break;
+                        
                         case "impression":
                                 Debug.Log("광고 노출");
                                 break;
+                        
                         case "show":
                                 Debug.Log("광고 컨텐츠 보여졌음");
                                 break;
-                        //ShowAd쪽
+                       
                         case "requested":
                                 Debug.Log("광고 보여주기 요청 완료");
                                 AudioManager.Instance.BGM.PauseBGM(true);//BGM일시정지
@@ -170,8 +182,31 @@ public class NetworkManager : Singleton<NetworkManager>
                 }
         }
 
+        //광고 재시작 루틴
+        IEnumerator AdReload()
+        {
+                _adRetryCount++;
+                
+                LoadAd();
+                while (!_adLoaded)
+                {
+                        yield return null;
+                }
+                RaiseAd();
+        }
+        
+        //광고 재생 루틴
+        private void RaiseAd()
+        {
+                ShowInterstitialAd();
+                UIManager.Instance.popupUIController.ShowAdBg();
+                _adLoaded = false;
+        }
+
+        //광고 종료 루틴
         private void EndAd()
         {
+            _adRetryCount = 0;
             AudioManager.Instance.BGM.PauseBGM(false);//BGM 다시 재생
             GameManager.Instance.ResumeGame();//게임재개
             GameManager.Instance.inGameController.EndAdMob();//광고 재생으로 멈춘 루틴 재개
