@@ -1,9 +1,12 @@
+//#define DEBUG //디버깅 사용시에만 활성화 할것
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using static Constants;
 
 public class GameManager : Singleton<GameManager>
@@ -21,7 +24,10 @@ public class GameManager : Singleton<GameManager>
     //public GameState CurrentGameState => _currentState;
     private Dictionary<GameState, IGameState> _states = new Dictionary<GameState, IGameState>();
     public Action<GameState> GameStateChanged;
-
+    
+    //토스앱 버전 체크
+    [FormerlySerializedAs("isSupported")] public bool isSupportedCheck = false;
+    
     //일시정지 관리.
     public bool _isPaused;
     
@@ -74,6 +80,15 @@ public class GameManager : Singleton<GameManager>
         await UIManager.Instance.popupUIController.pauseUIController.LoadSprites();
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
         await UIManager.Instance.inGameUIController.interactionUIController.LoadSprites();
+        
+        NetworkManager.Instance.CheckAppVersion();//토스앱 버전 체크
+        
+        //버전 체크가 완료 될때까지 대기
+        while (!isSupportedCheck)
+        {
+            await Task.Yield();
+        }
+        
         StartCoroutine(LoadEndInitGame());
     }
 
@@ -94,25 +109,9 @@ public class GameManager : Singleton<GameManager>
             _states[_currentState].OnUpdate();
         }
         
-        // //테스트용 입력
-        // if (Input.GetKeyDown(KeyCode.Alpha1))
-        // {
-        //     GoToInGame();
-        // }
-        // else if (Input.GetKeyDown(KeyCode.Alpha2))
-        // {
-        //     //게임오버 시키기
-        //     inGameController.QuitGame();
-        //     //ReturnToTitle();
-        // }
-        // else if (Input.GetKeyDown(KeyCode.Alpha3))
-        // {
-        //     PauseGame();
-        // }
-        // else if (Input.GetKeyDown(KeyCode.Alpha4))
-        // {
-        //     ResumeGame();
-        // }
+#if DEBUG
+        DebugInputs();//디버그용 입력 체크
+#endif
     }
     
     ///게임을 시작합니다.
@@ -220,5 +219,44 @@ public class GameManager : Singleton<GameManager>
     {
         obstacleClearEffect.ClearSprites();//List에 로드한 스프라이트 해제
         base.OnDestroy();
+    }
+
+    private void DebugInputs()
+    {
+        // //테스트용 입력
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            //NetworkManager.Instance.OnScoreEvent("FailedToSend");
+            NetworkManager.Instance.OnScoreEvent("VersionNotSupported");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            NetworkManager.Instance.OnAdEvent("failedToShow");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            NetworkManager.Instance.OnAdEvent("TestErrMsg");
+        }
+        
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     GoToInGame();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     //게임오버 시키기
+        //     inGameController.QuitGame();
+        //     //ReturnToTitle();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha3))
+        // {
+        //     PauseGame();
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha4))
+        // {
+        //     ResumeGame();
+        // }
     }
 }

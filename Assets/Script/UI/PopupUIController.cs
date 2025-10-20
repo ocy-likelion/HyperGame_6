@@ -21,6 +21,7 @@ public class PopupUIController : Singleton<PopupUIController>
     public TutorialUIControllerRE tutorialUIController;
     public InfoUIController InfoUIController;
     public IntroUIController introUIController;
+    public ErrorReportUIController errorReportUIController;
     //여기까지
 
     protected override void Initialize()
@@ -116,6 +117,21 @@ public class PopupUIController : Singleton<PopupUIController>
     public void HideIntroUI()
     {
         introUIController.ClosePopup();
+    }
+    #endregion
+    
+    #region ErrorReportUI
+    
+    public void ShowErrorReportUI()
+    {
+        if(errorReportUIController != null)
+            errorReportUIController.ShowPopup();
+    }
+
+    public void HideErrorReportUI()
+    {
+        if(errorReportUIController != null)
+            errorReportUIController.ClosePopup();
     }
     #endregion
 }

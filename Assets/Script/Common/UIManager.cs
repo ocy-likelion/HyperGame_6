@@ -45,6 +45,12 @@ public class UIManager : Singleton<UIManager>
         popupUIController.backgroundImage.gameObject.SetActive(isShow);
     }
 
+    public ErrorReportUIController ErrorReport()
+    {
+       return popupUIController.errorReportUIController != 
+              null ? popupUIController.errorReportUIController : null;
+    }
+
     // Panel 관련
     public void OpenPanel(GameObject panel) => panelController.OpenPanel(panel);
     
