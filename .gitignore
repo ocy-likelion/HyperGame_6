@@ -74,6 +74,12 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# AITbuild SDK
+/[Aa]it-build/.npm-cache
+/[Aa]it-build/node_modules
+/[Aa]it-build/dist
+/[Aa]it-build/public
+
 # End of https://www.toptal.com/developers/gitignore/api/unity
 # Apps in Toss SDK - 민감한 인증 정보 보호
 **/AITCredentials.asset
