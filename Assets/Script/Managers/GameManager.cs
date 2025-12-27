@@ -81,6 +81,7 @@ public class GameManager : Singleton<GameManager>
         await UIManager.Instance.titleUIController.subMenuUIController.LoadSprites();
         await UIManager.Instance.inGameUIController.interactionUIController.LoadSprites();
         
+#if UNITY_WEBGL && !UNITY_EDITOR //WebGL(Toss) 구동시에만 실행.
         NetworkManager.Instance.CheckAppVersion();//토스앱 버전 체크
         
         //버전 체크가 완료 될때까지 대기
@@ -88,15 +89,21 @@ public class GameManager : Singleton<GameManager>
         {
             await Task.Yield();
         }
+#endif
         
         StartCoroutine(LoadEndInitGame());
     }
 
     private IEnumerator LoadEndInitGame()
     {
+        //파티클 효과 사전로드완료 대기
         yield return new WaitUntil(() => particleLoadOn);
+        
+        //인트로 UI 셋업 대기
         yield return StartCoroutine(
             UIManager.Instance.popupUIController.introUIController.InitIntroUI());
+        
+        //게임 로직 시작.
         yield return StartCoroutine(inGameController.Initialize());
         ChangeGameState(GameState.Title);
         yield return null;

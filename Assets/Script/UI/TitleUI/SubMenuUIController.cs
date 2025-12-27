@@ -30,11 +30,18 @@ public class SubMenuUIController : MonoBehaviour
         _audioBtnSprites[0] = audioBtnSprites[0];
         _audioBtnSprites[1] = audioBtnSprites[1];
         _gameSettingButton.image.sprite = _audioBtnSprites[0];
+        
+        //로컬버전 기본설정을 비활성화로
+        _leaderBoardButton.gameObject.SetActive(false);
     }
     
     public void InitUI()
     {
         _gameSettingButton.image.sprite = AudioManager.Instance.GetIsAudioOn() ? _audioBtnSprites[0] : _audioBtnSprites[1];
+        
+#if UNITY_WEBGL && !UNITY_EDITOR// Toss(WebGL)버전일때만 리더보드 버튼 활성화
+        _leaderBoardButton.gameObject.SetActive(true);
+#endif
     }
     
     public void OnClickGameSettingButton()
