@@ -27,9 +27,11 @@ public class NetworkManager : Singleton<NetworkManager>
 
         protected override void Initialize()
         {
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
                 _adLoaded = false;
                 _adRetryCount = 0;
                 LoadAd();
+#endif
         }
         
         /// <summary>

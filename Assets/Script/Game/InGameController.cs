@@ -179,6 +179,7 @@ public class InGameController
         //결과창이 떠야 게임 한판을 완료했다는 것이므로
         if (!_skipResultUI)
         {
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
             //광고호출
             NetworkManager.Instance.ShowAd();
 
@@ -193,6 +194,7 @@ public class InGameController
         
             //다음 광고 로드
             NetworkManager.Instance.LoadAd();
+#endif
         }  
         
         //초기화.
