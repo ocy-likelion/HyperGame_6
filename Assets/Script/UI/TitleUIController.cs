@@ -53,7 +53,6 @@ public class TitleUIController : Singleton<TitleUIController>
     #region SubMenuUI
     public void ShowSubMenuUI()
     {
-        subMenuUIController.InitUI();
         subMenuUIController.gameObject.SetActive(true);
     }
 

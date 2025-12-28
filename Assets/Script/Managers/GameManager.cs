@@ -75,6 +75,7 @@ public class GameManager : Singleton<GameManager>
         }
         UIManager.Instance.popupUIController.introUIController.InitUI();//인트로 실행
         UIManager.Instance.titleUIController.mainBackGroundUIController.InitUI();//최고기록 불러오기
+        UIManager.Instance.titleUIController.subMenuUIController.InitUI();//서브메뉴 버튼정렬
         
         //Addressable 데이터 로드
         await obstacleClearEffect.LoadSprites();
