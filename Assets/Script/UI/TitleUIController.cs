@@ -13,6 +13,7 @@ public class TitleUIController : Singleton<TitleUIController>
     //ex. public TimerUIController timerUIController;
     public MainMenuUIController mainMenuUIController;
     public SubMenuUIController subMenuUIController;
+    public MainBackGroundUIController mainBackGroundUIController;
     
     //여기까지
     
@@ -59,6 +60,18 @@ public class TitleUIController : Singleton<TitleUIController>
     public void HideSubMenuUI()
     {
         subMenuUIController.gameObject.SetActive(false);
+    }
+    #endregion
+    
+    #region MainBackGroundUI
+    public void ShowMainBackGroundUI()
+    {
+        mainBackGroundUIController.gameObject.SetActive(true);
+    }
+
+    public void HideMainBackGroundUI()
+    {
+        mainBackGroundUIController.gameObject.SetActive(false);
     }
     #endregion
     
