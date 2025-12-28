@@ -73,7 +73,9 @@ public class GameManager : Singleton<GameManager>
         {
             await Task.Yield();
         }
-        UIManager.Instance.popupUIController.introUIController.InitUI();
+        UIManager.Instance.popupUIController.introUIController.InitUI();//인트로 실행
+        UIManager.Instance.titleUIController.mainBackGroundUIController.InitUI();//최고기록 불러오기
+        UIManager.Instance.titleUIController.subMenuUIController.InitUI();//서브메뉴 버튼정렬
         
         //Addressable 데이터 로드
         await obstacleClearEffect.LoadSprites();
@@ -231,21 +233,21 @@ public class GameManager : Singleton<GameManager>
     private void DebugInputs()
     {
         // //테스트용 입력
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            //NetworkManager.Instance.OnScoreEvent("FailedToSend");
-            NetworkManager.Instance.OnScoreEvent("VersionNotSupported");
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            NetworkManager.Instance.OnAdEvent("failedToShow");
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            NetworkManager.Instance.OnAdEvent("TestErrMsg");
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     //NetworkManager.Instance.OnScoreEvent("FailedToSend");
+        //     NetworkManager.Instance.OnScoreEvent("VersionNotSupported");
+        // }
+        //
+        // if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     NetworkManager.Instance.OnAdEvent("failedToShow");
+        // }
+        //
+        // if (Input.GetKeyDown(KeyCode.Alpha3))
+        // {
+        //     NetworkManager.Instance.OnAdEvent("TestErrMsg");
+        // }
         
         // if (Input.GetKeyDown(KeyCode.Alpha1))
         // {

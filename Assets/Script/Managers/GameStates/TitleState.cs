@@ -9,6 +9,7 @@ public class TitleState : IGameState
         UIManager.Instance.titleUIController.ShowTitleUI();
         UIManager.Instance.titleUIController.ShowMainMenuUI();
         UIManager.Instance.titleUIController.ShowSubMenuUI();
+        UIManager.Instance.titleUIController.ShowMainBackGroundUI();
         
         // BGM 재생
         AudioManager.Instance.BGM.PlayBGMByState(GameManager.Instance.GetGameState());
@@ -24,5 +25,6 @@ public class TitleState : IGameState
         UIManager.Instance.titleUIController.HideTitleUI();
         UIManager.Instance.titleUIController.HideMainMenuUI();
         UIManager.Instance.titleUIController.HideSubMenuUI();
+        UIManager.Instance.titleUIController.HideMainBackGroundUI();
     }
 }

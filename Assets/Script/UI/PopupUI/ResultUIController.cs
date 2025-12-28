@@ -45,8 +45,12 @@ public class ResultUIController : PopupController
         // 점수 보내기
         //해당기능에서는 점수를 string 타입으로 받음. 임시로 정수 형변환을 시켰지만
         //추후 반올림같은 로직을 넣는다면 그렇게 한 결과값을 인수로 넣도록 수정할 것.
+        
         cacheScore = (int)resultData.Score; //스코어 전송 실패 대비
+        
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
         NetworkManager.Instance.SendScore((int)resultData.Score);
+#endif
         
         // FadeOut Panel 초기화
         fadeOutCanvasGroup.alpha = 0;
@@ -104,8 +108,13 @@ public class ResultUIController : PopupController
                 // New Record 체크
                 if (resultData.Score > bestScore)
                 {
+                    //신기록 저장
                     PlayerPrefs.SetFloat("BestScore", resultData.Score);
                     PlayerPrefs.Save();
+                    
+                    //신기록을 타이틀에 표기
+                    UIManager.Instance.titleUIController.mainBackGroundUIController.UpdateBestScore(cacheScore);
+                    
                     ShowNewRecordEffect();
                 }
             }));
