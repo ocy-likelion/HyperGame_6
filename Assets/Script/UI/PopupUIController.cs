@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class PopupUIController : Singleton<PopupUIController>
 {
     [SerializeField] public Image backgroundImage;
+    [SerializeField] public Image errorReportBgImage;
     [SerializeField] public Image adBackgroundImage;
     [SerializeField] public TMP_Text AdmobDebugText;
     

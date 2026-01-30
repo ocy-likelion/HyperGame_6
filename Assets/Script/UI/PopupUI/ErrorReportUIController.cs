@@ -16,6 +16,18 @@ public class ErrorReportUIController : PopupController
         Initialize();
     }
 
+    //ResultUI와 동시 호출 시 Bg가 혼용되어 전용 Bg를 쓰도록한다.
+    protected override void OnEnable()
+    {
+        UIManager.Instance.popupUIController.errorReportBgImage.gameObject.SetActive(true);
+    }
+    
+    protected override void OnDisable()
+    {
+        UIManager.Instance.popupUIController.errorReportBgImage.gameObject.SetActive(false);
+    }
+
+    
     void Initialize()
     {
         //셋업 초기화
@@ -31,10 +43,10 @@ public class ErrorReportUIController : PopupController
     /// <summary>
     /// 팝업을 닫습니다.
     /// </summary>
-    /// <param name="autoClose"> true로 설정하면 2초 후 자동으로 팝업이 닫힙니다.</param>
+    /// <param name="autoClose"> true로 설정하면 3초 후 자동으로 팝업이 닫힙니다.</param>
     public void ClosePopup(bool autoClose = false)
     {
-        if (autoClose) StartCoroutine(DelayAction(2f, () => base.ClosePopup(gameObject)));
+        if (autoClose) StartCoroutine(DelayAction(3f, () => base.ClosePopup(gameObject)));
         else base.ClosePopup(gameObject);
     }
 
