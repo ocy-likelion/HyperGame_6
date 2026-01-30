@@ -37,6 +37,10 @@ public class GameManager : Singleton<GameManager>
     
     protected override void Initialize()
     {
+        #if UNITY_ANDROID && !UNITY_EDITOR //안드로이드 버전 프레임 고정
+        Application.targetFrameRate = 60;
+        #endif
+        
         //Initialize
         _states[GameState.Title] = new TitleState();
         _states[GameState.InGame] = new InGameState();
@@ -69,6 +73,10 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(warmUpParticleLoad);
         
         //인트로 초기화
+        while (UIManager.Instance.popupUIController== null)
+        {
+            await Task.Yield();
+        }
         while (UIManager.Instance.popupUIController.introUIController == null)
         {
             await Task.Yield();

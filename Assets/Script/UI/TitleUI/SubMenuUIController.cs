@@ -64,9 +64,10 @@ public class SubMenuUIController : MonoBehaviour
     {
         Debug.Log("OnClickLeaderBoardButton");
         AudioManager.Instance.SFX.PlayButtonClick();
-        
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
         //토스 게임 리더보드 열어보기
         NetworkManager.Instance.OnTossLeaderboard();
+#endif
     }
 
     public void OnClickInfoButton()

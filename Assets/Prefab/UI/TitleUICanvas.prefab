@@ -183,6 +183,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3412576542313236916}
     m_Modifications:
+    - target: {fileID: 1232880412595754710, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_text
+      value: 000000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232880412595754710, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1527416223973061776, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
       propertyPath: m_Name
       value: MainBackGroundUI
@@ -294,6 +302,10 @@ PrefabInstance:
     - target: {fileID: 5906912479924186229, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931947462874689175, guid: 3cdbbf0994e9136489e8e8798f308021, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -148
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

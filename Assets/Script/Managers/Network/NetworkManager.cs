@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 
 public class NetworkManager : Singleton<NetworkManager>
 {
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
         [DllImport("__Internal")]
         private static extern void OpenTossLeaderboard();
         
@@ -21,7 +22,7 @@ public class NetworkManager : Singleton<NetworkManager>
         private static extern void LoadInterstitialAd();
         [DllImport("__Internal")]
         private static extern void ShowInterstitialAd();
-        
+
         private bool _adLoaded = false;
         private int _adRetryCount;
 
@@ -277,6 +278,7 @@ public class NetworkManager : Singleton<NetworkManager>
             GameManager.Instance.inGameController.EndAdMob();//광고 재생으로 멈춘 루틴 재개
             UIManager.Instance.popupUIController.HideAdBg();
         }
+#endif
 
         public void SendErrorReport(string msg)
         {
