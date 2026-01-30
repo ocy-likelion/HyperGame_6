@@ -1345,10 +1345,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3412576542313236916}
     m_Modifications:
-    - target: {fileID: 2617471244178898091, guid: 5bd35a21ec508024498cbfce7740010b, type: 3}
-      propertyPath: m_EffectDistance.y
-      value: -30
-      objectReference: {fileID: 0}
     - target: {fileID: 6904634781118308913, guid: 5bd35a21ec508024498cbfce7740010b, type: 3}
       propertyPath: m_Name
       value: ScoreUI
@@ -1436,10 +1432,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1544351043798126922, guid: 5bd35a21ec508024498cbfce7740010b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4333561625499845562}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bd35a21ec508024498cbfce7740010b, type: 3}
 --- !u!114 &1572362373284509418 stripped
 MonoBehaviour:
@@ -1468,23 +1461,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689111b597c90aa46a7791196c848a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7148252618796697168 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1544351043798126922, guid: 5bd35a21ec508024498cbfce7740010b, type: 3}
-  m_PrefabInstance: {fileID: 8528994115775715098}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4333561625499845562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7148252618796697168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -20}
-  m_UseGraphicAlpha: 1

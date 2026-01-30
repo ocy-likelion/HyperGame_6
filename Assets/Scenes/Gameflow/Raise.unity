@@ -315,22 +315,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 381958679399234578, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3412576542313236916, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -434,18 +418,6 @@ PrefabInstance:
     - target: {fileID: 5555419457573602589, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_Name
       value: TitleUICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8521666684244870591, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8619714795471727524, guid: a191a34214c22e944a7402ca073d1dbc, type: 3}
       propertyPath: m_AnchorMax.y
