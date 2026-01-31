@@ -44,13 +44,18 @@ public class ErrorReportUIController : PopupController
     /// 팝업을 닫습니다.
     /// </summary>
     /// <param name="autoClose"> true로 설정하면 3초 후 자동으로 팝업이 닫힙니다.</param>
-    public void ClosePopup(bool autoClose = false)
+    /// <param name="onComplete"> 팝업이 닫힐 때 실행할 액션을 할당할 수 있습니다.</param>
+    public void ClosePopup(bool autoClose = false, Action onComplete = null)
     {
-        if (autoClose) StartCoroutine(DelayAction(3f, () => base.ClosePopup(gameObject)));
+        if (autoClose) StartCoroutine(DelayAction(3f, () =>
+        {
+            base.ClosePopup(gameObject);
+            onComplete?.Invoke();
+        }));
         else base.ClosePopup(gameObject);
     }
 
-    IEnumerator DelayAction(float delay, Action action)
+    private static IEnumerator DelayAction(float delay, Action action)
     {
         var elapsedTime = 0f;
         while (elapsedTime < delay)
