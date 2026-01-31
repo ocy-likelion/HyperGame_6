@@ -155,7 +155,7 @@ public class ResultUIController : PopupController
             .OnComplete(() =>
             {
                 ClosePopup();
-                GameManager.Instance.ResumeGame();
+                //GameManager.Instance.ResumeGame();
                 GameManager.Instance.inGameController.QuitGame();
                 _quitButton.interactable = true;
             });
@@ -163,10 +163,9 @@ public class ResultUIController : PopupController
 
     public void OnClickRetryButton()
     {
-        GameManager.Instance.ResumeGame();
-        GameManager.Instance.inGameController.Dispose();
+        //GameManager.Instance.ResumeGame();
+        //GameManager.Instance.inGameController.Dispose();
         GameManager.Instance.inGameController.UseRetry();
-        //GameManager.Instance.inGameController.SkipResultUI();
         GameManager.Instance.inGameController.QuitGame();
         ClosePopup();
     }
