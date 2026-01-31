@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 public class NetworkManager : Singleton<NetworkManager>
 {
-#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
+//#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
         [DllImport("__Internal")]
         private static extern void OpenTossLeaderboard();
         
@@ -24,13 +24,16 @@ public class NetworkManager : Singleton<NetworkManager>
         private static extern void ShowInterstitialAd();
 
         private bool _adLoaded = false;
+        private bool _reloadFailed = false;
         private int _adRetryCount;
+        private int _adRetryLimitCount; //광고로드 재시도 상한
 
         protected override void Initialize()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
                 _adLoaded = false;
                 _adRetryCount = 0;
+                _adRetryLimitCount = 5;
                 LoadAd();
 #endif
         }
@@ -198,6 +201,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 }
 
                 //송신받은 event메시지에 따라 다른 액션
+                //광고가 사전에 Load되어 있지 않으면 ShowAd의 이벤트 메시지는 받지못한다. CannotAccessAd로 연결된다.
                 switch (eventType)
                 {
                         //LoadAd쪽
@@ -213,17 +217,14 @@ public class NetworkManager : Singleton<NetworkManager>
                         
                         case "dismissed":
                                 Debug.Log("광고 닫힘");
+                                AudioManager.Instance.BGM.PauseBGM(false);//BGM 다시 재생
+                                GameManager.Instance.ResumeGame();//게임재개
                                 EndAd();//광고재생 종료 루틴
                                 break;
                         
                         case "failedToShow":
                                 Debug.Log("광고 보여주기 실패");
-                                if(_adRetryCount < 3) StartCoroutine(AdReload());//광고 재로드 및 재생.
-                                else {
-                                        SendErrorReport("광고 재생에 실패했습니다.");//광고재생 종료 루틴 -> 나중에 불러오기 실패 팝업으로 바꾸기
-                                        UIManager.Instance.ErrorReport().ClosePopup(true);//팝업 자동 닫기
-                                        EndAd();//광고 루틴 종료
-                                }
+                                TryLimitAd();
                                 break;
                         
                         case "impression":
@@ -240,46 +241,89 @@ public class NetworkManager : Singleton<NetworkManager>
                                 GameManager.Instance.PauseGame();//게임 일시정지
                                 break;
                         
+                        //예외 메시지
                         default:
                                 Debug.Log(eventType);
-                                SendErrorReport($"ErrCode: {eventType}\n터치하면 팝업을 닫습니다.");
-                                UIManager.Instance.ErrorReport().OnRetryProcess += ()=> UIManager.Instance.ErrorReport().ClosePopup();
+                                //ShowAd
+                                if (eventType.Contains("CannotAccessAd"))//CannotAccessAd가 포함된 이벤트를 받으면 Load된 광고가 없을때 발생했다는 뜻.
+                                {
+                                        TryLimitAd();
+                                }
+                                //LoadAd
+                                else if (eventType.Contains("failedToLoad"))
+                                {
+                                        //TryLimitAd("광고 로드에 실패했습니다.", true);
+                                        _reloadFailed = true;
+                                }
+                                //AnotherMsg
+                                else{
+                                        SendErrorReport($"ErrCode: {eventType}\n터치하면 팝업을 닫습니다.");
+                                        UIManager.Instance.ErrorReport().OnRetryProcess += ()=> UIManager.Instance.ErrorReport().ClosePopup();
+                                }
+                                
                                 break;
                 }
         }
 
         //광고 재시작 루틴
-        IEnumerator AdReload()
+        IEnumerator AdReload(bool adLoadOnly = false)
         {
                 _adRetryCount++;
+                if(!_adLoaded) LoadAd();
                 
-                LoadAd();
-                while (!_adLoaded)
+                while (!_adLoaded)//
                 {
+                        if (_reloadFailed) break;//로드 실패 시 대기루틴 끊기
                         yield return null;
                 }
-                RaiseAd();
+                _reloadFailed = false;
+                
+                if(!adLoadOnly) RaiseAd();//true면Load만 하는 상황.
         }
         
         //광고 재생 루틴
-        private void RaiseAd()
+        private void RaiseAd()//ShowAd에서 호출함.
         {
-                ShowInterstitialAd();
-                UIManager.Instance.popupUIController.ShowAdBg();
                 _adLoaded = false;
+                UIManager.Instance.popupUIController.ShowAdBg();
+                ShowInterstitialAd();
+        }
+
+        /// <summary>
+        /// 광고 재시도 처리
+        /// </summary>
+        /// <param name="cmsg">입력 시 메시지를 커스텀하여 출력합니다.</param>
+        /// <param name="adLoadOnly">광고 로드만 재시도할 때 True로 전환해주세요</param>
+        private void TryLimitAd(string cmsg = null, bool adLoadOnly = false)
+        {
+                //재시도 루틴
+                if(_adRetryCount < _adRetryLimitCount) StartCoroutine(AdReload(adLoadOnly));//광고 재로드 및 재생.
+                else//재시도 횟수 초과 시.
+                {
+                        //광고 재생시점에서 호출한게 아니면 팝업을 띄우지 않음.
+                        if (adLoadOnly) return;
+                        
+                        //재시도 횟수 초과 시 팝업 표출
+                        SendErrorReport(cmsg ?? "광고 재생에 실패했습니다."); //광고재생 종료 루틴
+                        UIManager.Instance.ErrorReport().ClosePopup(true, EndAd);//팝업 자동 닫기
+                }
         }
 
         //광고 종료 루틴
         private void EndAd()
         {
             _adRetryCount = 0;
-            AudioManager.Instance.BGM.PauseBGM(false);//BGM 다시 재생
-            GameManager.Instance.ResumeGame();//게임재개
             GameManager.Instance.inGameController.EndAdMob();//광고 재생으로 멈춘 루틴 재개
             UIManager.Instance.popupUIController.HideAdBg();
         }
-#endif
+//#endif
 
+        public bool CheckAdLoaded()
+        {
+                return _adLoaded;
+        }
+
+        //에러 팝업 띄우기
         public void SendErrorReport(string msg)
         {
                 UIManager.Instance.ErrorReport().ShowPopup();
