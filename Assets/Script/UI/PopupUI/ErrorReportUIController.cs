@@ -55,7 +55,7 @@ public class ErrorReportUIController : PopupController
         var elapsedTime = 0f;
         while (elapsedTime < delay)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
         action?.Invoke();
