@@ -93,4 +93,9 @@ public class InteractionUIController : MonoBehaviour
         UIManager.Instance.popupUIController.ShowPauseUI();
         AudioManager.Instance.SFX.PlayButtonClick();
     }
+
+    public Button GetPauseButton()
+    {
+        return _pauseButton;
+    }
 }

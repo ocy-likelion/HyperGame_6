@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class InGameUIController : Singleton<InGameUIController>
 {
     [SerializeField] private RectTransform _inGameUI;
+    public RectTransform activeUI;
 
     //새로 추가한 InGameUI는 이곳 아래에 추가해주시고, 프리팹의 자식개체로 넣은 뒤 인스펙터에서 할당해주세요.
     //이 싱글톤 객체를 통해 UI 접근을 용이하게 관리합니다.
@@ -33,6 +34,14 @@ public class InGameUIController : Singleton<InGameUIController>
         SceneManager.sceneLoaded -= OnSceneLoaded;
         UIManager.Instance.SetInGameUIController(this);
         difficultyUpEffectUIController.Initialize();
+    }
+
+    public void SetSafeAreaOffset()
+    {
+        var offset = new Vector2(0, GameManager.Instance.cachedSafeAreaValue);
+        var pauseBtnRect = interactionUIController.GetPauseButton().transform as RectTransform;
+        activeUI.anchoredPosition -= offset;
+        if (pauseBtnRect != null) pauseBtnRect.anchoredPosition -= offset;
     }
 
     public void ShowInGameUI()

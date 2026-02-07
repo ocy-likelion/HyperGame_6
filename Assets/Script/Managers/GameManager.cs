@@ -35,6 +35,10 @@ public class GameManager : Singleton<GameManager>
     public bool particleLoadOn;
     public static IEnumerator warmUpParticleLoad;
     
+    //SafeArea
+    public float cachedSafeAreaValue;
+    public bool recieveDoneSafeAreaValue;
+    
     protected override void Initialize()
     {
         #if UNITY_ANDROID && !UNITY_EDITOR //안드로이드 버전 프레임 고정
@@ -99,6 +103,17 @@ public class GameManager : Singleton<GameManager>
         {
             await Task.Yield();
         }
+
+        //환경별 SafeArea 받기
+        NetworkManager.GetSafeAreaValue();
+
+        while (!recieveDoneSafeAreaValue)
+        {
+            await Task.Yield();
+        }
+
+        //인게임 UI SafeArea값 적용
+        UIManager.Instance.inGameUIController.SetSafeAreaOffset();
 #endif
         
         StartCoroutine(LoadEndInitGame());

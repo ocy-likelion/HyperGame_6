@@ -22,6 +22,9 @@ public class NetworkManager : Singleton<NetworkManager>
         private static extern void LoadInterstitialAd();
         [DllImport("__Internal")]
         private static extern void ShowInterstitialAd();
+        
+        [DllImport("__Internal")]
+        private static extern void GetSafeAreaInsets();
 
         private bool _adLoaded = false;
         private bool _reloadFailed = false;
@@ -36,6 +39,34 @@ public class NetworkManager : Singleton<NetworkManager>
                 _adRetryLimitCount = 5;
                 LoadAd();
 #endif
+        }
+
+        /// <summary>
+        /// SafeArea값을 전달 받습니다. Unity에서 직접 호출하지 않는 함수입니다.
+        /// </summary>
+        /// <param name="safeAreaValue">SafeAreaInsets의 Top 값을 전달 받습니다.</param>
+        public void RecieveSafeAreaValue(string platformValue)
+        {
+                if (float.TryParse(platformValue, out float safeAreaValue))
+                {
+                        // 변환 성공
+                        GameManager.Instance.cachedSafeAreaValue = safeAreaValue;
+                        GameManager.Instance.recieveDoneSafeAreaValue = true;
+                }
+                else
+                {
+                        // 변환 실패
+                        GameManager.Instance.cachedSafeAreaValue = 0;
+                        GameManager.Instance.recieveDoneSafeAreaValue = true;
+                }
+
+                //디버그시만 활성화
+                //UIManager.Instance.popupUIController.SetAdmobDebugText(platformValue);
+        }
+
+        public static void GetSafeAreaValue()
+        {
+                GetSafeAreaInsets();
         }
         
         /// <summary>
@@ -317,7 +348,7 @@ public class NetworkManager : Singleton<NetworkManager>
             UIManager.Instance.popupUIController.HideAdBg();
         }
 //#endif
-
+        
         public bool CheckAdLoaded()
         {
                 return _adLoaded;
