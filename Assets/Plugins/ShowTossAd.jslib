@@ -1,4 +1,6 @@
 mergeInto(LibraryManager.library, {
+  //광고기능 비활성화로 주석처리
+  /*
   LoadInterstitialAd: function() {
     setTimeout(() => {
       if (window.loadAdMobInterstitialAd) window.loadAdMobInterstitialAd();
@@ -11,4 +13,5 @@ mergeInto(LibraryManager.library, {
       else console.warn("window.showAdMobInterstitialAd not defined");
     }, 0);
   }
+  */
 });

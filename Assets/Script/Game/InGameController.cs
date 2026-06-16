@@ -179,22 +179,25 @@ public class InGameController
         //결과창이 떠야 게임 한판을 완료했다는 것이므로
         if (!_skipResultUI)
         {
-#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
-            //광고호출
-            NetworkManager.Instance.ShowAd();
-
-            //광고 끝나기 전까지 대기
-            while (!_endAdmob)
+            if (NetworkManager.Instance.useAd) //광고기능 사용시에만 호출합니다.
             {
-                yield return null;
-            }
-        
-            //광고 제어 변수 초기화
-            _endAdmob = false;
-        
-            //다음 광고 로드
-            NetworkManager.Instance.LoadAd();
+#if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
+                //광고호출
+                NetworkManager.Instance.ShowAd();
+
+                //광고 끝나기 전까지 대기
+                while (!_endAdmob)
+                {
+                    yield return null;
+                }
+            
+                //광고 제어 변수 초기화
+                _endAdmob = false;
+            
+                //다음 광고 로드
+                NetworkManager.Instance.LoadAd();
 #endif
+            }
         }  
         
         //초기화.

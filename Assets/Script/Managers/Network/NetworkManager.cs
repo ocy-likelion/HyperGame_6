@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using System.Runtime.InteropServices;
+using UnityEngine.Serialization;
 
 
 public class NetworkManager : Singleton<NetworkManager>
@@ -18,14 +19,43 @@ public class NetworkManager : Singleton<NetworkManager>
         [DllImport("__Internal")]
         private static extern void SubmitTossScore(int score);
         
-        [DllImport("__Internal")]
-        private static extern void LoadInterstitialAd();
-        [DllImport("__Internal")]
-        private static extern void ShowInterstitialAd();
+
+        //--광고기능 함수--//
+
+        // [DllImport("__Internal")]
+        // private static extern void LoadInterstitialAd();
+        // [DllImport("__Internal")]
+        // private static extern void ShowInterstitialAd();
+        //광고 기능 재활성화 시 RaiseAd()의 주석도 같이 해제할것.
+
+        /// <summary>
+        ///광고기능 비활성화 중 문법 충돌 회피를 위한 더미 코드.
+        ///광고 기능을 다시 활성화 시 아래의 더미코드는 삭제할 것.
+        /// </summary>
+        private static void LoadInterstitialAd()
+        {
+                //
+        }
+        
+        private static void ShowInterstitialAd()
+        {
+                //
+        }
+        
+        //----//
+        
+        
+        
         
         [DllImport("__Internal")]
         private static extern void GetSafeAreaInsets();
 
+        /// <summary>
+        /// 광고기능 사용여부
+        /// </summary>
+        public bool useAd;
+        
+        //
         private bool _adLoaded = false;
         private bool _reloadFailed = false;
         private int _adRetryCount;
@@ -33,6 +63,9 @@ public class NetworkManager : Singleton<NetworkManager>
 
         protected override void Initialize()
         {
+                useAd = false; //false = 광고 비활성화.
+                if (!useAd) return;
+
 #if UNITY_WEBGL && !UNITY_EDITOR //Toss(WebGL) 버전일때만 로직 수행
                 _adLoaded = false;
                 _adRetryCount = 0;
@@ -317,7 +350,7 @@ public class NetworkManager : Singleton<NetworkManager>
         {
                 _adLoaded = false;
                 UIManager.Instance.popupUIController.ShowAdBg();
-                ShowInterstitialAd();
+                //ShowInterstitialAd();
         }
 
         /// <summary>
